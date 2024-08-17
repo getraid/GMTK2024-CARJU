@@ -22,9 +22,17 @@ public class PlayerDebrieAttraction : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        List<Debree> toRemove = new List<Debree>();
+        float valueToGrowBy = 0;
         for(int i=0;i<_listOfDebriesAttracting.Count;i++)
         {
             Debree currDebree = _listOfDebriesAttracting[i];
+            if(currDebree==null)
+            {
+                toRemove.Add(currDebree);
+                continue;
+            }
+
             Vector3 dir = transform.position - currDebree.transform.position;
             currDebree.MoveTowards(dir.normalized);
 
@@ -33,17 +41,23 @@ public class PlayerDebrieAttraction : MonoBehaviour
             currScale.y -= _shrinkBy;
             currScale.z -= _shrinkBy;
 
-            if(currScale.magnitude<=_shrinkBy)
+            if (currScale.magnitude <= _shrinkBy)
             {
-                _listOfDebriesAttracting.Remove(currDebree);
-                Destroy(currDebree);
+                toRemove.Add(currDebree);
             }
             else
+            {
                 currDebree.transform.localScale = currScale;
+                valueToGrowBy += 0.01f;
+            }
 
         }
-
-
+        toRemove.ForEach(x=> 
+        {
+            _listOfDebriesAttracting.Remove(x);
+            Destroy(x);
+        });
+        GameManager.Instance.DebreePartsTotalCollected = GameManager.Instance.DebreePartsTotalCollected + valueToGrowBy;
     }
     private void OnTriggerEnter(Collider other)
     {
