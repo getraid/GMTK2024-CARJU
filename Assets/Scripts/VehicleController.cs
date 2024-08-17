@@ -22,8 +22,9 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private float maxSpeed = 100f;
     [SerializeField] private float deceleration = 10f;
     [SerializeField] private float steerStrength = 15f;
-    [SerializeField] private AnimationCurve turningCurve;
     [SerializeField] private float dragCoefficient = 1f;
+    [SerializeField] private AnimationCurve turningCurve;
+    [SerializeField] private AnimationCurve accelerationCurve;
 
     [Header("Visuals")]
     [SerializeField] private bool showGizmos = false;
@@ -63,7 +64,7 @@ public class VehicleController : MonoBehaviour
         GroundCheck();
         CalculateCarVelocity();
         Movement();
-        Visuals();
+        //Visuals();
     }
 
     private void GetPlayerInput()
@@ -143,10 +144,11 @@ public class VehicleController : MonoBehaviour
     {
         if (_isGrounded)
         {
-            Acceleration();
-            Deceleration();
-            Turn();
-            SidewaysDrag();
+            //Acceleration();
+            //Deceleration();
+            //SidewaysDrag();
+            TurnAndMove();
+            
         }
     }
 
@@ -163,26 +165,46 @@ public class VehicleController : MonoBehaviour
     /// <summary>
     /// Why you no turn properly?
     /// </summary>
-    private void Turn()
+    private void TurnAndMove()
     {
         //Vector3 torque = steerStrength * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio)) * Mathf.Sign(_velocityRatio) * _rigidbody.transform.up;
         //_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
 
         // Turn the Tires
         float steering_angle = maxSteeringAngle * _steerInput;
-        _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength);
+        _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength * Time.fixedDeltaTime);
 
+        // Force = Mass * Acceleration
+        // Acceleration = Chance in Velocity / Time
 
 
         // Apply Force at the Tire Positions based on their rotation
-
         for (int i = 0; i < tires.Length; i++)
         {
+            // Cancel if the tire is not grounded
+            if (_wheelsGrounded[i] == 0)
+                continue;
+
+            Transform tire = tires[i];
+
             if (i < 2) // Only apply for the front 2 tires
             {
-                tires[i].transform.Rotate(Vector3.right, tireRotationSpeed * _velocityRatio * Time.deltaTime, Space.Self);
+                // Spin the wheel
+                tire.transform.Rotate(Vector3.right, tireRotationSpeed * _velocityRatio * Time.deltaTime, Space.Self);
 
-                frontTireParents[i].transform.localEulerAngles = new Vector3(frontTireParents[i].transform.localEulerAngles.x, steering_angle, frontTireParents[i].transform.localEulerAngles.z);
+                // Rotate the tire visual
+                frontTireParents[i].transform.localEulerAngles = new Vector3(frontTireParents[i].transform.localEulerAngles.x, _currentSteeringAngle, frontTireParents[i].transform.localEulerAngles.z);
+
+                Vector3 forward = _moveInput * acceleration * accelerationCurve.Evaluate(_velocityRatio) * frontTireParents[i].forward;
+                _rigidbody.AddForceAtPosition(forward, tires[i].transform.position, ForceMode.Acceleration);
+            }
+            else // Only apply to the back 2 tires
+            {
+                // Spin the wheel
+                tires[i].transform.Rotate(Vector3.right, tireRotationSpeed * _moveInput * Time.deltaTime, Space.Self);
+
+                // Apply forward force at the position of the tire in its rotation
+                //_rigidbody.AddForceAtPosition(transform.forward * acceleration * _moveInput, tires[i].transform.position, ForceMode.Acceleration);
             }
         }
     }
@@ -190,37 +212,33 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private float tireGripFactor = 1f;
     [SerializeField] private float tireMass = 1f;
 
-    // Separate custom acceleration using unique tire position physics (x/z)
-    // Just a random sample I wrote up.
-    private void ApplyAcceleration()
+    private void SidewaysDrag()
     {
-        // Front Tires Turn
+        // Old Implementation
+        //float current_sideways_speed = _currentLocalVelocity.x;
+        //float drag_magnitude = -current_sideways_speed * dragCoefficient;
+        //Vector3 drag_force = transform.right * drag_magnitude;
 
-        // Acceleration = Change in Velocity / Time
-        // Front Grip vs Rear Grip
-
-        // Left/Right Friction
+        //_rigidbody.AddForceAtPosition(drag_force, _rigidbody.centerOfMass, ForceMode.Acceleration);
+        
+        // New Implementation
+        // Apply Force at the Tire Positions based on their rotation
         for (int i = 0; i < tires.Length; i++)
         {
-            Transform tire_transform = tires[i];
-            Vector3 steering_direction = tire_transform.right;
-            Vector3 tire_world_velocity = _rigidbody.GetPointVelocity(tire_transform.position);
+            // Cancel if the tire is not grounded
+            if (_wheelsGrounded[i] == 0)
+                continue;
+
+            Transform tire = tires[i];
+
+            // Apply forward force at the position of the tire in its rotation
+            Vector3 steering_direction = tire.forward;
+            Vector3 tire_world_velocity = _rigidbody.GetPointVelocity(tire.position);
             float steering_velocity = Vector3.Dot(steering_direction, tire_world_velocity);
             float desired_velocity_change = -steering_velocity * tireGripFactor;
             float desired_acceleration = desired_velocity_change / Time.deltaTime;
-            _rigidbody.AddForceAtPosition(steering_direction * tireMass * desired_acceleration, tire_transform.position, ForceMode.Acceleration);
+            _rigidbody.AddForceAtPosition(desired_acceleration * tireMass * steering_direction, tires[i].transform.position, ForceMode.Acceleration);
         }
-
-
-    }
-
-    private void SidewaysDrag()
-    {
-        float current_sideways_speed = _currentLocalVelocity.x;
-        float drag_magnitude = -current_sideways_speed * dragCoefficient;
-        Vector3 drag_force = transform.right * drag_magnitude;
-
-        _rigidbody.AddForceAtPosition(drag_force, _rigidbody.centerOfMass, ForceMode.Acceleration);
     }
 
     private void SetTirePosition(Transform tire, Vector3 position)
