@@ -13,12 +13,17 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float positionSmoothing = 3f;
     [SerializeField] private float rotationSmoothing = 2f;
 
+    Vector3 _velocity = Vector3.zero;
+
     private void LateUpdate()
     {
         if (target == null)
             return;
 
         // Set the Position - Based on the target's forward direction
+        //Vector3 target_position = target.TransformPoint(new Vector3(0f, heightOffset, -distanceOffset));
+        //transform.position = Vector3.SmoothDamp(target_position, transform.position, ref _velocity, positionSmoothing * Time.deltaTime);
+
         Vector3 target_camera_position = target.position + target.up * heightOffset - target.forward * distanceOffset;
         transform.position = Vector3.Lerp(transform.position, target_camera_position, positionSmoothing * Time.deltaTime);
 
