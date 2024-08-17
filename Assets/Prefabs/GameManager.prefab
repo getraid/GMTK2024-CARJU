@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1d5faf537494540a0147a5e91d6096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FuelPercentGUI: 1
+  SpeedometerPercentGUI: 1
+  LevelUpPercentGUI: 1
+  IsCloseToLevelUp: 0
 --- !u!114 &2664193335103816540
 MonoBehaviour:
   m_ObjectHideFlags: 0
