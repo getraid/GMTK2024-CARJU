@@ -1,9 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-   // Placeholder for now. Fill in as needed
-   // Good for having mutal events, or stuff
+    public static GameManager Instance { get; private set; }
+
+    public int CurrentPlayerLevel { get; set; } = 1;
+    public float FuelGUI { get; set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 }
