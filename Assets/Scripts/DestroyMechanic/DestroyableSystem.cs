@@ -1,3 +1,4 @@
+using Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.TextCore;
 using Random = UnityEngine.Random;
 
-public class DestroyableSystem : MonoBehaviour
+public class DestroyableSystem : MonoBehaviour, IDestroyable
 {
     public static Action<Debree> DebreeAttaching { get; set; }
 
@@ -17,7 +18,15 @@ public class DestroyableSystem : MonoBehaviour
 
     [SerializeField] int _levelOfTheCarNeededForDestroyment = 1;
     [SerializeField] GameObject _destroyParticles;
+    [SerializeField] DestructionType _desctructionType;
     [SerializeField] List<Debree> _fragments;
+
+    public event EventHandler DestructionEvent;
+
+    public enum DestructionType
+    {
+        Building, Prop, TrafficCar, CopCar
+    }
 
     private void Awake()
     {
@@ -71,6 +80,7 @@ public class DestroyableSystem : MonoBehaviour
             }
         }
         _destroyParticles.SetActive(true);
+        DestructionEvent?.Invoke(_desctructionType,EventArgs.Empty);
 
         StartCoroutine(TurnOffParticles());
 
