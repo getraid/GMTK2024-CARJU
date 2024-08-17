@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerDebrieAttraction : MonoBehaviour
 {
-    [SerializeField] float _magnetForceStrength = 10;
-    List<Rigidbody> _listOfDebriesAttracting = new List<Rigidbody>();
+    List<Debree> _listOfDebriesAttracting = new List<Debree>();
+    float _shrinkBy = 0.002f;
     private void Awake()
     {
         DestroyableSystem.DebreeAttaching += DebreeRegistration;
     }
-    void DebreeRegistration(Rigidbody rigidbody)
+    void DebreeRegistration(Debree debree)
     {
-        _listOfDebriesAttracting.Add(rigidbody);
+        _listOfDebriesAttracting.Add(debree);
     }
     private void OnDestroy()
     {
@@ -20,12 +20,40 @@ public class PlayerDebrieAttraction : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         for(int i=0;i<_listOfDebriesAttracting.Count;i++)
         {
-            Vector3 dir = transform.position - _listOfDebriesAttracting[i].position;
-            _listOfDebriesAttracting[i].AddForce(dir.normalized, ForceMode.VelocityChange);
+            Debree currDebree = _listOfDebriesAttracting[i];
+            Vector3 dir = transform.position - currDebree.transform.position;
+            currDebree.MoveTowards(dir.normalized);
+
+            Vector3 currScale = currDebree.transform.localScale;
+            currScale.x -= _shrinkBy;
+            currScale.y -= _shrinkBy;
+            currScale.z -= _shrinkBy;
+
+            if(currScale.magnitude<=_shrinkBy)
+            {
+                _listOfDebriesAttracting.Remove(currDebree);
+                Destroy(currDebree);
+            }
+            else
+                currDebree.transform.localScale = currScale;
+
+        }
+
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Debree"))
+        {
+            Debree debree = other.GetComponent<Debree>();
+            if(debree!=null&& !_listOfDebriesAttracting.Contains(debree) && debree.IsDettached)
+            {
+                _listOfDebriesAttracting.Add(debree);
+            }
         }
     }
 }

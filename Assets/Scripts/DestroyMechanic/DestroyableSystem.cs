@@ -8,17 +8,16 @@ using Random = UnityEngine.Random;
 
 public class DestroyableSystem : MonoBehaviour
 {
-    public static Action<Rigidbody> DebreeAttaching { get; set; }
+    public static Action<Debree> DebreeAttaching { get; set; }
 
      MeshRenderer _mainMeshRenderer;
      Collider _collider;
-    Rigidbody _rb;
     [SerializeField] float _probabilityOfDebreeAttach = 0.3f;
     [SerializeField] float _probabilityPartialDesctruction = 0.1f;
 
     [SerializeField] int _levelOfTheCarNeededForDestroyment = 1;
     [SerializeField] GameObject _destroyParticles;
-    [SerializeField] List<Rigidbody> _fragments;
+    [SerializeField] List<Debree> _fragments;
 
     private void Awake()
     {
@@ -52,8 +51,7 @@ public class DestroyableSystem : MonoBehaviour
             _fragments[i].gameObject.SetActive(true);
             if (Random.Range(0, 1.0f) <= _probabilityPartialDesctruction)
             {
-                _fragments[i].isKinematic=false;
-                _fragments[i].AddExplosionForce(50, transform.position, 50);
+                _fragments[i].AddExplosionForce( transform.position);
             }
 
         }
@@ -66,10 +64,9 @@ public class DestroyableSystem : MonoBehaviour
         for(int i=0;i<_fragments.Count;i++)
         {
             _fragments[i].gameObject.SetActive(true);
-            _fragments[i].isKinematic = false;
+            _fragments[i].AddExplosionForce(transform.position);
             if (Random.Range(0, 1.0f)<=_probabilityOfDebreeAttach)
             {
-                _fragments[i].AddExplosionForce(50, transform.position, 50);
                 DebreeAttaching?.Invoke(_fragments[i]);
             }
         }
