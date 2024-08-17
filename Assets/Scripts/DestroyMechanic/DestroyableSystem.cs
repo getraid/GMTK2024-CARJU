@@ -7,53 +7,54 @@ using UnityEngine;
 using UnityEngine.TextCore;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Collider))]
 public class DestroyableSystem : MonoBehaviour, IDestroyable
 {
     public static Action<Debree> DebreeAttaching { get; set; }
 
-     MeshRenderer _mainMeshRenderer;
-     Collider _collider;
-    [SerializeField] float _probabilityOfDebreeAttach = 0.3f;
-    [SerializeField] float _probabilityPartialDesctruction = 0.1f;
+    float _probabilityOfDebreeAttach = 0.3f;
+    float _probabilityPartialDesctruction = 0.1f;
 
+    [SerializeField] MeshRenderer _initialMeshRenderer;
+    [SerializeField] Collider _initialCollisionCollider;
     [SerializeField] int _levelOfTheCarNeededForDestroyment = 1;
     [SerializeField] GameObject _destroyParticles;
     [SerializeField] DestructionType _desctructionType;
+    [SerializeField] float _slowCarVelocityMultiplier = 0.9f;
     [SerializeField] List<Debree> _fragments;
 
+    int _howManyPartialDestructionUntilTheFullOne = 2;
+    int _numberOfPartialDestructions = 0;
     public event EventHandler DestructionEvent;
 
+    private void Awake()
+    {
+        _fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
+    }
     public enum DestructionType
     {
         Building, Prop, TrafficCar, CopCar
     }
 
-    private void Awake()
-    {
-        _mainMeshRenderer=GetComponent<MeshRenderer>();
-        _collider = GetComponent<Collider>();
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Player"))
+    private void OnTriggerEnter(Collider other)
+    {   
+        if (other.CompareTag("Player"))
         {
-
-            if (GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment)
+            if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions>=_howManyPartialDestructionUntilTheFullOne))
             {
                 DestroyTheObject();
-                Physics.IgnoreCollision(collision.collider, _collider);
             }
             else
             {
-               PartiallyDestroyTheObject();
+                PartiallyDestroyTheObject();
             }
         }
     }
-
+   
     void PartiallyDestroyTheObject()
     {
-        _mainMeshRenderer.enabled = false;
-        _collider.enabled = false;
+        _initialMeshRenderer.enabled = false;
+        _initialCollisionCollider.enabled = false;
 
         for (int i = 0; i < _fragments.Count; i++)
         {
@@ -64,11 +65,12 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             }
 
         }
+        _numberOfPartialDestructions++;
     }
     void DestroyTheObject()
     {
-        _mainMeshRenderer.enabled = false;
-        _collider.enabled = false;
+        _initialMeshRenderer.enabled = false;
+        _initialCollisionCollider.enabled = false;
 
         for(int i=0;i<_fragments.Count;i++)
         {
@@ -80,7 +82,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             }
         }
         _destroyParticles.SetActive(true);
-        DestructionEvent?.Invoke(_desctructionType,EventArgs.Empty);
+        DestructionEvent?.Invoke(this,EventArgs.Empty);
 
         StartCoroutine(TurnOffParticles());
 
@@ -90,5 +92,11 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             _destroyParticles.SetActive(false);
         }
     }
+    void OnDebreeDeleted(Debree debree)
+    {
+        _fragments.Remove(debree);
 
+        if (_fragments.Count == 0)
+            Destroy(gameObject);
+    }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4547762462375720685}
   m_Layer: 0
   m_Name: Fragment0
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 8367458907662103320}
   m_Layer: 0
   m_Name: Fragment2
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 4732345915302914263}
   m_Layer: 0
   m_Name: Fragment1
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 6567314821089702658}
   m_Layer: 0
   m_Name: Fragment0
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 6813128510226023861}
   m_Layer: 0
   m_Name: Fragment1
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 6852811939340380547}
   m_Layer: 0
   m_Name: Fragment1
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -910,7 +910,7 @@ GameObject:
   - component: {fileID: 6265679193549471774}
   m_Layer: 0
   m_Name: Fragment0
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1059,7 +1059,7 @@ GameObject:
   - component: {fileID: 31795504112047289}
   m_Layer: 0
   m_Name: Fragment2
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1253,7 +1253,7 @@ GameObject:
   - component: {fileID: 5764950461133287444}
   m_Layer: 0
   m_Name: Fragment1
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1402,7 +1402,7 @@ GameObject:
   - component: {fileID: 501190009702436526}
   m_Layer: 0
   m_Name: Fragment0
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1551,7 +1551,7 @@ GameObject:
   - component: {fileID: 3102023000973649705}
   m_Layer: 0
   m_Name: Fragment2
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1693,6 +1693,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8322531261187643623}
+  - component: {fileID: 2657311982114713577}
+  - component: {fileID: 6284413679320391544}
   m_Layer: 0
   m_Name: Building 2
   m_TagString: Untagged
@@ -1718,6 +1720,60 @@ Transform:
   - {fileID: 6256776115132285291}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2657311982114713577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078323559148846956}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 5, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6284413679320391544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078323559148846956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialMeshRenderer: {fileID: 7468859772138049867}
+  _initialCollisionCollider: {fileID: 5074203763276550420}
+  _levelOfTheCarNeededForDestroyment: 2
+  _destroyParticles: {fileID: 3657994856854135802}
+  _desctructionType: 0
+  _slowCarVelocityMultiplier: 0.9
+  _fragments:
+  - {fileID: 3520878422369754204}
+  - {fileID: 6813128510226023861}
+  - {fileID: 31795504112047289}
+  - {fileID: 501190009702436526}
+  - {fileID: 761192575677016362}
+  - {fileID: 8367458907662103320}
+  - {fileID: 4547762462375720685}
+  - {fileID: 4732345915302914263}
+  - {fileID: 3102023000973649705}
+  - {fileID: 6265679193549471774}
+  - {fileID: 6852811939340380547}
+  - {fileID: 6567314821089702658}
+  - {fileID: 5764950461133287444}
+  - {fileID: 4189480583299800961}
 --- !u!1 &7350097184680324716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,7 +1790,7 @@ GameObject:
   - component: {fileID: 761192575677016362}
   m_Layer: 0
   m_Name: Fragment1
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1883,7 +1939,7 @@ GameObject:
   - component: {fileID: 3520878422369754204}
   m_Layer: 0
   m_Name: Fragment0
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2032,7 +2088,7 @@ GameObject:
   - component: {fileID: 4189480583299800961}
   m_Layer: 0
   m_Name: Fragment2
-  m_TagString: Debree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2418,11 +2474,13 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5074203763276550420}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9279d9ca03edc7843a0029365f0ee0af,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1034979467608600473}
   m_SourcePrefab: {fileID: 100100000, guid: 9279d9ca03edc7843a0029365f0ee0af, type: 3}
+--- !u!23 &7468859772138049867 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 9279d9ca03edc7843a0029365f0ee0af,
+    type: 3}
+  m_PrefabInstance: {fileID: 8099492782367624655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8641726781065374244 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9279d9ca03edc7843a0029365f0ee0af,
@@ -2457,34 +2515,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4475816228108511202, guid: 9279d9ca03edc7843a0029365f0ee0af, type: 3}
---- !u!114 &1034979467608600473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8981941360295800990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _probabilityOfDebreeAttach: 0.3
-  _probabilityPartialDesctruction: 0.1
-  _levelOfTheCarNeededForDestroyment: 2
-  _destroyParticles: {fileID: 3657994856854135802}
-  _fragments:
-  - {fileID: 3520878422369754204}
-  - {fileID: 6813128510226023861}
-  - {fileID: 31795504112047289}
-  - {fileID: 501190009702436526}
-  - {fileID: 761192575677016362}
-  - {fileID: 8367458907662103320}
-  - {fileID: 4547762462375720685}
-  - {fileID: 4732345915302914263}
-  - {fileID: 3102023000973649705}
-  - {fileID: 6265679193549471774}
-  - {fileID: 6852811939340380547}
-  - {fileID: 6567314821089702658}
-  - {fileID: 5764950461133287444}
-  - {fileID: 4189480583299800961}

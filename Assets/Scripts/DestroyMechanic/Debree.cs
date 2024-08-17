@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Debree : MonoBehaviour
 {
     [SerializeField] Rigidbody _rB;
+    public Action<Debree> DebreeDeleteMessage { get; set; }
 
     private void Awake()
     {
@@ -29,6 +32,15 @@ public class Debree : MonoBehaviour
         {
             yield return new WaitForSeconds(3);
             IsDettached = true;
+
+            StartCoroutine(DestroyDebree(Random.Range(10, 30)));        //When player doesnt pick up the debrie, it gets destroyed in random interval
+        }
+
+        IEnumerator DestroyDebree(int waitUntilDeletion)
+        {
+            yield return new WaitForSeconds(waitUntilDeletion);
+
+            DebreeDeleteMessage?.Invoke(this);
         }
     }
 }

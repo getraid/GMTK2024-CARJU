@@ -13,6 +13,7 @@ public class PlayerDebrieAttraction : MonoBehaviour
     void DebreeRegistration(Debree debree)
     {
         _listOfDebriesAttracting.Add(debree);
+        debree.DebreeDeleteMessage += (Debree debree) => _listOfDebriesAttracting.Remove(debree);
     }
     private void OnDestroy()
     {
@@ -43,27 +44,21 @@ public class PlayerDebrieAttraction : MonoBehaviour
 
             if (currScale.magnitude <= _shrinkBy)
             {
-                toRemove.Add(currDebree);
+                currDebree.DebreeDeleteMessage?.Invoke(currDebree);
             }
             else
             {
                 currDebree.transform.localScale = currScale;
                 valueToGrowBy += 0.01f;
             }
-
         }
-        toRemove.ForEach(x=> 
-        {
-            _listOfDebriesAttracting.Remove(x);
-            Destroy(x);
-        });
+
         GameManager.Instance.DebreePartsTotalCollected = GameManager.Instance.DebreePartsTotalCollected + valueToGrowBy;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Debree"))
+        if(other.TryGetComponent<Debree>(out Debree debree))
         {
-            Debree debree = other.GetComponent<Debree>();
             if(debree!=null&& !_listOfDebriesAttracting.Contains(debree) && debree.IsDettached)
             {
                 _listOfDebriesAttracting.Add(debree);
