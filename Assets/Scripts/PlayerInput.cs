@@ -25,5 +25,6 @@ public class PlayerInput : MonoBehaviour
     {
         controlledVehicle.SetForwardInput(_inputAxis.y);
         controlledVehicle.SetTurnInput(_inputAxis.x);
+        controlledVehicle.SetIsBraking(Input.GetKey(KeyCode.Space));
     }
 }
