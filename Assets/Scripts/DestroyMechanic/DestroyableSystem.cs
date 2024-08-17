@@ -25,7 +25,8 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
-    public event EventHandler DestructionEvent;
+
+    public event IDestroyable.DestroyableDelegate DestructionEvent;
 
     private void Awake()
     {
@@ -82,7 +83,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             }
         }
         _destroyParticles.SetActive(true);
-        DestructionEvent?.Invoke(this,EventArgs.Empty);
+        DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
 
         StartCoroutine(TurnOffParticles());
 
