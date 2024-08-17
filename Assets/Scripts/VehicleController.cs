@@ -55,7 +55,7 @@ public class VehicleController : MonoBehaviour
 
     private void Update()
     {
-        GetPlayerInput();
+        //GetPlayerInput();
     }
 
     private void FixedUpdate()
@@ -144,39 +144,27 @@ public class VehicleController : MonoBehaviour
     {
         if (_isGrounded)
         {
-            //Acceleration();
-            //Deceleration();
-            //SidewaysDrag();
-            TurnAndMove();
+            Turn();
+            SidewaysDrag();
+            WheelAcceleration();
             
         }
     }
 
-    private void Acceleration()
+    private void Turn()
     {
-        _rigidbody.AddForceAtPosition(acceleration * _moveInput * transform.forward, accelerationPoint.position, ForceMode.Acceleration);
-    }
-
-    private void Deceleration()
-    {
-        _rigidbody.AddForceAtPosition(deceleration * _moveInput * -transform.forward, accelerationPoint.position, ForceMode.Acceleration);
+        // Turn the Tires
+        float steering_angle = maxSteeringAngle * _steerInput;
+        _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength * Time.fixedDeltaTime);
     }
 
     /// <summary>
     /// Why you no turn properly?
     /// </summary>
-    private void TurnAndMove()
+    private void WheelAcceleration()
     {
         //Vector3 torque = steerStrength * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio)) * Mathf.Sign(_velocityRatio) * _rigidbody.transform.up;
         //_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
-
-        // Turn the Tires
-        float steering_angle = maxSteeringAngle * _steerInput;
-        _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength * Time.fixedDeltaTime);
-
-        // Force = Mass * Acceleration
-        // Acceleration = Chance in Velocity / Time
-
 
         // Apply Force at the Tire Positions based on their rotation
         for (int i = 0; i < tires.Length; i++)
@@ -195,8 +183,13 @@ public class VehicleController : MonoBehaviour
                 // Rotate the tire visual
                 frontTireParents[i].transform.localEulerAngles = new Vector3(frontTireParents[i].transform.localEulerAngles.x, _currentSteeringAngle, frontTireParents[i].transform.localEulerAngles.z);
 
-                Vector3 forward = _moveInput * acceleration * accelerationCurve.Evaluate(_velocityRatio) * frontTireParents[i].forward;
+                Vector3 forward = _moveInput * acceleration * accelerationCurve.Evaluate(Mathf.Abs(_velocityRatio)) / 2f * transform.forward;
                 _rigidbody.AddForceAtPosition(forward, tires[i].transform.position, ForceMode.Acceleration);
+
+                if (showGizmos)
+                {
+                    Debug.DrawLine(tire.position, tire.position + forward, Color.cyan);
+                }
             }
             else // Only apply to the back 2 tires
             {
@@ -212,6 +205,7 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private float tireGripFactor = 1f;
     [SerializeField] private float tireMass = 1f;
 
+
     private void SidewaysDrag()
     {
         // Old Implementation
@@ -220,9 +214,22 @@ public class VehicleController : MonoBehaviour
         //Vector3 drag_force = transform.right * drag_magnitude;
 
         //_rigidbody.AddForceAtPosition(drag_force, _rigidbody.centerOfMass, ForceMode.Acceleration);
-        
+
         // New Implementation
-        // Apply Force at the Tire Positions based on their rotation
+
+        // Force = Mass * Acceleration
+        // Acceleration = Chance in Velocity / Time
+
+        // Convert _currentSteeringAngle to a Vector3
+        //Vector3 steering_direction = frontTireParents[0].transform.right;
+
+        //float steering_velocity = Vector3.Dot(steering_direction, _rigidbody.velocity);
+
+        //float desired_velocity_change = -steering_velocity * tireGripFactor;
+
+
+
+        //// Apply Force at the Tire Positions based on their rotation
         for (int i = 0; i < tires.Length; i++)
         {
             // Cancel if the tire is not grounded
@@ -232,12 +239,20 @@ public class VehicleController : MonoBehaviour
             Transform tire = tires[i];
 
             // Apply forward force at the position of the tire in its rotation
-            Vector3 steering_direction = tire.forward;
+            Vector3 steering_direction = tire.right;
             Vector3 tire_world_velocity = _rigidbody.GetPointVelocity(tire.position);
             float steering_velocity = Vector3.Dot(steering_direction, tire_world_velocity);
             float desired_velocity_change = -steering_velocity * tireGripFactor;
-            float desired_acceleration = desired_velocity_change / Time.deltaTime;
-            _rigidbody.AddForceAtPosition(desired_acceleration * tireMass * steering_direction, tires[i].transform.position, ForceMode.Acceleration);
+            float desired_acceleration = desired_velocity_change / Time.fixedDeltaTime;
+
+            Vector3 force_applied = desired_acceleration * tireMass * steering_direction;
+            _rigidbody.AddForceAtPosition(force_applied, tires[i].transform.position, ForceMode.Acceleration);
+
+            if (showGizmos)
+            {
+                Debug.DrawLine(steering_direction, steering_direction * 10f, Color.blue);
+                Debug.DrawLine(tire.position, tire.position + force_applied, Color.red);
+            }
         }
     }
 
@@ -268,5 +283,15 @@ public class VehicleController : MonoBehaviour
                 tires[i].transform.Rotate(Vector3.right, tireRotationSpeed * _moveInput * Time.deltaTime, Space.Self);
             }
         }
+    }
+
+    public void SetForwardInput(float input)
+    {
+        _moveInput = input;
+    }
+
+    public void SetTurnInput(float input)
+    {
+        _steerInput = input;
     }
 }
