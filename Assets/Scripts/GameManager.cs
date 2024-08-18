@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     
     [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
 
+    [SerializeField] MusicSfxManager _musicManager;
     float _DebreePartsTotalCollected = 0;
     public float DebreePartsTotalCollected 
     {
@@ -27,7 +28,10 @@ public class GameManager : MonoBehaviour
             _DebreePartsTotalCollected = value;
             LevelUpPercentGUI = _DebreePartsTotalCollected / (float)_levelDebreeTresholds[CurrentPlayerLevel - 1];
             if (IsCloseToLevelUp && !_isLevelingUp)
-                StartCoroutine(DoLevelUp());
+            {
+                _isLevelingUp = true;
+                _musicManager.RequestCarUpgrade();
+            }
         }
     }
     public bool IsCloseToLevelUp
@@ -43,10 +47,9 @@ public class GameManager : MonoBehaviour
     private PlayerStatusUI PlayerStatusUI;
     List<int> _levelDebreeTresholds = new List<int>() { 100, 200, 300, 400 };
     bool _isLevelingUp;
-    IEnumerator DoLevelUp()
+
+    void LeveledUp()
     {
-        _isLevelingUp = true;
-        yield return new WaitForSeconds(5);
         LevelUpPercentGUI = 0;
         _DebreePartsTotalCollected = 0;
         CurrentPlayerLevel++;
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+            _musicManager.StartMusic(1);
+            _musicManager.MusicUpgradeHappened += LeveledUp;
         }
             
         // Link / Init UI
