@@ -122,12 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &48135499 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1510012337356369945, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-    type: 3}
-  m_PrefabInstance: {fileID: 9122477110400004054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &127073204
 Mesh:
   m_ObjectHideFlags: 0
@@ -504,6 +498,11 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1246146887}
+    - target: {fileID: 2664193335103816540, guid: a6fa3b712a3744d1ab702b16b4682e2d,
+        type: 3}
+      propertyPath: _ultimatePlayer
+      value: 
+      objectReference: {fileID: 889054359}
     - target: {fileID: 5880413044966869881, guid: a6fa3b712a3744d1ab702b16b4682e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -835,7 +834,7 @@ MonoBehaviour:
   - {fileID: 893156354468781890, guid: 2e680f794d8e2de4d8b686ee2fb5fe47, type: 3}
   _edgesEnvironment:
   - {fileID: 386043748}
-  _player: {fileID: 48135499}
+  _ultimatePlayer: {fileID: 889054359}
   _sizeOfTheMapBlock: 220
 --- !u!4 &349269187
 Transform:
@@ -2086,6 +2085,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44545ccef7f901d4aa4f72c119b3759b, type: 3}
+--- !u!114 &889054359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3994417924972886227, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
+    type: 3}
+  m_PrefabInstance: {fileID: 9122477110400004054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a6f7d16e40b4d4ebdb5983106fa2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &894761977
 GameObject:
   m_ObjectHideFlags: 0
