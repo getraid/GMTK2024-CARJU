@@ -1753,12 +1753,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMeshRenderer: {fileID: 7468859772138049867}
   _initialCollisionCollider: {fileID: 5074203763276550420}
   _levelOfTheCarNeededForDestroyment: 2
   _destroyParticles: {fileID: 3657994856854135802}
   _desctructionType: 0
   _slowCarVelocityMultiplier: 0.9
+  _destructionForceMultiplier: 50
+  _initialMeshRenderers:
+  - {fileID: 7468859772138049867}
   _fragments:
   - {fileID: 3520878422369754204}
   - {fileID: 6813128510226023861}

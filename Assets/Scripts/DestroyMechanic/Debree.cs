@@ -22,10 +22,10 @@ public class Debree : MonoBehaviour
     {
         _rB.AddForce(direction.normalized, ForceMode.VelocityChange);
     }
-    public void AddExplosionForce(Vector3 origin)
+    public void AddExplosionForce(Vector3 origin,int destructionForceVal)
     {
         _rB.isKinematic = false;
-        _rB.AddExplosionForce(50, origin, 50);
+        _rB.AddExplosionForce(destructionForceVal, origin, 50);
 
         StartCoroutine(DetachDelay());
         IEnumerator DetachDelay()
