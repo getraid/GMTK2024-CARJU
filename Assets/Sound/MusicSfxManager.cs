@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MusicSfxManager : MonoBehaviour
 {
-
+    public Action MusicUpgradeHappened { get; set; }
     double nextEventTime = Double.PositiveInfinity;
 
     public AudioSource music_1_start;
@@ -61,7 +61,7 @@ public class MusicSfxManager : MonoBehaviour
         }
     }
 
-    void StartMusic(int startLevel = 1)
+    public void StartMusic(int startLevel = 1)
     {
         currentMusic = startLevel;
         nextEventTime = AudioSettings.dspTime + 0.2f; //.2 seconds for buffer
@@ -202,6 +202,7 @@ public class MusicSfxManager : MonoBehaviour
     }
 
     void TriggerUpgrade(){
+        MusicUpgradeHappened?.Invoke();
         Debug.Log("NOW UPGRADE TO LEVEL " + currentMusic.ToString());
     }
 

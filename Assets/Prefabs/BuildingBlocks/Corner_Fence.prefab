@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 826046622220132345}
   - component: {fileID: 6254886846326360479}
   - component: {fileID: 6299303520885697134}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 7818849188368077428}
   - component: {fileID: 8493156072221429645}
   - component: {fileID: 1100344351483413173}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 2702793766147786232}
   - component: {fileID: 8483452893848057294}
   - component: {fileID: 1811438950038445625}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 2670649240180808850}
   - component: {fileID: 1003282823973388449}
   - component: {fileID: 716224987094484788}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 8460636525948321587}
   - component: {fileID: 1041140711401444030}
   - component: {fileID: 6686050313845539419}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 6210947861234791544}
   - component: {fileID: 8173913844643889956}
   - component: {fileID: 5012145764905826361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 2461703435601252991}
   - component: {fileID: 5653366913369423870}
   - component: {fileID: 3441644764289699520}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1098,7 @@ GameObject:
   - component: {fileID: 6258970857404174056}
   - component: {fileID: 1338231355672599638}
   - component: {fileID: 5974313784353238080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1247,7 +1247,7 @@ GameObject:
   - component: {fileID: 4567591595139607183}
   - component: {fileID: 4820405322725909669}
   - component: {fileID: 6016487707644234755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 269699026506427467}
   - component: {fileID: 6656334016494164381}
   - component: {fileID: 2123910282104442806}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fragment5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
