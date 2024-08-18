@@ -5,8 +5,12 @@ using UnityEngine;
 public class VehicleController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform[] rayPoints;
-    [SerializeField] private Transform[] tires = new Transform[4];
+    [SerializeField] private Transform[] tireAnchors = new Transform[4];
+    [SerializeField] private Transform[] tireVisuals = new Transform[4];
+    [SerializeField] private TrailRenderer skidMarksVFX;
+    [SerializeField] private ParticleSystem tireSmokeVFX;
+    [SerializeField] private AudioSource engineSound;
+    [SerializeField] private AudioSource skidSound;
 
     [Header("Suspension")]
     [SerializeField] private float springStiffness = 30000f;
@@ -35,22 +39,35 @@ public class VehicleController : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private bool showGizmos = false;
     [SerializeField] private float tireRotationSpeed = 30f;
-   
+    [SerializeField] private float skidMarkWidth = 0.22f;
+    [SerializeField] private AnimationCurve particleSpeedThreshold;
+    [SerializeField] private AnimationCurve particleTurnThreshold;
 
+    [Header("Sound")]
+    [SerializeField] private Vector2 pitchRange = new Vector2(1f, 5f);
+
+
+    // Components
     private Rigidbody _rigidbody;
 
-    private int[] _wheelsGrounded = new int[4];
+    // States
+    private float[] _wheelGroundedDistance = new float[4];
     private bool _isGrounded = false;
 
+    // Inputs
     private float _forwardInput = 0;
     private float _reverseInput = 0;
     private float _steerInput = 0;
     private bool _isBraking = false;
 
+    // Calculations
     private Vector3 _currentLocalVelocity = Vector3.zero;
     private float _velocityRatio = 0f;
-
     private float _currentSteeringAngle = 0f;
+
+    // Containers
+    private List<TrailRenderer> _skidMarkContainer = new List<TrailRenderer>();
+    private List<ParticleSystem> _tireSmokeContainer = new List<ParticleSystem>();
 
     // Cache
     RaycastHit hit;
@@ -58,6 +75,25 @@ public class VehicleController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < tireVisuals.Length; i++)
+        {
+            // Skid Marks need to spawn with 90x rotation
+            _skidMarkContainer.Add(Instantiate(skidMarksVFX, tireVisuals[i].position, Quaternion.Euler(90f, 0f, 0f), transform));
+            _skidMarkContainer[i].startWidth = skidMarkWidth;
+
+            // Tire Smoke VFX
+            _tireSmokeContainer.Add(Instantiate(tireSmokeVFX, tireVisuals[i].position, Quaternion.identity, transform));
+        }
+    }
+
+    private void Update()
+    {
+        PlayVFX();
+        EngineSound();
     }
 
     private void FixedUpdate()
@@ -68,58 +104,11 @@ public class VehicleController : MonoBehaviour
         Movement();
     }
 
-    // This works.
-    private void Suspension()
-    {
-        float max_distance = restLength + springTravel;
-        for (int i = 0; i < rayPoints.Length; i++)
-        {
-            if (Physics.Raycast(rayPoints[i].position, -rayPoints[i].up, out hit, max_distance + wheelRadius))
-            {
-                _wheelsGrounded[i] = 1;
-
-                float current_spring_length = hit.distance - wheelRadius;
-                float spring_compression = (restLength - current_spring_length) / springTravel;
-
-                float spring_velocity = Vector3.Dot(_rigidbody.GetPointVelocity(rayPoints[i].position), rayPoints[i].up);
-                float damp_force = damperStiffness * spring_velocity;
-
-                float spring_force = springStiffness * spring_compression;
-
-                float net_force = spring_force - damp_force;
-
-                _rigidbody.AddForceAtPosition(net_force * rayPoints[i].up, rayPoints[i].position);
-
-                // Visuals
-                SetTirePosition(tires[i], hit.point + wheelRadius * rayPoints[i].up);
-
-                // Helper
-                if (showGizmos)
-                {
-                    Debug.DrawLine(rayPoints[i].position, hit.point, Color.red);
-                }
-            }
-            else
-            {
-                _wheelsGrounded[i] = 0;
-
-                // Visuals
-                SetTirePosition(tires[i], rayPoints[i].position - rayPoints[i].up * max_distance);
-
-                // Helper
-                if (showGizmos)
-                {
-                    Debug.DrawLine(rayPoints[i].position, rayPoints[i].position + (wheelRadius + max_distance) * -rayPoints[i].up, Color.green);
-                }
-            }
-        }
-    }
-
     private void GroundCheck()
     {
-        for (int i = 0; i < _wheelsGrounded.Length; i++)
+        for (int i = 0; i < _wheelGroundedDistance.Length; i++)
         {
-            if (_wheelsGrounded[i] == 1)
+            if (_wheelGroundedDistance[i] > 0f)
             {
                 _isGrounded = true;
                 return;
@@ -142,40 +131,87 @@ public class VehicleController : MonoBehaviour
             Turn();
             SidewaysDrag();
             WheelAcceleration();
-            
+        }
+    }
+
+    #region Physics Applications
+    private void Suspension()
+    {
+        float max_distance = restLength + springTravel;
+        for (int i = 0; i < tireAnchors.Length; i++)
+        {
+            if (Physics.Raycast(tireAnchors[i].position, -tireAnchors[i].up, out hit, max_distance + wheelRadius))
+            {
+                _wheelGroundedDistance[i] = hit.distance;
+
+                float current_spring_length = hit.distance - wheelRadius;
+                float spring_compression = (restLength - current_spring_length) / springTravel;
+
+                float spring_velocity = Vector3.Dot(_rigidbody.GetPointVelocity(tireAnchors[i].position), tireAnchors[i].up);
+                float damp_force = damperStiffness * spring_velocity;
+
+                float spring_force = springStiffness * spring_compression;
+
+                float net_force = spring_force - damp_force;
+
+                _rigidbody.AddForceAtPosition(net_force * tireAnchors[i].up, tireAnchors[i].position);
+
+                // Visuals
+                SetTirePosition(tireVisuals[i], hit.point + wheelRadius * tireAnchors[i].up);
+
+                // Helper
+                if (showGizmos)
+                {
+                    Debug.DrawLine(tireAnchors[i].position, hit.point, Color.red);
+                }
+            }
+            else
+            {
+                _wheelGroundedDistance[i] = 0f;
+
+                // Visuals
+                SetTirePosition(tireVisuals[i], tireAnchors[i].position - tireAnchors[i].up * max_distance);
+
+                // Helper
+                if (showGizmos)
+                {
+                    Debug.DrawLine(tireAnchors[i].position, tireAnchors[i].position + (wheelRadius + max_distance) * -tireAnchors[i].up, Color.green);
+                }
+            }
         }
     }
 
     private void Turn()
     {
-        //Vector3 torque = steerStrength * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio)) * Mathf.Sign(_velocityRatio) * _rigidbody.transform.up;
-        //_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
-
-        // Turn the Tires
         float steering_angle = maxSteeringAngle * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio));
         _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength * Time.fixedDeltaTime);
     }
 
-    /// <summary>
-    /// Why you no turn properly?
-    /// </summary>
     private void WheelAcceleration()
     {
         // Apply Force at the Tire Positions based on their rotation
-        for (int i = 0; i < tires.Length; i++)
+        for (int i = 0; i < tireVisuals.Length; i++)
         {
             // Cancel if the tire is not grounded
-            if (_wheelsGrounded[i] == 0)
+            if (_wheelGroundedDistance[i] <= 0f)
                 continue;
 
-            Transform tire = tires[i];
+            Transform tire = tireVisuals[i];
 
             if (i < 2) // Only apply for the front 2 tires
             {
                 // Setup Forces
-                Vector3 forward_force = _forwardInput * acceleration * accelerationCurve.Evaluate(Mathf.Abs(_velocityRatio)) / 2f * transform.forward;
+                Vector3 steering_forward = Quaternion.Euler(0f, _currentSteeringAngle, 0f) * tireAnchors[i].forward;
+                Vector3 forward_force = _forwardInput * acceleration * accelerationCurve.Evaluate(Mathf.Abs(_velocityRatio)) / 2f * steering_forward;
                 Vector3 backward_force = _reverseInput * reverse * accelerationCurve.Evaluate(Mathf.Abs(_velocityRatio)) / 2f * -transform.forward;
                 Vector3 brake_force = (_isBraking) ? -_currentLocalVelocity.z * brakeForce * Time.fixedDeltaTime * transform.forward : Vector3.zero;
+
+                // If no forward or backward input, apply full brake force
+                if (_isBraking && _forwardInput == 0f && _reverseInput == 0f)
+                {
+                    brake_force = -_currentLocalVelocity.z * brakeForce * transform.forward;
+                }
+                
 
                 // Turn the Tire
                 Vector3 current_rotation = tire.transform.localEulerAngles;
@@ -196,7 +232,9 @@ public class VehicleController : MonoBehaviour
 
                 if (showGizmos)
                 {
-                    Debug.DrawLine(tire.position, tire.position + forward_force, Color.cyan);
+                    Debug.DrawLine(tire.position, tire.position + forward_force, Color.green);
+                    Debug.DrawLine(tire.position, tire.position + backward_force, Color.yellow);
+                    Debug.DrawLine(tire.position, tire.position + brake_force, Color.red);
                 }
             }
             else // Only apply to the back 2 tires
@@ -207,18 +245,16 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-
-
     private void SidewaysDrag()
     {
         // Apply Force at the Tire Positions based on their rotation
-        for (int i = 0; i < tires.Length; i++)
+        for (int i = 0; i < tireVisuals.Length; i++)
         {
             // Cancel if the tire is not grounded
-            if (_wheelsGrounded[i] == 0)
+            if (_wheelGroundedDistance[i] <= 0f)
                 continue;
 
-            Transform tire = tires[i];
+            Transform tire = tireVisuals[i];
 
             // Apply forward force at the position of the tire in its rotation
             Vector3 steering_direction = tire.right;
@@ -234,7 +270,13 @@ public class VehicleController : MonoBehaviour
                 force_applied = -tire_world_velocity * tireGripFactor * gripCurve.Evaluate(Mathf.Abs(_velocityRatio));
             }
 
-            _rigidbody.AddForceAtPosition(force_applied, tires[i].transform.position, ForceMode.Acceleration);
+            // If no forward or backward input, double the grip
+            if (_isBraking && _forwardInput == 0f && _reverseInput == 0f)
+            {
+                force_applied *= 2f;
+            }
+
+            _rigidbody.AddForceAtPosition(force_applied, tireVisuals[i].transform.position, ForceMode.Acceleration);
 
             if (showGizmos)
             {
@@ -243,14 +285,72 @@ public class VehicleController : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Visuals
     private void SetTirePosition(Transform tire, Vector3 position)
     {
         tire.transform.position = position;
     }
 
-    // Collecting Input
+    private void PlayVFX()
+    {
+        bool play_skid_sound = false;
+        float speed_threshold = particleSpeedThreshold.Evaluate(_velocityRatio);
 
+        for (int i = 0; i < tireVisuals.Length; i++)
+        {
+            // Set the Position just above the ground
+            _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
+            _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
+
+            // Automatically mark as inactive.
+            _skidMarkContainer[i].emitting = false;
+
+            // Cancel if the tire is not grounded
+            if (_wheelGroundedDistance[i] <= 0f)
+                continue;
+
+            // We want to get a float based on the tire's facing direction vs the vehicle's velocity
+            Vector3 tire_forward = (i < 2) ? Quaternion.Euler(0f, _currentSteeringAngle, 0f) * tireAnchors[i].forward : tireAnchors[i].forward;
+            Vector3 vehicle_forward = transform.forward;
+            float offset_angle = Vector3.Angle(tire_forward, vehicle_forward);
+
+            float turn_threshold = particleTurnThreshold.Evaluate(offset_angle / maxSteeringAngle);
+            
+
+            bool is_skidding = false;
+            if (_isBraking && speed_threshold > 0.1f)
+            {
+                is_skidding = true;
+            }
+            else if (speed_threshold >= 1f && turn_threshold >= 1f)
+            {
+                is_skidding = true;
+            }
+
+            // Emit the VFX and Sound
+            if (is_skidding)
+            {
+                play_skid_sound = true;
+                _skidMarkContainer[i].emitting = true;
+                _tireSmokeContainer[i].Emit(Mathf.RoundToInt(turn_threshold + speed_threshold));
+                
+            }
+        }
+
+        if (play_skid_sound)
+        {
+            ToggleSkidSound(true, speed_threshold);
+        }
+        else
+        {
+            ToggleSkidSound(false, 0f);
+        }
+    }
+    #endregion
+
+    #region Input Methods
     public void SetForwardInput(float value)
     {
         _forwardInput = value;
@@ -270,4 +370,27 @@ public class VehicleController : MonoBehaviour
     {
        _isBraking = isBraking;
     }
+    #endregion
+
+    #region Audio
+    private void EngineSound()
+    {
+        if (engineSound == null)
+            return;
+
+        engineSound.pitch = Mathf.Lerp(pitchRange.x, pitchRange.y, Mathf.Abs(_velocityRatio));
+    }
+
+    private void ToggleSkidSound(bool isPlaying, float volume)
+    {
+        if (skidSound == null)
+            return;
+
+        
+        skidSound.mute = !isPlaying;
+        skidSound.volume = 0.1f * (1f + volume);
+    }
+
+    #endregion
+
 }

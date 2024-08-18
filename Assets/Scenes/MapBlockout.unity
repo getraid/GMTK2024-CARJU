@@ -255,21 +255,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.04
       objectReference: {fileID: 0}
@@ -424,7 +409,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -542,6 +527,8 @@ MonoBehaviour:
   cameraTilt: 15
   positionSmoothing: 10
   rotationSmoothing: 5
+  forwardLookAhead: 0.5
+  turnLookAhead: 2
 --- !u!1001 &7294583621502106491
 PrefabInstance:
   m_ObjectHideFlags: 0
