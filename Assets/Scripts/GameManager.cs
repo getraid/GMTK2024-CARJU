@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public Action PlayerLeveledUp { get; set; }
 
     [field:SerializeField] public float FuelPercentGUI { get; set; } = 1f; // 0-1f
     
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         _DebreePartsTotalCollected = 0;
         CurrentPlayerLevel++;
         _isLevelingUp = false;
+        PlayerLeveledUp?.Invoke();
     }
     
 

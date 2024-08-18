@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Debree : MonoBehaviour
 {
@@ -32,8 +31,7 @@ public class Debree : MonoBehaviour
         {
             yield return new WaitForSeconds(3);
             IsDettached = true;
-
-            StartCoroutine(DestroyDebree(Random.Range(10, 30)));        //When player doesnt pick up the debrie, it gets destroyed in random interval
+            StartCoroutine(DestroyDebree(UnityEngine.Random.Range(10, 30)));        //When player doesnt pick up the debrie, it gets destroyed in random interval
         }
 
         IEnumerator DestroyDebree(int waitUntilDeletion)

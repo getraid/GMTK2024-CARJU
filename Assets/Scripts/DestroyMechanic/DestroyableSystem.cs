@@ -83,10 +83,13 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 DebreeAttaching?.Invoke(_fragments[i]);
             }
         }
-        _destroyParticles?.SetActive(true);
+        if (_destroyParticles != null)
+        {
+            _destroyParticles.SetActive(true);
+            StartCoroutine(TurnOffParticles());
+        }
         DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
 
-        StartCoroutine(TurnOffParticles());
 
         IEnumerator TurnOffParticles()
         {
@@ -97,6 +100,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     void OnDebreeDeleted(Debree debree)
     {
         _fragments.Remove(debree);
+        Destroy(debree.gameObject);
 
         if (_fragments.Count == 0)
             Destroy(gameObject);
