@@ -72,20 +72,33 @@ public class CilvianSpawner : MonoBehaviour
     }
 
     // I know, much copying and pasting, but idc tbh.
-    private void FindDestroyablesAndSubscribe()
-    {
-        var destroyable = FetchDestroyablesFromCurrentObjects();
-        destroyable.DestructionEvent += InterfOnDestructionEvent;   
-    }
+    private void FindDestroyablesAndSubscribe() =>  FetchDestroyablesFromCurrentObjects(false);
+    
 
-    private IDestroyable FetchDestroyablesFromCurrentObjects()
+    private void FetchDestroyablesFromCurrentObjects(bool destroy)
     {
         foreach (var currentGo in currentGameObjects)
         {
             if (!currentGo.currentGameObject.IsDestroyed())
-              return FetchDestroyablesFromGameObject(currentGo.currentGameObject);
+            {
+                
+                if (destroy)
+                {
+                    var destroyable= FetchDestroyablesFromGameObject(currentGo.currentGameObject);
+                    destroyable.DestructionEvent -= InterfOnDestructionEvent;   
+                    
+                }
+                else
+                {
+                    var destroyable= FetchDestroyablesFromGameObject(currentGo.currentGameObject);
+                    destroyable.DestructionEvent += InterfOnDestructionEvent;   
+
+                }
+                    
+                    
+            }
+              
         }
-        return null;
     }
 
     private IDestroyable FetchDestroyablesFromGameObject(GameObject vars)
@@ -114,31 +127,20 @@ public class CilvianSpawner : MonoBehaviour
         
     }
     
-    private void OnDestroy()
-    {
-        var destroyable = FetchDestroyablesFromCurrentObjects();
-        destroyable.DestructionEvent -= InterfOnDestructionEvent;   
-    }
+    private void OnDestroy() =>  FetchDestroyablesFromCurrentObjects(true);
+    
+    
     
     private void InterfOnDestructionEvent(object sender, EventArgs e)
     {
-        Debug.Log("event rec");
+       
         GameObject gameObj = (currentGameObjects.FirstOrDefault(el => el.currentGameObject == (GameObject)sender)).currentGameObject;
         var tmp = Spawnables.FirstOrDefault(el => gameObj);
         
-        IEnumerator SpawnAfterwards()
-        {
          
-                yield return new WaitForEndOfFrame();
-               var go = Spawnables.FirstOrDefault(el => el.type.GetType() == gameObj.GetType());
-                
-                
-                SpawnOnRandomPoint(go.type, tmp);
-                
-            
-        }
+        var go = Spawnables.FirstOrDefault(el => el.type.GetType() == gameObj.GetType());
+        SpawnOnRandomPoint(go.type, tmp);
    
-        StartCoroutine(SpawnAfterwards());
 
         FindDestroyablesAndUnsubscribeSingle(gameObj);
     }
@@ -166,7 +168,7 @@ public class CilvianSpawner : MonoBehaviour
         var nextKnot = nextKnotRng.Next();
         var knotIndex = GetValidKnotIndex(nextKnot);
         var knot = Path.Next(knotIndex);
-        
+
        GameObject gameobj = Instantiate(typeOfGoToSpawn,CivilianContainer);
        float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
        gameobj.transform.localPosition= knot.Position + localTransformOffset + spawnable.spawn_offset;
@@ -181,7 +183,6 @@ public class CilvianSpawner : MonoBehaviour
        }
        StartCoroutine(ScaleBypass());
        currentGameObjects.Add(new GoWithIndex(gameobj, knotIndex,spawnable));
-       Debug.Log("spawned");
     }
 
     private Vector3 ConvertKnotPosToVec3(BezierKnot knot, float3 ObjectSpawnOffset )
