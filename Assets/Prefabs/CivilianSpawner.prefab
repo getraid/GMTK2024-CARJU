@@ -484,7 +484,6 @@ GameObject:
   - component: {fileID: 2387603738322771163}
   - component: {fileID: 2807579992686034461}
   - component: {fileID: 8997174868448825563}
-  - component: {fileID: 4443801049639511996}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -578,19 +577,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4443801049639511996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2741812485507595087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56705437253f41dca9d70f8155a4d3a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroy: 0
 --- !u!1 &3967709690975575232
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +589,6 @@ GameObject:
   - component: {fileID: 8833037779503844801}
   - component: {fileID: 2999074712862007321}
   - component: {fileID: 1347311247562414946}
-  - component: {fileID: 2832038849197735756}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -699,19 +684,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2832038849197735756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3967709690975575232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56705437253f41dca9d70f8155a4d3a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroy: 0
 --- !u!1 &5792448474618395640
 GameObject:
   m_ObjectHideFlags: 0
