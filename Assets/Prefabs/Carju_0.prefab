@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &586135969378956264
+--- !u!1 &2194325260544474686
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,126 +8,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4244104986352753749}
-  - component: {fileID: 3405270375644836718}
+  - component: {fileID: 5017605483839554913}
   m_Layer: 0
-  m_Name: DriftAudioSource
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4244104986352753749
+--- !u!4 &5017605483839554913
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586135969378956264}
+  m_GameObject: {fileID: 2194325260544474686}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.588, z: 0.584}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3110301702205024428}
+  - {fileID: 1643885534714711998}
   m_Father: {fileID: 1924980453592434868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &3405270375644836718
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586135969378956264}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f9c762ae3c6f66f469f8e70bcc749069, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 1000
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &2337692213495450263
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,12 +124,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3400419492397204239}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.588, z: 0.584}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.588, z: 0.5839999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1924980453592434868}
+  m_Father: {fileID: 5017605483839554913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1059726968412663026
 AudioSource:
@@ -347,12 +252,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8280340575511936476}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.588, z: 0.584}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.588, z: 0.5839999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1924980453592434868}
+  m_Father: {fileID: 5017605483839554913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8610885715371744094
 AudioSource:
@@ -541,7 +446,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
@@ -614,19 +519,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3110301702205024428}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1643885534714711998}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 8340378542601548117}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4244104986352753749}
+      addedObject: {fileID: 5017605483839554913}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
@@ -728,7 +625,7 @@ MonoBehaviour:
   tireSmokeVFX: {fileID: 7139332386411099946, guid: 13cd31228b37f7745985f0c03126aeea,
     type: 3}
   engineSound: {fileID: 8610885715371744094}
-  skidSound: {fileID: 3405270375644836718}
+  skidSound: {fileID: 1059726968412663026}
   springStiffness: 30000
   damperStiffness: 3000
   restLength: 0.1
@@ -778,7 +675,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  tireMass: 0.25
+  tireForce: 0.22
+  tireMass: 0.5
   tireGripFactor: 0.3
   gripCurve:
     serializedVersion: 2
@@ -871,6 +769,7 @@ MonoBehaviour:
   showGizmos: 1
   tireRotationSpeed: 2000
   skidMarkWidth: 0.22
+  testSkidMarkWidthOnPlay: 0
   particleSpeedThreshold:
     serializedVersion: 2
     m_Curve:

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] private _CameraSettings cameraSettings;
 
     [SerializeField] private float heightOffset = 2.5f;
     [SerializeField] private float distanceOffset = 4f;
@@ -18,6 +19,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float turnLookAhead = 2f;
 
     private Vector2 _inputAxis;
+
+    private void Start()
+    {
+        if (cameraSettings != null)
+            UpdateCameraSettings(cameraSettings);
+    }
 
     private void Update()
     {
@@ -47,5 +54,16 @@ public class CameraController : MonoBehaviour
         Quaternion target_rotation = Quaternion.LookRotation(look_direction + forward_offset_rotation + turn_input_offset_rotation);
         target_rotation *= Quaternion.Euler(cameraTilt, 0, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, target_rotation, rotationSmoothing * Time.deltaTime);
+    }
+
+    private void UpdateCameraSettings(_CameraSettings settings)
+    {
+        heightOffset = settings.heightOffset;
+        distanceOffset = settings.distanceOffset;
+        cameraTilt = settings.cameraTilt;
+        positionSmoothing = settings.positionSmoothing;
+        rotationSmoothing = settings.rotationSmoothing;
+        forwardLookAhead = settings.forwardLookAhead;
+        turnLookAhead = settings.turnLookAhead;
     }
 }

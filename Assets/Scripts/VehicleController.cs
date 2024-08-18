@@ -6,7 +6,7 @@ public class VehicleController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform[] tireAnchors = new Transform[4];
-    [SerializeField] private Transform[] tireVisuals = new Transform[4];
+    
     [SerializeField] private TrailRenderer skidMarksVFX;
     [SerializeField] private ParticleSystem tireSmokeVFX;
     [SerializeField] private AudioSource engineSound;
@@ -25,6 +25,7 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private AnimationCurve turningCurve;
 
     [Header("Tire Friction")]
+    [SerializeField] private float tireForce = 1f;
     [SerializeField] private float tireMass = 1f;
     [SerializeField] private float tireGripFactor = 1f;
     [SerializeField] private AnimationCurve gripCurve;
@@ -40,6 +41,7 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private bool showGizmos = false;
     [SerializeField] private float tireRotationSpeed = 30f;
     [SerializeField] private float skidMarkWidth = 0.22f;
+    [SerializeField] private bool testSkidMarkWidthOnPlay = false;
     [SerializeField] private AnimationCurve particleSpeedThreshold;
     [SerializeField] private AnimationCurve particleTurnThreshold;
 
@@ -65,6 +67,8 @@ public class VehicleController : MonoBehaviour
     private float _currentSteeringAngle = 0f;
 
     // Containers
+    private Transform _partsContainer;
+    private Transform[] _tireVisuals = new Transform[4];
     private List<TrailRenderer> _skidMarkContainer = new List<TrailRenderer>();
     private List<ParticleSystem> _tireSmokeContainer = new List<ParticleSystem>();
 
@@ -78,14 +82,20 @@ public class VehicleController : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < tireVisuals.Length; i++)
+        _partsContainer = new GameObject("Parts Container").transform;
+        _partsContainer.SetParent(transform);
+
+        for (int i = 0; i < _tireVisuals.Length; i++)
         {
+            // Set the tire visuals
+            _tireVisuals[i] = tireAnchors[i].GetChild(0);
+
             // Skid Marks need to spawn with 90x rotation
-            _skidMarkContainer.Add(Instantiate(skidMarksVFX, tireVisuals[i].position, Quaternion.Euler(90f, 0f, 0f), transform));
+            _skidMarkContainer.Add(Instantiate(skidMarksVFX, _tireVisuals[i].position, Quaternion.Euler(90f, 0f, 0f), _partsContainer));
             _skidMarkContainer[i].startWidth = skidMarkWidth;
 
             // Tire Smoke VFX
-            _tireSmokeContainer.Add(Instantiate(tireSmokeVFX, tireVisuals[i].position, Quaternion.identity, transform));
+            _tireSmokeContainer.Add(Instantiate(tireSmokeVFX, _tireVisuals[i].position, Quaternion.identity, _partsContainer));
         }
     }
 
@@ -131,6 +141,7 @@ public class VehicleController : MonoBehaviour
             Turn();
             SidewaysDrag();
             WheelAcceleration();
+            DownForce();
         }
     }
     public Rigidbody GetRigidBody()
@@ -167,7 +178,7 @@ public class VehicleController : MonoBehaviour
                 _rigidbody.AddForceAtPosition(net_force * tireAnchors[i].up, tireAnchors[i].position);
 
                 // Visuals
-                SetTirePosition(tireVisuals[i], hit.point + wheelRadius * tireAnchors[i].up);
+                SetTirePosition(_tireVisuals[i], hit.point + wheelRadius * tireAnchors[i].up);
 
                 // Helper
                 if (showGizmos)
@@ -180,7 +191,7 @@ public class VehicleController : MonoBehaviour
                 _wheelGroundedDistance[i] = 0f;
 
                 // Visuals
-                SetTirePosition(tireVisuals[i], tireAnchors[i].position - tireAnchors[i].up * max_distance);
+                SetTirePosition(_tireVisuals[i], tireAnchors[i].position - tireAnchors[i].up * max_distance);
 
                 // Helper
                 if (showGizmos)
@@ -200,13 +211,13 @@ public class VehicleController : MonoBehaviour
     private void WheelAcceleration()
     {
         // Apply Force at the Tire Positions based on their rotation
-        for (int i = 0; i < tireVisuals.Length; i++)
+        for (int i = 0; i < _tireVisuals.Length; i++)
         {
             // Cancel if the tire is not grounded
             if (_wheelGroundedDistance[i] <= 0f)
                 continue;
 
-            Transform tire = tireVisuals[i];
+            Transform tire = _tireVisuals[i];
 
             if (i < 2) // Only apply for the front 2 tires
             {
@@ -255,16 +266,31 @@ public class VehicleController : MonoBehaviour
         }
     }
 
+    // Apply Downward Force at the Tire Positions
+    private void DownForce()
+    {
+        for (int i = 0; i < tireAnchors.Length; i++)
+        {
+            Vector3 force = tireMass * Physics.gravity;
+            _rigidbody.AddForceAtPosition(force, tireAnchors[i].position, ForceMode.Acceleration);
+
+            if (showGizmos)
+            {
+                Debug.DrawLine(tireAnchors[i].position, tireAnchors[i].position + force, Color.blue);
+            }
+        }
+    }
+
     private void SidewaysDrag()
     {
         // Apply Force at the Tire Positions based on their rotation
-        for (int i = 0; i < tireVisuals.Length; i++)
+        for (int i = 0; i < _tireVisuals.Length; i++)
         {
             // Cancel if the tire is not grounded
             if (_wheelGroundedDistance[i] <= 0f)
                 continue;
 
-            Transform tire = tireVisuals[i];
+            Transform tire = _tireVisuals[i];
 
             // Apply forward force at the position of the tire in its rotation
             Vector3 steering_direction = tire.right;
@@ -273,7 +299,7 @@ public class VehicleController : MonoBehaviour
             float desired_velocity_change = -steering_velocity * tireGripFactor;
             float desired_acceleration = desired_velocity_change / Time.fixedDeltaTime;
 
-            Vector3 force_applied = desired_acceleration * tireMass * steering_direction;
+            Vector3 force_applied = desired_acceleration * tireForce * steering_direction;
             
             if (_isBraking)
             {
@@ -286,11 +312,10 @@ public class VehicleController : MonoBehaviour
                 force_applied *= 2f;
             }
 
-            _rigidbody.AddForceAtPosition(force_applied, tireVisuals[i].transform.position, ForceMode.Acceleration);
+            _rigidbody.AddForceAtPosition(force_applied, _tireVisuals[i].transform.position, ForceMode.Acceleration);
 
             if (showGizmos)
             {
-                Debug.DrawLine(steering_direction, steering_direction * 10f, Color.blue);
                 Debug.DrawLine(tire.position, tire.position + force_applied, Color.red);
             }
         }
@@ -308,8 +333,13 @@ public class VehicleController : MonoBehaviour
         bool play_skid_sound = false;
         float speed_threshold = particleSpeedThreshold.Evaluate(_velocityRatio);
 
-        for (int i = 0; i < tireVisuals.Length; i++)
+        for (int i = 0; i < _tireVisuals.Length; i++)
         {
+            if (testSkidMarkWidthOnPlay)
+            {
+                _skidMarkContainer[i].startWidth = skidMarkWidth;
+            }
+
             // Set the Position just above the ground
             _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
             _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
