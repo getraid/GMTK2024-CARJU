@@ -18,13 +18,19 @@ public class PlayerStatusUI : MonoBehaviour
     [SerializeField] private Image SpeedometerDynamic;
     [SerializeField] private Image TrashDynamic;
     [SerializeField] private Image LevelUp_incoming_glow;
-
+    [SerializeField] private List<Sprite> spriteAnim;
     #endregion
     
     const float speedometerMaxTransformToDeg = -88.8f;
 
     private const float trashMin = -81.6f;
     private const float trashMax = 8.4f;
+    private const float timeTrash= 0.5f;
+    private float timeTrashC= 0f;
+    private int trashImgIdx= 0;
+    private float prevlevelUpPercentage = 0f;
+    
+    
     private GameManager gameManager;
 
 
@@ -58,12 +64,28 @@ public class PlayerStatusUI : MonoBehaviour
         var distance = trashMin - trashMax;
         levelUpPercentage *= distance;
 
-        TrashDynamic.transform.localPosition = new Vector3(TrashDynamic.rectTransform.localPosition.x,
+        if (!Mathf.Approximately(levelUpPercentage, prevlevelUpPercentage))
+        {
+            if(timeTrashC > timeTrash )
+            {
+                // animate
+                trashImgIdx++;
+                trashImgIdx =  trashImgIdx % (spriteAnim.Count);
+                Debug.Log(trashImgIdx);
+                TrashDynamic.overrideSprite= spriteAnim[trashImgIdx];
+                timeTrashC = 0f;
+            }
+        
+        }
+
+        TrashDynamic.transform.localPosition = new Vector3(TrashDynamic.rectTransform.localPosition.x * math.sin(0.2f),
             levelUpPercentage, TrashDynamic.rectTransform.localPosition.z);
         
         // Close to levelup
         var closeToLevelUp = gameManager.IsCloseToLevelUp;
         LevelUp_incoming_glow.gameObject.SetActive(closeToLevelUp);
-
+        
+        prevlevelUpPercentage = levelUpPercentage;
+        timeTrashC += Time.deltaTime;
     }
 }
