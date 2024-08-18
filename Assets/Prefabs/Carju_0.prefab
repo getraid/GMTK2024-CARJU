@@ -292,11 +292,12 @@ MonoBehaviour:
   springTravel: 0.2
   wheelRadius: 0.2
   acceleration: 20
+  reverse: 10
   maxSpeed: 10
   deceleration: 10
-  steerStrength: 75
+  steerStrength: 135
   dragCoefficient: 0.75
-  tireGripFactor: 0.2
+  tireGripFactor: 0.3
   tireMass: 0.15
   turningCurve:
     serializedVersion: 2
@@ -394,6 +395,24 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.35384268
+      value: 0.7415476
+      inSlope: -0.2479154
+      outSlope: -0.2479154
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.77601075
+      value: 0.48005286
+      inSlope: -1.4844265
+      outSlope: -1.4844265
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.1959791
     - serializedVersion: 3
       time: 1
       value: 0.2
