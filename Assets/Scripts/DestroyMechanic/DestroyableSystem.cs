@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TextCore;
+using IDestroyable = Interfaces.IDestroyable;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider))]
@@ -26,7 +27,6 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
-
     public event IDestroyable.DestroyableDelegate DestructionEvent;
 
     private void Awake()

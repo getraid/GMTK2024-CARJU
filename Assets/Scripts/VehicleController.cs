@@ -156,8 +156,11 @@ public class VehicleController : MonoBehaviour
 
     private void Turn()
     {
+        //Vector3 torque = steerStrength * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio)) * Mathf.Sign(_velocityRatio) * _rigidbody.transform.up;
+        //_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
+
         // Turn the Tires
-        float steering_angle = maxSteeringAngle * _steerInput;
+        float steering_angle = maxSteeringAngle * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio));
         _currentSteeringAngle = Mathf.MoveTowards(_currentSteeringAngle, steering_angle, steerStrength * Time.fixedDeltaTime);
     }
 
@@ -166,9 +169,6 @@ public class VehicleController : MonoBehaviour
     /// </summary>
     private void WheelAcceleration()
     {
-        //Vector3 torque = steerStrength * _steerInput * turningCurve.Evaluate(Mathf.Abs(_velocityRatio)) * Mathf.Sign(_velocityRatio) * _rigidbody.transform.up;
-        //_rigidbody.AddRelativeTorque(torque, ForceMode.Acceleration);
-
         // Apply Force at the Tire Positions based on their rotation
         for (int i = 0; i < tires.Length; i++)
         {
