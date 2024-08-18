@@ -46,7 +46,6 @@ public class VehicleController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private Vector2 pitchRange = new Vector2(1f, 5f);
 
-
     // Components
     private Rigidbody _rigidbody;
 
@@ -103,6 +102,7 @@ public class VehicleController : MonoBehaviour
         CalculateCarVelocity();
         Movement();
     }
+    
 
     private void GroundCheck()
     {
@@ -132,6 +132,16 @@ public class VehicleController : MonoBehaviour
             SidewaysDrag();
             WheelAcceleration();
         }
+    }
+    public Rigidbody GetRigidBody()
+    {
+        return _rigidbody;
+    }
+    public void TransferRigidBodyParameters(Rigidbody rb)
+    {
+        _rigidbody.velocity = rb.velocity;
+        _rigidbody.angularVelocity = rb.angularVelocity;
+        _rigidbody.angularDrag = rb.angularDrag;
     }
 
     #region Physics Applications
