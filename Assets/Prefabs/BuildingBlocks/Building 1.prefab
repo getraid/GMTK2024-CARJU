@@ -2200,12 +2200,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMeshRenderer: {fileID: 7491422816374279002}
   _initialCollisionCollider: {fileID: 7486275578032340224}
   _levelOfTheCarNeededForDestroyment: 1
   _destroyParticles: {fileID: 6213340451210460211}
   _desctructionType: 0
   _slowCarVelocityMultiplier: 0.9
+  _destructionForceMultiplier: 50
+  _initialMeshRenderers:
+  - {fileID: 7491422816374279002}
   _fragments:
   - {fileID: 7970001518320365466}
   - {fileID: 3574757945675583853}
