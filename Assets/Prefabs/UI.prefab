@@ -779,6 +779,9 @@ MonoBehaviour:
   SpeedometerDynamic: {fileID: 8162253289374252477}
   TrashDynamic: {fileID: 5578185490604320296}
   LevelUp_incoming_glow: {fileID: 5587517043078324278}
+  spriteAnim:
+  - {fileID: 21300000, guid: 147c19ca9bdde4271a7bd3f88d27c629, type: 3}
+  - {fileID: 21300000, guid: 627dfcc2f3102476690a96d8199a4195, type: 3}
 --- !u!1 &7451511281781594065
 GameObject:
   m_ObjectHideFlags: 0
