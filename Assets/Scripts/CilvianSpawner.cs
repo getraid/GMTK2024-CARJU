@@ -82,7 +82,8 @@ public class CilvianSpawner : MonoBehaviour
     {
         foreach (var currentGo in currentGameObjects)
         {
-            return FetchDestroyablesFromGameObject(currentGo.currentGameObject);
+            if (!currentGo.currentGameObject.IsDestroyed())
+              return FetchDestroyablesFromGameObject(currentGo.currentGameObject);
         }
         return null;
     }
@@ -121,11 +122,24 @@ public class CilvianSpawner : MonoBehaviour
     
     private void InterfOnDestructionEvent(object sender, EventArgs e)
     {
+        Debug.Log("event rec");
         GameObject gameObj = (currentGameObjects.FirstOrDefault(el => el.currentGameObject == (GameObject)sender)).currentGameObject;
         var tmp = Spawnables.FirstOrDefault(el => gameObj);
         
-        SpawnOnRandomPoint(gameObj, tmp);
-        
+        IEnumerator SpawnAfterwards()
+        {
+         
+                yield return new WaitForEndOfFrame();
+               var go = Spawnables.FirstOrDefault(el => el.type.GetType() == gameObj.GetType());
+                
+                
+                SpawnOnRandomPoint(go.type, tmp);
+                
+            
+        }
+   
+        StartCoroutine(SpawnAfterwards());
+
         FindDestroyablesAndUnsubscribeSingle(gameObj);
     }
 
@@ -167,7 +181,7 @@ public class CilvianSpawner : MonoBehaviour
        }
        StartCoroutine(ScaleBypass());
        currentGameObjects.Add(new GoWithIndex(gameobj, knotIndex,spawnable));
-       
+       Debug.Log("spawned");
     }
 
     private Vector3 ConvertKnotPosToVec3(BezierKnot knot, float3 ObjectSpawnOffset )
@@ -189,10 +203,13 @@ public class CilvianSpawner : MonoBehaviour
     public void MoveGameObjectToNextPosition(GoWithIndex go)
     {
         var current = Path.Next(go.knot);
-        var next =  Path.Next(Path.NextIndex(go.knot)); 
-    
-        MoveToKnot(go.currentGameObject, go, current, next);
+        var next =  Path.Next(Path.NextIndex(go.knot));
 
+        if (!go.currentGameObject.IsDestroyed())
+        {
+            MoveToKnot(go.currentGameObject, go, current, next);
+        }
+        
     }
 
     private void MoveToKnot(GameObject lgameObject,GoWithIndex go, BezierKnot from, BezierKnot to)
@@ -220,7 +237,8 @@ public class CilvianSpawner : MonoBehaviour
         
         foreach (var item in currentGameObjects)
         {
-            MoveGameObjectToNextPosition(item);
+            if (!item.currentGameObject.IsDestroyed())
+               MoveGameObjectToNextPosition(item);
         }
 
      
