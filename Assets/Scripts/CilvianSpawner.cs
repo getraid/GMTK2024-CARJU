@@ -12,6 +12,7 @@ using UnityEngine.Splines;
 
 [Serializable]
 public struct Spawnable {
+    [Header("This can only be set on init")]
     public GameObject type;
     public int count;
     public float3 spawn_offset;
@@ -25,12 +26,16 @@ public class GoWithIndex {
     public GameObject currentGameObject;
     public int knot;
     public Spawnable typeInfo;
-
+    public float localTimer;
+    public float timeToCompleteTheLoop;
+    
     public GoWithIndex(GameObject gameobj, int knotI, Spawnable typeInfoS)
     {
         currentGameObject = gameobj;
         knot = knotI;
         typeInfo = typeInfoS;
+        localTimer = 0;
+        timeToCompleteTheLoop = 5f;
     }
 }
 
@@ -47,8 +52,7 @@ public class CilvianSpawner : MonoBehaviour
     
     private List<GoWithIndex> currentGameObjects;
 
-    public bool toggleUpdate = false;
-    float timer = 0;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -142,8 +146,6 @@ public class CilvianSpawner : MonoBehaviour
     public int GetValidKnotIndex(int index) => index % Path.Count;
     
     
-    
-    
     public void SpawnOnRandomPoint(GameObject typeOfGoToSpawn, Spawnable spawnable)
     {
         var nextKnotRng = new System.Random();
@@ -151,17 +153,11 @@ public class CilvianSpawner : MonoBehaviour
         var knotIndex = GetValidKnotIndex(nextKnot);
         var knot = Path.Next(knotIndex);
         
-        //next pos;
-       // var nextPos= knot.Position;
-       
        GameObject gameobj = Instantiate(typeOfGoToSpawn,CivilianContainer);
        float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
        gameobj.transform.localPosition= knot.Position + localTransformOffset + spawnable.spawn_offset;
-       // gameobj.transform.position.Scale(scale);
-
        gameobj.SetActive(true);
-       
-       IEnumerator tmp()
+       IEnumerator ScaleBypass()
        {
            if (spawnable.scale != Vector3.zero)
            {
@@ -169,9 +165,7 @@ public class CilvianSpawner : MonoBehaviour
                gameobj.transform.localScale = spawnable.scale;
            }
        }
-
-       StartCoroutine(tmp());
-      
+       StartCoroutine(ScaleBypass());
        currentGameObjects.Add(new GoWithIndex(gameobj, knotIndex,spawnable));
        
     }
@@ -201,39 +195,23 @@ public class CilvianSpawner : MonoBehaviour
 
     }
 
-    private void MoveToKnot(GameObject gameObject,GoWithIndex go, BezierKnot from, BezierKnot to)
+    private void MoveToKnot(GameObject lgameObject,GoWithIndex go, BezierKnot from, BezierKnot to)
     {
         Vector3 fromPos = ConvertKnotPosToVec3(from, go.typeInfo.spawn_offset);
         Vector3 toPos = ConvertKnotPosToVec3(to, go.typeInfo.spawn_offset);
         
-        IEnumerator LerpWithCompletionAction(Action onCompletion){
-            while(Vector3.Distance(fromPos, gameObject.transform.localPosition)<0.001f)       
-            {
-              
-                yield return null;
-            }
-
-            if (onCompletion != null)
-            {
-                onCompletion();
-            }
+        lgameObject.transform.localPosition = Vector3.Lerp(fromPos, toPos, go.localTimer / go.timeToCompleteTheLoop);
+            
+        if(go.localTimer / go.timeToCompleteTheLoop > 0.98f)
+        {
+       
+            go.knot = Path.NextIndex(go.knot);
+            go.localTimer = 0f;
         }
-        
-        StartCoroutine(LerpWithCompletionAction(() => { UpdateToNext(go);}));
-        
-        // gameObject.transform.localPosition = (toPos - ConvertTransformPosToVec3(gameObject.transform, go.typeInfo.spawn_offset)) / go.typeInfo.moveSpeed*Time.deltaTime;
-
-        gameObject.transform.localPosition = Vector3.Lerp(fromPos, toPos, timer / 5);
-
+        go.localTimer += Time.deltaTime;
     }
 
-    private void UpdateToNext(GoWithIndex go)
-    {
-        Debug.Log(go.knot);
-        if(toggleUpdate == true)
-            go.knot = Path.NextIndex(go.knot); // update next knot
-        Debug.Log(go.knot);
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -245,7 +223,7 @@ public class CilvianSpawner : MonoBehaviour
             MoveGameObjectToNextPosition(item);
         }
 
-        timer += Time.deltaTime;
+     
 
     }
 }
