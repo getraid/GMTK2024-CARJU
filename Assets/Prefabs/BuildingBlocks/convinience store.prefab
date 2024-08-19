@@ -158,6 +158,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: convinience store
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3f1180904f8c4c347b036eec7c370e81,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3021780583470790795, guid: 3f1180904f8c4c347b036eec7c370e81,
         type: 3}
       propertyPath: m_Layer

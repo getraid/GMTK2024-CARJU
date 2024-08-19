@@ -15,16 +15,16 @@ public class GameManager : MonoBehaviour
     
     [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
 
-    [SerializeField] MusicSfxManager _musicManager;
-
-    
+    [SerializeField] MusicSfxManager _musicManager;    
     
     float _DebreePartsTotalCollected = 0;
 
 
-    public float CurrentFuelAmount = 50;
-    public float MaxFuelAmount = 100;
-    
+    [field: SerializeField] public float CurrentFuelAmount { get; set; } = 50;
+    [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
+
+    [SerializeField] List<Material> _skyboxesMaterials;
+
     public float DebreePartsTotalCollected 
     {
         get 
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
         CurrentPlayerLevel++;
         _isLevelingUp = false;
         PlayerLeveledUp?.Invoke();
+        RenderSettings.skybox = _skyboxesMaterials[CurrentPlayerLevel - 1];
     }
     
 

@@ -2494,6 +2494,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FENCE
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ab43ea30a252874fb5c8453b3419c29,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1462048587327321567, guid: 4ab43ea30a252874fb5c8453b3419c29,
         type: 3}
       propertyPath: m_IsActive
