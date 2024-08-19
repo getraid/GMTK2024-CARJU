@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3568815190279064568}
   - component: {fileID: 3994417924972886227}
+  - component: {fileID: 5263075852466902874}
   m_Layer: 0
   m_Name: UltimatePlayerController
   m_TagString: Untagged
@@ -65,7 +66,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d18e600661aeee54cabc155cf56e90b1, type: 2}
   playerInputRef: {fileID: 3477519299011922827}
   cameraControllerRef: {fileID: 3492999671103970876}
-  <LatestController>k__BackingField: {fileID: 1940317271762889822}
+  policePerLevel: 1
+  <LatestController>k__BackingField: {fileID: 6301442977203990922}
+--- !u!114 &5263075852466902874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192964861299610421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4afe3bcbfa438624aa1a9b3e88ccbe44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  policePrefabs:
+  - {fileID: 1433326905926154462, guid: 7246bf75dfb02cb48a62ae7a000640e6, type: 3}
+  spawnRadius: 100
+  repositionDistance: 200
+  maxPoliceCars: 0
+  heightCheck: 100
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3630780779999500387
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +417,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1296252923919127054, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -601,6 +629,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3568815190279064568}
     m_Modifications:
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 94.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: tireMass
+      value: 2.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: tireForce
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: restLength
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: springTravel
+      value: 0.61
+      objectReference: {fileID: 0}
     - target: {fileID: 8114222351511820201, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -664,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 8921721641337474323, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

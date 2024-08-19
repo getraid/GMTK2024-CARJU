@@ -10,6 +10,15 @@ public class ActiveCarPrefabSelector : MonoBehaviour
     [SerializeField] private PlayerInput playerInputRef;
     [SerializeField] private CameraController cameraControllerRef;
 
+    [SerializeField] private int policePerLevel = 1;
+    
+    private PoliceSpawner _policeSpawner;
+
+    private void Awake()
+    {
+        _policeSpawner = GetComponent<PoliceSpawner>();
+    }
+
     [field:SerializeField] public VehicleController LatestController { get; set; }
     void Start()
     {
@@ -17,6 +26,7 @@ public class ActiveCarPrefabSelector : MonoBehaviour
 
         playerInputRef.SetControlledVehicle(LatestController);
         cameraControllerRef.SetTarget(LatestController.transform, _cameraSettings[GameManager.Instance.CurrentPlayerLevel - 1]);
+        _policeSpawner.SetTarget(LatestController.transform);
     }
     void OnPlayerLeveledUp()
     {
@@ -32,6 +42,11 @@ public class ActiveCarPrefabSelector : MonoBehaviour
 
         playerInputRef.SetControlledVehicle(LatestController);
         cameraControllerRef.SetTarget(LatestController.transform, _cameraSettings[GameManager.Instance.CurrentPlayerLevel - 1]);
+        _policeSpawner.SetTarget(LatestController.transform);
+
+        // 0, 2, 4, 6
+        int spawn_count = policePerLevel * (GameManager.Instance.CurrentPlayerLevel - 1);
+        _policeSpawner.SetMaxSpawnCount(spawn_count);
     }
 
     // Update is called once per frame
