@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 2337692213495450263}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.738, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -518,7 +518,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 8340378542601548117}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
@@ -615,11 +615,6 @@ MonoBehaviour:
   - {fileID: 5152877099281469882}
   - {fileID: 6895021550984221032}
   - {fileID: 1004838459692340786}
-  tireVisuals:
-  - {fileID: 3304431697843591904}
-  - {fileID: 7613731341184625362}
-  - {fileID: 8012497142326996761}
-  - {fileID: 2259270019348791169}
   skidMarksVFX: {fileID: 1884757664413582426, guid: e347141327af4734bac047e51ca98ee6,
     type: 3}
   tireSmokeVFX: {fileID: 7139332386411099946, guid: 13cd31228b37f7745985f0c03126aeea,
@@ -825,18 +820,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2106663159867633503}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2259270019348791169 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -9050312309536812834, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106663159867633503}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3304431697843591904 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -5699325238164195905, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106663159867633503}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5152877099281469882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6538923815574257381, guid: 1d17836a62b8403439a76a6d73f8d8a6,
@@ -852,18 +835,6 @@ Transform:
 --- !u!4 &6895021550984221032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4795303819248156215, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106663159867633503}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7613731341184625362 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -822691245638908531, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106663159867633503}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8012497142326996761 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8218582552340086854, guid: 1d17836a62b8403439a76a6d73f8d8a6,
     type: 3}
   m_PrefabInstance: {fileID: 2106663159867633503}
   m_PrefabAsset: {fileID: 0}
