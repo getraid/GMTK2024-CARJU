@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 617d9be015db68348a623b01ea51a8c5, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 81c93a5dac0e89643826ee15e186edfb, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -4484,6 +4484,7 @@ MonoBehaviour:
   - {fileID: 3599180149268698741}
   _ultimatePlayer: {fileID: 277639546}
   _sizeOfTheMapBlock: 220
+  _howManyToPrepool: 100
 --- !u!4 &1309414499
 Transform:
   m_ObjectHideFlags: 0
