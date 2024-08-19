@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,6 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
     [SerializeField] int _howManyToPrepool = 100;
-    [SerializeField] GameObject _poolParent;
 
     Dictionary<GameObject,GameObject> _placedEnvironments = new Dictionary<GameObject, GameObject>();
     List<GameObject> _objectPool=new List<GameObject>();
@@ -22,6 +22,9 @@ public class EnvironmentManager : MonoBehaviour
     float _minimumEdgeDistance = 220;
     float _maximumDespawnEdgeDistance = 520;
     float _mapCheckingDelaySeconds = 0.2f;
+
+    Queue<Tuple<GameObject, bool>> _activationCommands = new Queue<Tuple<GameObject, bool>>();
+
     private void Awake()
     {
         foreach (var item in _edgesEnvironment)
@@ -31,9 +34,13 @@ public class EnvironmentManager : MonoBehaviour
 
         for(int i=0;i<_howManyToPrepool;i++)
         {
-            GameObject poolObj = Instantiate(_environmentPiece, _poolParent.transform);
+            GameObject poolObj = Instantiate(_environmentPiece, transform);
             _objectPool.Add(poolObj);
         }
+    }
+    private void Start()
+    {
+        _objectPool.ForEach(x => x.SetActive(false));
     }
     IEnumerator UpdateLoop()
     {
@@ -57,21 +64,28 @@ public class EnvironmentManager : MonoBehaviour
                         {
                             _placedEnvironments.Add(leftInstance, _edgesEnvironment[i]);
                             edgesToAdd.Add(leftInstance);
+                            _activationCommands.Enqueue(new(leftInstance,true));
                         }
                         if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), out GameObject rightInstance))
                         {
                             _placedEnvironments.Add(rightInstance, _edgesEnvironment[i]);
                             edgesToAdd.Add(rightInstance);
+                            _activationCommands.Enqueue(new(rightInstance, true));
+
                         }
                         if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), out GameObject forwardInstance))
                         {
                             _placedEnvironments.Add(forwardInstance, _edgesEnvironment[i]);
                             edgesToAdd.Add(forwardInstance);
+                            _activationCommands.Enqueue(new(forwardInstance, true));
+
                         }
                         if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), out GameObject backInstance))
                         {
                             _placedEnvironments.Add(backInstance, _edgesEnvironment[i]);
                             edgesToAdd.Add(backInstance);
+                            _activationCommands.Enqueue(new(backInstance, true));
+
                         }
 
                         edgesToRemove.Add(_edgesEnvironment[i]);
@@ -101,12 +115,17 @@ public class EnvironmentManager : MonoBehaviour
             edgesToAdd.ForEach(x => _edgesEnvironment.Add(x));
             objectsToDestroy.ForEach(x =>
             {
-                x.transform.parent = _poolParent.transform;
                 _placedEnvironments.Remove(x);
 
-                x.SetActive(false);
+                _activationCommands.Enqueue(new(x, false));
             });
         }
+    }
+  
+    private void FixedUpdate()
+    {
+        if(_activationCommands.TryDequeue(out Tuple<GameObject,bool> activate))
+            activate.Item1.SetActive(activate.Item2);
     }
     bool CheckDirectionForInstantiation(Vector3  position, out GameObject instance)
     {
@@ -117,7 +136,6 @@ public class EnvironmentManager : MonoBehaviour
 
             instance = _objectPool[GetNextPoolIndex()];
             instance.transform.SetPositionAndRotation(position, Quaternion.Euler(pieceRotatedBy));
-            instance.transform.parent = transform;
             instance.SetActive(true);
 
             //instance = Instantiate(_environmentPiece, position, Quaternion.Euler(pieceRotatedBy), transform);

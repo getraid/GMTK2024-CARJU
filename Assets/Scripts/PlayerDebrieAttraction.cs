@@ -5,15 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class PlayerDebrieAttraction : MonoBehaviour
 {
-    List<Debree> _listOfDebriesAttracting = new List<Debree>();
+    LinkedList<Debree> _listOfDebriesAttracting = new LinkedList<Debree>();
     float _shrinkBy = 0.002f;
+    float _maxDebreeAttraction = 50;
     private void Awake()
     {
         DestroyableSystem.DebreeAttaching += DebreeRegistration;
     }
     void DebreeRegistration(Debree debree)
     {
-        _listOfDebriesAttracting.Add(debree);
+        _listOfDebriesAttracting.AddLast(debree);
+        LimitDebreeSize();
         debree.DebreeDeleteMessage += (Debree debree) => _listOfDebriesAttracting.Remove(debree);
     }
     private void OnDestroy()
@@ -26,30 +28,31 @@ public class PlayerDebrieAttraction : MonoBehaviour
     {
         List<Debree> toRemove = new List<Debree>();
         float valueToGrowBy = 0;
-        for(int i=0;i<_listOfDebriesAttracting.Count;i++)
+
+        for (LinkedListNode<Debree> currDebree = _listOfDebriesAttracting.First; currDebree != null; currDebree = currDebree.Next)
         {
-            Debree currDebree = _listOfDebriesAttracting[i];
-            if(currDebree==null)
+
+            if (currDebree.Value==null)
             {
-                toRemove.Add(currDebree);
+                toRemove.Add(currDebree.Value);
                 continue;
             }
 
-            Vector3 dir = transform.position - currDebree.transform.position;
-            currDebree.MoveTowards(dir.normalized);
+            Vector3 dir = transform.position - currDebree.Value.transform.position;
+            currDebree.Value.MoveTowards(dir.normalized);
 
-            Vector3 currScale = currDebree.transform.localScale;
+            Vector3 currScale = currDebree.Value.transform.localScale;
             currScale.x -= _shrinkBy;
             currScale.y -= _shrinkBy;
             currScale.z -= _shrinkBy;
 
             if (currScale.magnitude <= _shrinkBy)
             {
-                currDebree.DebreeDeleteMessage?.Invoke(currDebree);
+                currDebree.Value.DebreeDeleteMessage?.Invoke(currDebree.Value);
             }
             else
             {
-                currDebree.transform.localScale = currScale;
+                currDebree.Value.transform.localScale = currScale;
                 valueToGrowBy += 0.01f;
             }
         }
@@ -62,8 +65,18 @@ public class PlayerDebrieAttraction : MonoBehaviour
         {
             if(debree!=null&& !_listOfDebriesAttracting.Contains(debree) && debree.IsDettached)
             {
-                _listOfDebriesAttracting.Add(debree);
+                _listOfDebriesAttracting.AddLast(debree);
+                LimitDebreeSize();
             }
+        }
+    }
+    void LimitDebreeSize()
+    {
+        if (_listOfDebriesAttracting.Count > _maxDebreeAttraction)
+        {
+            Debree d = _listOfDebriesAttracting.First.Value;
+            d.DebreeDeleteMessage?.Invoke(d);
+
         }
     }
 }

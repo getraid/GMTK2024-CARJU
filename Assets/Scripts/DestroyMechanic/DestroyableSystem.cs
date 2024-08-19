@@ -18,7 +18,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     [SerializeField] Collider _initialCollisionCollider;
     [SerializeField] int _levelOfTheCarNeededForDestroyment = 1;
-    [SerializeField] GameObject _destroyParticles;
+    [SerializeField] ParticleSystem _destroyParticles;
     [SerializeField] DestructionType _desctructionType;
     [SerializeField] float _slowCarVelocityMultiplier = 0.9f;
     [SerializeField] int _destructionForceMultiplier = 50;
@@ -30,9 +30,11 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     int _ignoreCollisionsByLevelDifference = 2;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
 
+    List<Collider> _playerColliderTouching = new List<Collider>();
+    bool _isDestroying = false;
     private void Awake()
     {
-        _fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
+        //_fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
     }
     public enum DestructionType
     {
@@ -41,25 +43,35 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     private void OnTriggerEnter(Collider other)
     {   
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && _playerColliderTouching.Count==0)
         {
+            _playerColliderTouching.Add(other);
+
             if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions>=_howManyPartialDestructionUntilTheFullOne))
             {
                 if ((GameManager.Instance.CurrentPlayerLevel - _levelOfTheCarNeededForDestroyment) <= _ignoreCollisionsByLevelDifference)
-                    DestroyTheObject();
+                {
+                    if(!_isDestroying)
+                        DestroyTheObject();
+                }
                 else
                 {
                     _initialCollisionCollider.enabled = false;
                     Destroy(gameObject);
                 }
             }
-            else
+            else if ((_levelOfTheCarNeededForDestroyment- GameManager.Instance.CurrentPlayerLevel) == 1)        //Make partial destruction on object only one level above (so tiny car doesnt destroy scyscraper)
+
             {
                 PartiallyDestroyTheObject();
             }
         }
     }
-   
+    private void OnTriggerExit(Collider other)
+    {
+        _playerColliderTouching.Remove(other);
+    }
+
     void PartiallyDestroyTheObject()
     {
         _initialMeshRenderers.ForEach(x=>x.enabled = false);
@@ -78,6 +90,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     }
     void DestroyTheObject()
     {
+        _isDestroying = true;
         _initialMeshRenderers.ForEach(x => x.enabled = false);
         _initialCollisionCollider.enabled = false;
 
@@ -92,7 +105,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
         }
         if (_destroyParticles != null)
         {
-            _destroyParticles.SetActive(true);
+            _destroyParticles.gameObject?.SetActive(true);
             StartCoroutine(TurnOffParticles());
         }
         DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
@@ -100,16 +113,19 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
         IEnumerator TurnOffParticles()
         {
-            yield return new WaitForSeconds(1);
-            _destroyParticles?.SetActive(false);
+            yield return new WaitForSeconds(_destroyParticles.main.duration);
+            _destroyParticles.gameObject?.SetActive(false);
         }
     }
     void OnDebreeDeleted(Debree debree)
     {
-        _fragments.Remove(debree);
-        Destroy(debree.gameObject);
+        if (debree != null)
+        {
+            _fragments.Remove(debree);
+            Destroy(debree.gameObject);
 
-        if (_fragments.Count == 0)
-            Destroy(gameObject);
+            if (_fragments.Count == 0)
+                Destroy(gameObject);
+        }
     }
 }
