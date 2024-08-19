@@ -67,7 +67,7 @@ MonoBehaviour:
   playerInputRef: {fileID: 3477519299011922827}
   cameraControllerRef: {fileID: 3492999671103970876}
   policePerLevel: 1
-  <LatestController>k__BackingField: {fileID: 6301442977203990922}
+  <LatestController>k__BackingField: {fileID: 1940317271762889822}
 --- !u!114 &5263075852466902874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ PrefabInstance:
     - target: {fileID: 1296252923919127054, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1924980453592434868, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
         type: 3}
@@ -717,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 8921721641337474323, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
