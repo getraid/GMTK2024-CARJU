@@ -433,6 +433,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5610832936595009893, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00853
+      objectReference: {fileID: 0}
+    - target: {fileID: -1331929763569451585, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.50664
+      objectReference: {fileID: 0}
     - target: {fileID: -206446254853795533, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -453,6 +463,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1798892560203251630, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00338
+      objectReference: {fileID: 0}
     - target: {fileID: 4795303819248156215, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -492,6 +507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5733911823876726600, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6538923815574257381, guid: 1d17836a62b8403439a76a6d73f8d8a6,
         type: 3}
@@ -512,6 +532,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209737513751929851, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.50664
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -538,12 +563,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1103826212300206367}
   m_SourcePrefab: {fileID: 100100000, guid: 1d17836a62b8403439a76a6d73f8d8a6, type: 3}
---- !u!4 &1004838459692340786 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8012543952704816787, guid: 1d17836a62b8403439a76a6d73f8d8a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106663159867633503}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1296252923919127054 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d17836a62b8403439a76a6d73f8d8a6,
@@ -613,8 +632,8 @@ MonoBehaviour:
   tireAnchors:
   - {fileID: 6441533404423088497}
   - {fileID: 5152877099281469882}
-  - {fileID: 6895021550984221032}
-  - {fileID: 1004838459692340786}
+  - {fileID: 7841477506198539428}
+  - {fileID: 8122336574578086624}
   skidMarksVFX: {fileID: 1884757664413582426, guid: e347141327af4734bac047e51ca98ee6,
     type: 3}
   tireSmokeVFX: {fileID: 7139332386411099946, guid: 13cd31228b37f7745985f0c03126aeea,
@@ -844,9 +863,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2106663159867633503}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6895021550984221032 stripped
+--- !u!4 &7841477506198539428 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4795303819248156215, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+  m_CorrespondingSourceObject: {fileID: 8209737513751929851, guid: 1d17836a62b8403439a76a6d73f8d8a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106663159867633503}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8122336574578086624 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1331929763569451585, guid: 1d17836a62b8403439a76a6d73f8d8a6,
     type: 3}
   m_PrefabInstance: {fileID: 2106663159867633503}
   m_PrefabAsset: {fileID: 0}

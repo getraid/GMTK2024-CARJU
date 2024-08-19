@@ -918,6 +918,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -601018869012299972, guid: 82d514d7f277e774091b8119a1f05b9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00788
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 82d514d7f277e774091b8119a1f05b9c,
         type: 3}
       propertyPath: m_Name
@@ -1239,7 +1244,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   showGizmos: 1
   tireRotationSpeed: 1000
-  skidMarkWidth: 0.75
+  skidMarkWidth: 3
   testSkidMarkWidthOnPlay: 1
   particleSpeedThreshold:
     serializedVersion: 2

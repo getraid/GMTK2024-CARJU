@@ -335,7 +335,7 @@ public class VehicleController : MonoBehaviour
     private void PlayVFX()
     {
         bool play_skid_sound = false;
-        float speed_threshold = particleSpeedThreshold.Evaluate(_velocityRatio);
+        float speed_threshold = particleSpeedThreshold.Evaluate(Mathf.Abs(_velocityRatio));
 
         for (int i = 0; i < _tireVisuals.Length; i++)
         {

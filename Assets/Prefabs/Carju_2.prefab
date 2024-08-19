@@ -1251,7 +1251,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   showGizmos: 1
   tireRotationSpeed: 1000
-  skidMarkWidth: 0.33
+  skidMarkWidth: 1.25
   testSkidMarkWidthOnPlay: 1
   particleSpeedThreshold:
     serializedVersion: 2
