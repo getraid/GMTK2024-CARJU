@@ -2403,11 +2403,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2664193335103816540, guid: a6fa3b712a3744d1ab702b16b4682e2d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2494693753099504007, guid: a6fa3b712a3744d1ab702b16b4682e2d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1747123251}
   m_SourcePrefab: {fileID: 100100000, guid: a6fa3b712a3744d1ab702b16b4682e2d, type: 3}
 --- !u!1001 &173493526
 PrefabInstance:
@@ -26474,6 +26477,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1855233733}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1747123250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2494693753099504007, guid: a6fa3b712a3744d1ab702b16b4682e2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 173269867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1747123251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747123250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838eaf84d96c14bdfaf5c0f90b8e6657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ultimatePlayer: {fileID: 1821487242}
+  WhenToResetUpwards: 1200
+  WhenToResetDownwards: -300
+  startingHeightOffset: 13
 --- !u!1001 &1748901309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28888,25 +28913,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 94052783886917681, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 306745579228270415, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 1192964861299610421, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
         type: 3}
       propertyPath: m_Name
       value: UltimatePlayerController
-      objectReference: {fileID: 0}
-    - target: {fileID: 1940317271762889822, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: roughHeight
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3568815190279064568, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
         type: 3}
@@ -28958,20 +28968,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3750724890591476024, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5094502969666345445, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5173778193420659074, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
         type: 3}
-      propertyPath: m_Layer
-      value: 9
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
