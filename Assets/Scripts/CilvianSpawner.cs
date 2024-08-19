@@ -42,7 +42,7 @@ public class GoWithIndex {
 
 public class CilvianSpawner : MonoBehaviour
 {
-    private Transform CivilianContainer;
+    public Transform CivilianContainer;
     [Header("Create a spline as a child and drag it in here!")]
     public SplineContainer SplineContainer;
     private Spline Path;
@@ -58,7 +58,7 @@ public class CilvianSpawner : MonoBehaviour
     void Start()
     {
         // can be set freely if you want to
-        CivilianContainer = this.transform;
+        // CivilianContainer = this.transform;
         
         // only use first spline for now
         Path = SplineContainer[0];
@@ -85,13 +85,15 @@ public class CilvianSpawner : MonoBehaviour
                 if (destroy)
                 {
                     var destroyable= FetchDestroyablesFromGameObject(currentGo.currentGameObject);
-                    destroyable.DestructionEvent -= InterfOnDestructionEvent;   
+                    if(destroyable != null)
+                        destroyable.DestructionEvent -= InterfOnDestructionEvent;   
                     
                 }
                 else
                 {
                     var destroyable= FetchDestroyablesFromGameObject(currentGo.currentGameObject);
-                    destroyable.DestructionEvent += InterfOnDestructionEvent;   
+                    if(destroyable != null)
+                        destroyable.DestructionEvent += InterfOnDestructionEvent;   
 
                 }
                     
@@ -171,6 +173,7 @@ public class CilvianSpawner : MonoBehaviour
 
        GameObject gameobj = Instantiate(typeOfGoToSpawn,CivilianContainer);
        float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
+       
        gameobj.transform.localPosition= knot.Position + localTransformOffset + spawnable.spawn_offset;
        gameobj.SetActive(true);
        IEnumerator ScaleBypass()
@@ -179,6 +182,8 @@ public class CilvianSpawner : MonoBehaviour
            {
                yield return new WaitForEndOfFrame();
                gameobj.transform.localScale = spawnable.scale;
+               gameobj.transform.LookAt(knot.Position + localTransformOffset+knot.Position + localTransformOffset);
+               
            }
        }
        StartCoroutine(ScaleBypass());
@@ -219,7 +224,9 @@ public class CilvianSpawner : MonoBehaviour
         Vector3 toPos = ConvertKnotPosToVec3(to, go.typeInfo.spawn_offset);
         
         lgameObject.transform.localPosition = Vector3.Lerp(fromPos, toPos, go.localTimer / go.timeToCompleteTheLoop);
-            
+        lgameObject.transform.LookAt(toPos);
+        
+        
         if(go.localTimer / go.timeToCompleteTheLoop > 0.98f)
         {
        
