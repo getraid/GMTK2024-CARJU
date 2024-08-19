@@ -640,6 +640,9 @@ MonoBehaviour:
     type: 3}
   engineSound: {fileID: 8701274465293345257}
   skidSound: {fileID: 4673648198652797506}
+  drivableMask:
+    serializedVersion: 2
+    m_Bits: 65
   springStiffness: 35187
   damperStiffness: 4017
   restLength: 1.79

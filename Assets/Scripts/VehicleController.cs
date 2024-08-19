@@ -13,6 +13,9 @@ public class VehicleController : MonoBehaviour
     [SerializeField] private AudioSource engineSound;
     [SerializeField] private AudioSource skidSound;
 
+    [Header("Layer Mask")]
+    [SerializeField] private LayerMask drivableMask;
+
     [Header("Suspension")]
     [SerializeField] private float springStiffness = 30000f;
     [SerializeField] private float damperStiffness = 3000f;
@@ -163,7 +166,7 @@ public class VehicleController : MonoBehaviour
         float max_distance = restLength + springTravel;
         for (int i = 0; i < tireAnchors.Length; i++)
         {
-            if (Physics.Raycast(tireAnchors[i].position, -tireAnchors[i].up, out hit, max_distance + wheelRadius))
+            if (Physics.Raycast(tireAnchors[i].position, -tireAnchors[i].up, out hit, max_distance + wheelRadius, drivableMask))
             {
                 _wheelGroundedDistance[i] = hit.distance;
 
@@ -342,8 +345,8 @@ public class VehicleController : MonoBehaviour
             }
 
             // Set the Position just above the ground
-            _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
-            _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
+            _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.025f;
+            _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.025f;
 
             // Automatically mark as inactive.
             _skidMarkContainer[i].emitting = false;

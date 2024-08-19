@@ -569,8 +569,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3, y: 1.3236415, z: 2.3}
-  m_Center: {x: 0, y: 0.6481792, z: 0.100000024}
+  m_Size: {x: 1.3, y: 1.1304901, z: 2.1514344}
+  m_Center: {x: 0, y: 0.7447549, z: 0.069067955}
 --- !u!54 &3311369135827320058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -621,6 +621,9 @@ MonoBehaviour:
     type: 3}
   engineSound: {fileID: 8610885715371744094}
   skidSound: {fileID: 1059726968412663026}
+  drivableMask:
+    serializedVersion: 2
+    m_Bits: 65
   springStiffness: 30000
   damperStiffness: 3000
   restLength: 0.1
@@ -633,7 +636,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.1
       inSlope: 2
       outSlope: 2
       tangentMode: 0

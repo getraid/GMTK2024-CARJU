@@ -646,6 +646,9 @@ MonoBehaviour:
     type: 3}
   engineSound: {fileID: 8362684144245725045}
   skidSound: {fileID: 6380047251347311106}
+  drivableMask:
+    serializedVersion: 2
+    m_Bits: 65
   springStiffness: 35187
   damperStiffness: 4017
   restLength: 1.79
@@ -658,13 +661,13 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 4.6472554
-      outSlope: 4.6472554
+      value: 0.1
+      inSlope: 2.969808
+      outSlope: 2.969808
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.12255897
+      outWeight: 0.168859
     - serializedVersion: 3
       time: 0.21126024
       value: 0.35691866
