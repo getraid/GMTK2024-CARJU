@@ -30,70 +30,78 @@ public class EnvironmentManager : MonoBehaviour
         List<GameObject> objectsToDestroy=new List<GameObject>();
         for (int i=0;i< _edgesEnvironment.Count; i++)
         {
-            float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
-            if (edgeDistance < _minimumEdgeDistance)
+            try
             {
-                var colls= Physics.OverlapSphere(_edgesEnvironment[i].transform.position, 50,_groundLayer);
 
+                float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
 
-                //Checking to the left
-                if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position+(Vector3.left* _sizeOfTheMapBlock),50, _groundLayer).Length==0)
+                if (edgeDistance < _minimumEdgeDistance)
                 {
-                    int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                    Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
+                    var colls = Physics.OverlapSphere(_edgesEnvironment[i].transform.position, 50, _groundLayer);
 
-                    GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy),transform);
-                    _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                    edgesToAdd.Add(instance);
-                }
-                //Checking to the right
-                if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
-                {
-                    int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                    Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-                    
-                    GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                    _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                    edgesToAdd.Add(instance);
-                }
-                //Checking to the forward
-                if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
-                {
-                    int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                    Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
 
-                    GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                    _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                    edgesToAdd.Add(instance);
-                }
-                //Checking to the back
-                if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
-                {
-                    int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                    Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-                    
-                    GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                    _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                    edgesToAdd.Add(instance);
+                    //Checking to the left
+                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    {
+                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
+                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
 
+                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
+                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(instance);
+                    }
+                    //Checking to the right
+                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    {
+                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
+                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
+
+                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
+                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(instance);
+                    }
+                    //Checking to the forward
+                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    {
+                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
+                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
+
+                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
+                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(instance);
+                    }
+                    //Checking to the back
+                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    {
+                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
+                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
+
+                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
+                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(instance);
+
+                    }
+                    edgesToRemove.Add(_edgesEnvironment[i]);
                 }
-                edgesToRemove.Add(_edgesEnvironment[i]);
+                else if (edgeDistance > _maximumDespawnEdgeDistance)
+                {
+                    GameObject lastConnection = _placedEnvironments[_edgesEnvironment[i]];
+
+                    if (!_edgesEnvironment.Contains(lastConnection) && !edgesToAdd.Contains(lastConnection))
+                        edgesToAdd.Add(lastConnection);
+
+                    edgesToRemove.Add(_edgesEnvironment[i]);
+                    objectsToDestroy.Add(_edgesEnvironment[i].gameObject);
+                }
             }
-            else if(edgeDistance>_maximumDespawnEdgeDistance)
+            catch
             {
-                GameObject lastConnection = _placedEnvironments[_edgesEnvironment[i]];
-
-                if (!_edgesEnvironment.Contains(_edgesEnvironment[i]))
-                    _edgesEnvironment.Add(_edgesEnvironment[i]);
-
-                edgesToAdd.Add(lastConnection);
-                edgesToRemove.Add(_edgesEnvironment[i]);
-                objectsToDestroy.Add(_edgesEnvironment[i].gameObject);
+                Debug.Log("Some shit happened in tile map generation");
             }
         }
         edgesToRemove.ForEach(x=> _edgesEnvironment.Remove(x));
         edgesToAdd.ForEach(x=>_edgesEnvironment.Add(x));
-        objectsToDestroy.ForEach(x => Destroy(x));
+        objectsToDestroy.ForEach(x => x.SetActive(false)) ;
     }
 
    
