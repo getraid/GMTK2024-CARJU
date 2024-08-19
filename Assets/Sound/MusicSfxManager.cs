@@ -50,12 +50,13 @@ public class MusicSfxManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* DEBUG
         if(Input.GetKeyDown(KeyCode.Space)){
             StartMusic(1);
         }
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             RequestCarUpgrade();
-        }
+        }*/
 
         double time = AudioSettings.dspTime;
         if(time + 0.2d >= nextEventTime){
