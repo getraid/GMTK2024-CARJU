@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> _environmentPieces;
+    [SerializeField] GameObject _environmentPiece;
     [SerializeField] List<GameObject> _edgesEnvironment = new List<GameObject>();
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
@@ -32,55 +32,32 @@ public class EnvironmentManager : MonoBehaviour
         {
             try
             {
-
                 float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
 
                 if (edgeDistance < _minimumEdgeDistance)
                 {
-                    var colls = Physics.OverlapSphere(_edgesEnvironment[i].transform.position, 50, _groundLayer);
 
-
-                    //Checking to the left
-                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    if(CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), out GameObject leftInstance))
                     {
-                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-
-                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                        edgesToAdd.Add(instance);
+                        _placedEnvironments.Add(leftInstance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(leftInstance);
                     }
-                    //Checking to the right
-                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), out GameObject rightInstance))
                     {
-                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-
-                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                        edgesToAdd.Add(instance);
+                        _placedEnvironments.Add(rightInstance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(rightInstance);
                     }
-                    //Checking to the forward
-                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), out GameObject forwardInstance))
                     {
-                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-
-                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                        edgesToAdd.Add(instance);
+                        _placedEnvironments.Add(forwardInstance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(forwardInstance);
                     }
-                    //Checking to the back
-                    if (Physics.OverlapSphere(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), 50, _groundLayer).Length == 0)
+                    if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), out GameObject backInstance))
                     {
-                        int envPieceIndex = Random.Range(0, _environmentPieces.Count);
-                        Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
-
-                        GameObject instance = Instantiate(_environmentPieces[0], _edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), Quaternion.Euler(pieceRotatedBy), transform);
-                        _placedEnvironments.Add(instance, _edgesEnvironment[i]);
-                        edgesToAdd.Add(instance);
-
+                        _placedEnvironments.Add(backInstance, _edgesEnvironment[i]);
+                        edgesToAdd.Add(backInstance);
                     }
+
                     edgesToRemove.Add(_edgesEnvironment[i]);
                 }
                 else if (edgeDistance > _maximumDespawnEdgeDistance)
@@ -103,6 +80,18 @@ public class EnvironmentManager : MonoBehaviour
         edgesToAdd.ForEach(x=>_edgesEnvironment.Add(x));
         objectsToDestroy.ForEach(x => x.SetActive(false)) ;
     }
+    bool CheckDirectionForInstantiation(Vector3  position, out GameObject instance)
+    {
+        instance = null;
+        if (Physics.OverlapSphere(position, 50, _groundLayer).Length == 0)
+        {
+            Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
 
+            instance = Instantiate(_environmentPiece, position, Quaternion.Euler(pieceRotatedBy), transform);
+            return true;
+        }
+        else
+            return false;
+    }
    
 }

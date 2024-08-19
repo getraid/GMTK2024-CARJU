@@ -27,6 +27,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
+    int _ignoreCollisionsByLevelDifference = 2;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
 
     private void Awake()
@@ -44,7 +45,13 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
         {
             if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions>=_howManyPartialDestructionUntilTheFullOne))
             {
-                DestroyTheObject();
+                if ((GameManager.Instance.CurrentPlayerLevel - _levelOfTheCarNeededForDestroyment) <= _ignoreCollisionsByLevelDifference)
+                    DestroyTheObject();
+                else
+                {
+                    _initialCollisionCollider.enabled = false;
+                    Destroy(gameObject);
+                }
             }
             else
             {
