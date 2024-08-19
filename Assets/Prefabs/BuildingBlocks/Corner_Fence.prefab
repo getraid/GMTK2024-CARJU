@@ -6266,6 +6266,7 @@ MonoBehaviour:
   - {fileID: 1230336488115299580}
   - {fileID: 1461708121340556170}
   - {fileID: 3463509042919648869}
+  _typeOfSfxToPlayOnDestroy: 5
 --- !u!23 &2598883882491928481 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -6456064997702581524, guid: 673e96297f7d9504993b51b1df1c67b6,

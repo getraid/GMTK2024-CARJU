@@ -19,7 +19,7 @@ public class FuelPickup : MonoBehaviour
             
             // should the fuel reappear?
             gameObject.SetActive(false);
-
+            MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.fuel);
         }
     }
 }

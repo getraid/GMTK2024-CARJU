@@ -25381,6 +25381,7 @@ MonoBehaviour:
   - {fileID: 211061339959776256}
   - {fileID: 3977078567939530749}
   - {fileID: 6769190896894234772}
+  _typeOfSfxToPlayOnDestroy: 1
 --- !u!1 &3167769816908850245
 GameObject:
   m_ObjectHideFlags: 0

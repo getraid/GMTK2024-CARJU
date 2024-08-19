@@ -24,6 +24,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     [SerializeField] int _destructionForceMultiplier = 50;
     [SerializeField] List<MeshRenderer> _initialMeshRenderers;
     [SerializeField] List<Debree> _fragments;
+    [SerializeField] MusicSfxManager.TypeOfSfx _typeOfSfxToPlayOnDestroy;
 
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
@@ -87,6 +88,8 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
         }
         _numberOfPartialDestructions++;
+        MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
+
     }
     void DestroyTheObject()
     {
@@ -110,6 +113,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
         }
         DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
 
+        MusicSfxManager.Instance.PlaySingleSfx(transform.position, _typeOfSfxToPlayOnDestroy);
 
         IEnumerator TurnOffParticles()
         {

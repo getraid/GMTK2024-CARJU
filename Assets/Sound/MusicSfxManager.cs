@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 [Serializable]
@@ -63,13 +65,17 @@ public class MusicSfxManager : MonoBehaviour
     float lastPolice = float.NegativeInfinity;
     float lastPoliceWithVoice = float.NegativeInfinity;
 
+    public static MusicSfxManager Instance { get; private set; }
+
+
     // Update is called once per frame
     void Update()
     {
         //DEBUG
-        if(Input.GetKeyDown(KeyCode.Space)){
-            PlaySingleSfx(gameObject);
-        }/*
+        //if(Input.GetKeyDown(KeyCode.Space)){
+        //    PlaySingleSfx(gameObject);
+        //}
+        /*
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             RequestCarUpgrade();
         }*/
@@ -79,6 +85,20 @@ public class MusicSfxManager : MonoBehaviour
             ChooseNextAudio();
         }
     }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            
+        }
+    }
+
 
     public void StartMusic(int startLevel = 1)
     {
@@ -264,28 +284,20 @@ public class MusicSfxManager : MonoBehaviour
             lastPolice = Time.time;
         }
     }
+    public enum TypeOfSfx
+    {
+        barril, big_building_break, bush, car_crash, cone_hit, fence_break, fuel, metal_bin, metal_post_big, metal_post_small, small_building_break, stone_wall_break, tree, ui_click
+    }
 
-    public void PlaySingleSfx(GameObject gameObject){
-        GameObject newSingleSfxPlayer = Instantiate(singleSfxPlayerPrefab, singleSfxContainer.transform);
-        if(gameObject.name == "music_sfx_manager"){ // this is an exemple called using PlaySingleSfx(gameObject);
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "barril").clip;
-        }/*else if(gameObject.name == "..."){
-            //here are all the one shot sound effects that exist, not too sure what the destroyed gameobjects' names are tho
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "barril").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "big_building_break").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "bush").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "car_crash").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "cone_hit").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "fence_break").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "fuel").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_bin").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_post_big").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_post_small").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "small_building_break").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "stone_wall_break").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "tree").clip;
-            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "ui_click").clip;
-        }*/else{
+    public void PlaySingleSfx(Vector3 position, TypeOfSfx sfxType){
+        GameObject newSingleSfxPlayer = Instantiate(singleSfxPlayerPrefab, position,Quaternion.identity, singleSfxContainer.transform);
+
+        AudioClip clip= singleSfxs.FirstOrDefault(x => x.name == sfxType.ToString()).clip;
+
+        if (clip != null)
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = clip;
+        else
+        { 
             Debug.LogError("Trying to PlaySingleSfx on a unknown gameobject name");
             Destroy(newSingleSfxPlayer);
         }

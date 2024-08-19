@@ -12,7 +12,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] List<GameObject> _edgesEnvironment = new List<GameObject>();
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
-    [SerializeField] int _howManyToPrepool = 100;
+    [SerializeField] int _howManyToPrepool = 50;
 
     public Action FinishedLoading { get; set; }
     Dictionary<GameObject,GameObject> _placedEnvironments = new Dictionary<GameObject, GameObject>();

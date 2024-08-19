@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
 
     private PlayerStatusUI PlayerStatusUI;
-    List<int> _levelDebreeTresholds = new List<int>() { 100, 200, 300, 400 };
+    List<int> _levelDebreeTresholds = new List<int>() { 100, 200, 300, 400,500 };
     bool _isLevelingUp;
 
     void LeveledUp()
