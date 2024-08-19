@@ -14,6 +14,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] float _sizeOfTheMapBlock = 220;
     [SerializeField] int _howManyToPrepool = 100;
 
+    public Action FinishedLoading { get; set; }
     Dictionary<GameObject,GameObject> _placedEnvironments = new Dictionary<GameObject, GameObject>();
     List<GameObject> _objectPool=new List<GameObject>();
     int _poolIndex = 0;
@@ -30,17 +31,21 @@ public class EnvironmentManager : MonoBehaviour
         foreach (var item in _edgesEnvironment)
             _placedEnvironments.Add(item.gameObject, null);
 
-        StartCoroutine(UpdateLoop());
 
         for(int i=0;i<_howManyToPrepool;i++)
         {
             GameObject poolObj = Instantiate(_environmentPiece, transform);
             _objectPool.Add(poolObj);
         }
+
+        StartCoroutine(UpdateLoop());
+        StartCoroutine(CommandQueue());
     }
     private void Start()
     {
         _objectPool.ForEach(x => x.SetActive(false));
+
+        FinishedLoading?.Invoke();
     }
     IEnumerator UpdateLoop()
     {
@@ -48,84 +53,103 @@ public class EnvironmentManager : MonoBehaviour
         {
             yield return new WaitForSeconds(_mapCheckingDelaySeconds);
 
-            List<GameObject> edgesToRemove = new List<GameObject>();
-            List<GameObject> edgesToAdd = new List<GameObject>();
-            List<GameObject> objectsToDestroy = new List<GameObject>();
-            for (int i = 0; i < _edgesEnvironment.Count; i++)
+            try
             {
-                try
+
+                List<GameObject> edgesToRemove = new List<GameObject>();
+                List<GameObject> edgesToAdd = new List<GameObject>();
+                List<GameObject> objectsToDestroy = new List<GameObject>();
+                for (int i = 0; i < _edgesEnvironment.Count; i++)
                 {
-                    float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
-
-                    if (edgeDistance < _minimumEdgeDistance)
+                    try
                     {
+                        float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
 
-                        if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), out GameObject leftInstance))
+                        if (edgeDistance < _minimumEdgeDistance)
                         {
-                            _placedEnvironments.Add(leftInstance, _edgesEnvironment[i]);
-                            edgesToAdd.Add(leftInstance);
-                            _activationCommands.Enqueue(new(leftInstance,true));
+
+                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), out GameObject leftInstance))
+                            {
+                                _placedEnvironments.Add(leftInstance, _edgesEnvironment[i]);
+                                edgesToAdd.Add(leftInstance);
+                                _activationCommands.Enqueue(new(leftInstance, true));
+                            }
+                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), out GameObject rightInstance))
+                            {
+                                _placedEnvironments.Add(rightInstance, _edgesEnvironment[i]);
+                                edgesToAdd.Add(rightInstance);
+                                _activationCommands.Enqueue(new(rightInstance, true));
+
+                            }
+                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), out GameObject forwardInstance))
+                            {
+                                _placedEnvironments.Add(forwardInstance, _edgesEnvironment[i]);
+                                edgesToAdd.Add(forwardInstance);
+                                _activationCommands.Enqueue(new(forwardInstance, true));
+
+                            }
+                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), out GameObject backInstance))
+                            {
+                                _placedEnvironments.Add(backInstance, _edgesEnvironment[i]);
+                                edgesToAdd.Add(backInstance);
+                                _activationCommands.Enqueue(new(backInstance, true));
+
+                            }
+
+                            edgesToRemove.Add(_edgesEnvironment[i]);
                         }
-                        if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), out GameObject rightInstance))
+                        else if (edgeDistance > _maximumDespawnEdgeDistance)
                         {
-                            _placedEnvironments.Add(rightInstance, _edgesEnvironment[i]);
-                            edgesToAdd.Add(rightInstance);
-                            _activationCommands.Enqueue(new(rightInstance, true));
+                            GameObject lastConnection = null;
 
+                            if (_placedEnvironments.ContainsKey(_edgesEnvironment[i]))
+                                lastConnection = _placedEnvironments[_edgesEnvironment[i]];
+
+                            if (lastConnection != null && !_edgesEnvironment.Contains(lastConnection) && !edgesToAdd.Contains(lastConnection))
+                            {
+                                edgesToAdd.Add(lastConnection);
+                            }
+
+                            edgesToRemove.Add(_edgesEnvironment[i]);
+                            objectsToDestroy.Add(_edgesEnvironment[i].gameObject);
                         }
-                        if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), out GameObject forwardInstance))
-                        {
-                            _placedEnvironments.Add(forwardInstance, _edgesEnvironment[i]);
-                            edgesToAdd.Add(forwardInstance);
-                            _activationCommands.Enqueue(new(forwardInstance, true));
-
-                        }
-                        if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), out GameObject backInstance))
-                        {
-                            _placedEnvironments.Add(backInstance, _edgesEnvironment[i]);
-                            edgesToAdd.Add(backInstance);
-                            _activationCommands.Enqueue(new(backInstance, true));
-
-                        }
-
-                        edgesToRemove.Add(_edgesEnvironment[i]);
                     }
-                    else if (edgeDistance > _maximumDespawnEdgeDistance)
+                    catch (Exception e)
                     {
-                        GameObject lastConnection = null;
-
-                        if (_placedEnvironments.ContainsKey(_edgesEnvironment[i]))
-                            lastConnection = _placedEnvironments[_edgesEnvironment[i]];
-
-                        if (lastConnection != null && !_edgesEnvironment.Contains(lastConnection) && !edgesToAdd.Contains(lastConnection))
-                        {
-                            edgesToAdd.Add(lastConnection);
-                        }
-
-                        edgesToRemove.Add(_edgesEnvironment[i]);
-                        objectsToDestroy.Add(_edgesEnvironment[i].gameObject);
+                        Debug.Log("Some shit happened in tile map generation");
                     }
                 }
-                catch(Exception e)
+                edgesToRemove.ForEach(x => _edgesEnvironment.Remove(x));
+                edgesToAdd.ForEach(x => _edgesEnvironment.Add(x));
+                objectsToDestroy.ForEach(x =>
                 {
-                    Debug.Log("Some shit happened in tile map generation");
-                }
+                    _placedEnvironments.Remove(x);
+
+                    _activationCommands.Enqueue(new(x, false));
+                });
             }
-            edgesToRemove.ForEach(x => _edgesEnvironment.Remove(x));
-            edgesToAdd.ForEach(x => _edgesEnvironment.Add(x));
-            objectsToDestroy.ForEach(x =>
+            catch
             {
-                _placedEnvironments.Remove(x);
-
-                _activationCommands.Enqueue(new(x, false));
-            });
+                Debug.Log("Some shit happened in tile map generation");
+            }
         }
     }
   
-    private void FixedUpdate()
+    private IEnumerator CommandQueue()
     {
-        if(_activationCommands.TryDequeue(out Tuple<GameObject,bool> activate))
-            activate.Item1.SetActive(activate.Item2);
+        while(true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            try
+            {
+                if (_activationCommands.TryDequeue(out Tuple<GameObject, bool> activate))
+                    activate.Item1.SetActive(activate.Item2);
+            }
+            catch
+            {
+
+            }
+        }
     }
     bool CheckDirectionForInstantiation(Vector3  position, out GameObject instance)
     {

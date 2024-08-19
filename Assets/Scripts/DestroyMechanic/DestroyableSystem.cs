@@ -34,7 +34,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     bool _isDestroying = false;
     private void Awake()
     {
-        //_fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
+        _fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
     }
     public enum DestructionType
     {
