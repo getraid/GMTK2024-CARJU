@@ -1064,9 +1064,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4588892393042980554}
   serializedVersion: 4
-  m_Mass: 4800
-  m_Drag: 0.8
-  m_AngularDrag: 1.5
+  m_Mass: 3000
+  m_Drag: 0.2
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1109,8 +1109,8 @@ MonoBehaviour:
   drivableMask:
     serializedVersion: 2
     m_Bits: 65
-  springStiffness: 35187
-  damperStiffness: 4003
+  springStiffness: 30000
+  damperStiffness: 3000
   restLength: 1.07
   springTravel: 0.2
   wheelRadius: 1.9

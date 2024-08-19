@@ -388,8 +388,8 @@ public class VehicleController : MonoBehaviour
             }
 
             // Set the Position just above the ground
-            _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.025f;
-            _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.025f;
+            _skidMarkContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
+            _tireSmokeContainer[i].transform.position = tireAnchors[i].position + Vector3.down * _wheelGroundedDistance[i] + Vector3.up * 0.1f;
 
             // Automatically mark as inactive.
             _skidMarkContainer[i].emitting = false;

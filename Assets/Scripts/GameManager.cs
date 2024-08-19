@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +26,9 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
 
     [SerializeField] List<Material> _skyboxesMaterials;
+
+
+    
 
     public float DebreePartsTotalCollected 
     {
@@ -52,9 +57,12 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public int CurrentPlayerLevel { get; set; } = 1;
 
 
+
     private PlayerStatusUI PlayerStatusUI;
     List<int> _levelDebreeTresholds = new List<int>() { 100, 200, 300, 400,500 };
     bool _isLevelingUp;
+
+
 
     void LeveledUp()
     {
@@ -96,10 +104,10 @@ public class GameManager : MonoBehaviour
         }
     #endif
 
-
+        // fuel ui update
         FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
 
-
+    
 
     }
 }

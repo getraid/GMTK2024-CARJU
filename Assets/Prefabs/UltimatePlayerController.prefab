@@ -381,6 +381,101 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6844403767820623635, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6844403767820623635, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: m_Mass
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6844403767820623635, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: reverse
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: tireMass
+      value: 2.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: tireForce
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: brakeForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: restLength
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: wheelRadius
+      value: 2.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: acceleration
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: springTravel
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: steerStrength
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: tireGripFactor
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: damperStiffness
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: springStiffness
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: accelerationCurve.m_Curve.Array.data[1].time
+      value: 0.40919685
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: accelerationCurve.m_Curve.Array.data[0].value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374187675909787381, guid: d91c7fa73bc12c54689ab4b8e818617a,
+        type: 3}
+      propertyPath: accelerationCurve.m_Curve.Array.data[1].value
+      value: 0.58142805
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -416,6 +511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: roughHeight
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103826212300206367, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
+        type: 3}
+      propertyPath: wheelRadius
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 1103826212300206367, guid: ece9faf1c9a2fad438dd574d4a08ebfe,
         type: 3}
@@ -661,28 +761,98 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
+      propertyPath: reverse
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
       propertyPath: maxSpeed
-      value: 94.6
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: tireMass
-      value: 2.35
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: tireForce
-      value: 0.13
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: brakeForce
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: restLength
-      value: 1.06
+      value: 0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: isFlippable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: roughHeight
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: wheelRadius
+      value: 4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: acceleration
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
       propertyPath: springTravel
-      value: 0.61
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: skidMarkWidth
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: steerStrength
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: tireGripFactor
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: damperStiffness
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7741573732124742939, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: springStiffness
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869006979169355366, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869006979169355366, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: m_Mass
+      value: 6000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869006979169355366, guid: c4130e41cac56ce4fb1342b00b2753c4,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8114222351511820201, guid: c4130e41cac56ce4fb1342b00b2753c4,
         type: 3}
@@ -874,6 +1044,66 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: reverse
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: tireMass
+      value: 2.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: tireForce
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: restLength
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: roughHeight
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: wheelRadius
+      value: 1.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: acceleration
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: springTravel
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: steerStrength
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: tireGripFactor
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305452100881861397, guid: 3a9f48b20a417c944b04dfced9cd977f,
+        type: 3}
+      propertyPath: maxSteeringAngle
+      value: 26
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
