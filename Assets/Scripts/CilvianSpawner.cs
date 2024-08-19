@@ -77,8 +77,14 @@ public class CilvianSpawner : MonoBehaviour
 
     private void FetchDestroyablesFromCurrentObjects(bool destroy)
     {
+        if(currentGameObjects == null || currentGameObjects.Count == 0)
+            return;
+        
         foreach (var currentGo in currentGameObjects)
         {
+            if(currentGo == null)
+                continue;
+            
             if (!currentGo.currentGameObject.IsDestroyed())
             {
                 

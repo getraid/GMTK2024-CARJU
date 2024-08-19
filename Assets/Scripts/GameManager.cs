@@ -9,14 +9,22 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public Action PlayerLeveledUp { get; set; }
 
-    [field:SerializeField] public float FuelPercentGUI { get; set; } = 1f; // 0-1f
+    [field:SerializeField] public float FuelPercentGUI { get; set; } = 0f; // 0-1f
     
     [field:SerializeField] public float SpeedometerPercentGUI { get; set; } = 1f; // 0-1f
     
     [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
 
     [SerializeField] MusicSfxManager _musicManager;
+
+    
+    
     float _DebreePartsTotalCollected = 0;
+
+
+    public float CurrentFuelAmount = 50;
+    public float MaxFuelAmount = 100;
+    
     public float DebreePartsTotalCollected 
     {
         get 
@@ -76,12 +84,21 @@ public class GameManager : MonoBehaviour
 
     }
 
+    
     private void Update()
     {
+    #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))
         {
             DebreePartsTotalCollected = 0;
             LeveledUp();
         }
+    #endif
+
+
+        FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
+
+
+
     }
 }
