@@ -49,6 +49,14 @@ MonoBehaviour:
   <SpeedometerPercentGUI>k__BackingField: 1
   <LevelUpPercentGUI>k__BackingField: 1
   _musicManager: {fileID: 2279416624087743018}
+  <CurrentFuelAmount>k__BackingField: 50
+  <MaxFuelAmount>k__BackingField: 100
+  _skyboxesMaterials:
+  - {fileID: 2100000, guid: 666a5dcefe0bc6f43a944456a7e452df, type: 2}
+  - {fileID: 2100000, guid: 77715b8b6b248994891d3ccad1ad330b, type: 2}
+  - {fileID: 2100000, guid: 81c93a5dac0e89643826ee15e186edfb, type: 2}
+  - {fileID: 2100000, guid: ceb0a3ed2cb53a94fa21843cc958c52b, type: 2}
+  - {fileID: 2100000, guid: 3930fc89a28b29746bde6a2389a513e0, type: 2}
   <CurrentPlayerLevel>k__BackingField: 1
 --- !u!1001 &4453973730526051516
 PrefabInstance:

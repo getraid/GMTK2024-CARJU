@@ -7,7 +7,7 @@ public class PlayerDebrieAttraction : MonoBehaviour
 {
     LinkedList<Debree> _listOfDebriesAttracting = new LinkedList<Debree>();
     float _shrinkBy = 0.002f;
-    float _maxDebreeAttraction = 50;
+    int _maxDebreeAttraction = 50;
     private void Awake()
     {
         DestroyableSystem.DebreeAttaching += DebreeRegistration;
@@ -74,9 +74,13 @@ public class PlayerDebrieAttraction : MonoBehaviour
     {
         if (_listOfDebriesAttracting.Count > _maxDebreeAttraction)
         {
-            Debree d = _listOfDebriesAttracting.First.Value;
-            d.DebreeDeleteMessage?.Invoke(d);
+            int howManyToDelete = _listOfDebriesAttracting.Count - _maxDebreeAttraction;
 
+            for(int i=0;i< howManyToDelete; i++)
+            {
+                Debree d = _listOfDebriesAttracting.First.Value;
+                d.DebreeDeleteMessage?.Invoke(d);
+            }
         }
     }
 }

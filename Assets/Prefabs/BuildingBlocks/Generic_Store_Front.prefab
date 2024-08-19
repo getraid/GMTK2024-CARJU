@@ -243,6 +243,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Generic_Store_Front
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4a36214a28843754195c46b73ef59671,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1429237661331202880, guid: 4a36214a28843754195c46b73ef59671,
         type: 3}
       propertyPath: m_Layer

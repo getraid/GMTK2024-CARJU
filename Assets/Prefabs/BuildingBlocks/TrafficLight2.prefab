@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 306540416039019276}
   - component: {fileID: 3735791127364678096}
   - component: {fileID: 3533809043358404532}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TrafficLight2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 1350204484756584751}
   - component: {fileID: 4262067965066452265}
   - component: {fileID: 8001867164619037765}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shyscraper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

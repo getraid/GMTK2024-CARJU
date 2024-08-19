@@ -25293,7 +25293,7 @@ GameObject:
   - component: {fileID: 1492160657393785231}
   - component: {fileID: 7787144982049139545}
   - component: {fileID: 6397604438388947104}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skyscraper_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

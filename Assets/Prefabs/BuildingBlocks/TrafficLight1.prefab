@@ -756,7 +756,7 @@ GameObject:
   - component: {fileID: 4689824806042774016}
   - component: {fileID: 1332213627194260231}
   - component: {fileID: 2375626222170995650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TrafficLight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
