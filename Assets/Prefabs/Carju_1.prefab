@@ -329,7 +329,7 @@ Transform:
   m_GameObject: {fileID: 5238635409671495479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.329, z: 0.982}
+  m_LocalPosition: {x: 0, y: 0.337, z: 0.976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -950,9 +950,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  acceleration: 81.7
+  acceleration: 47.8
   maxSpeed: 26
-  reverse: 48.2
+  reverse: 48.1
   brakeForce: 1
   accelerationCurve:
     serializedVersion: 2
