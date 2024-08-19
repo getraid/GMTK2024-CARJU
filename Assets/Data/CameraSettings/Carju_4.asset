@@ -16,6 +16,6 @@ MonoBehaviour:
   distanceOffset: 45
   cameraTilt: -10
   positionSmoothing: 10
-  rotationSmoothing: 5
+  rotationSmoothing: 10
   forwardLookAhead: 0.5
   turnLookAhead: 2

@@ -14,6 +14,9 @@ public class ActiveCarPrefabSelector : MonoBehaviour
     void Start()
     {
         GameManager.Instance.PlayerLeveledUp += OnPlayerLeveledUp;
+
+        playerInputRef.SetControlledVehicle(LatestController);
+        cameraControllerRef.SetTarget(LatestController.transform, _cameraSettings[GameManager.Instance.CurrentPlayerLevel - 1]);
     }
     void OnPlayerLeveledUp()
     {

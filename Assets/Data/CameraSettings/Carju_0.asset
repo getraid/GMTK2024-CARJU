@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Carju_0
   m_EditorClassIdentifier: 
   heightOffset: 2.5
-  distanceOffset: 4
-  cameraTilt: 10
+  distanceOffset: 5
+  cameraTilt: 5
   positionSmoothing: 10
-  rotationSmoothing: 5
+  rotationSmoothing: 10
   forwardLookAhead: 0.5
-  turnLookAhead: 2
+  turnLookAhead: 1

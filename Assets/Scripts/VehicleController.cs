@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class VehicleController : MonoBehaviour
 {
@@ -233,7 +234,6 @@ public class VehicleController : MonoBehaviour
                 {
                     brake_force = -_currentLocalVelocity.z * brakeForce * transform.forward;
                 }
-                
 
                 // Turn the Tire
                 Vector3 current_rotation = tire.transform.localEulerAngles;
@@ -395,8 +395,11 @@ public class VehicleController : MonoBehaviour
         if (GameManager.Instance == null)
             return;
 
-        float target_value = Mathf.Clamp(Mathf.Abs(_velocityRatio), 0f, 1f) * (float)GameManager.Instance.CurrentPlayerLevel / 4f;
-        GameManager.Instance.SpeedometerPercentGUI = target_value;
+        float velocity = Mathf.Abs(_velocityRatio);
+        float level_modifier = (float)GameManager.Instance.CurrentPlayerLevel / 4f; // Percentage based on Car Level
+        float factor = 0.90f; // 90% of the speedometer is the actual speed
+
+        GameManager.Instance.SpeedometerPercentGUI = velocity * level_modifier * factor;
     }
     #endregion
 

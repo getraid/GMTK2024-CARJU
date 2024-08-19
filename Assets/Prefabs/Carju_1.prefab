@@ -631,13 +631,13 @@ MonoBehaviour:
     type: 3}
   engineSound: {fileID: 1084236209139452418}
   skidSound: {fileID: 1659475470507171766}
-  springStiffness: 29429
-  damperStiffness: 2166
+  springStiffness: 35237
+  damperStiffness: 2862
   restLength: 0.43
-  springTravel: 0.14
+  springTravel: 0.11
   wheelRadius: 0.92
-  steerStrength: 75
-  maxSteeringAngle: 33
+  steerStrength: 73
+  maxSteeringAngle: 32
   turningCurve:
     serializedVersion: 2
     m_Curve:
@@ -680,9 +680,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  tireForce: 0.22
-  tireMass: 1
-  tireGripFactor: 0.44
+  tireForce: 0.48
+  tireMass: 2.14
+  tireGripFactor: 0.29
   gripCurve:
     serializedVersion: 2
     m_Curve:
@@ -725,16 +725,16 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  acceleration: 40
+  acceleration: 81.7
   maxSpeed: 26
-  reverse: 16
-  brakeForce: 2
+  reverse: 48.2
+  brakeForce: 1
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2
+      value: 0.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -742,8 +742,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.28090793
-      value: 0.6237668
+      time: 0.33269158
+      value: 0.5937109
       inSlope: 1.8375562
       outSlope: 1.8375562
       tangentMode: 0
@@ -762,11 +762,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -12.613625
+      outSlope: -12.613625
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.03682375
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
