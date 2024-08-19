@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct SingleSfx {
+    public String name;
+    public AudioClip clip;
+}
+
 public class MusicSfxManager : MonoBehaviour
 {
     [SerializeField] bool logMessages = false;
@@ -43,17 +49,27 @@ public class MusicSfxManager : MonoBehaviour
 
     public AudioSource music_5_main;
 
+    public GameObject singleSfxPlayerPrefab;
+    public GameObject singleSfxContainer;
+
+    public List<SingleSfx> singleSfxs;
+    public AudioClip policeSfx;
+    public AudioClip policeSfxWithVoice;
+
     bool requestingCarChange = false;
     int currentMusic = 0;
     char currentMusicPart = '?';
 
+    float lastPolice = float.NegativeInfinity;
+    float lastPoliceWithVoice = float.NegativeInfinity;
+
     // Update is called once per frame
     void Update()
     {
-        /* DEBUG
+        //DEBUG
         if(Input.GetKeyDown(KeyCode.Space)){
-            StartMusic(1);
-        }
+            PlaySingleSfx(gameObject);
+        }/*
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             RequestCarUpgrade();
         }*/
@@ -233,6 +249,45 @@ public class MusicSfxManager : MonoBehaviour
                 Debug.LogWarning("Car upgrade request registered. Please wait for the music loop to finish");
             }
             requestingCarChange = true;
+        }
+    }
+
+    public void TryPoliceSfx(){
+        if(Time.time - lastPoliceWithVoice > 200f && Time.time - lastPolice > 30f){
+            GameObject newSingleSfxPlayer = Instantiate(singleSfxPlayerPrefab, singleSfxContainer.transform);
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = policeSfxWithVoice;
+            lastPoliceWithVoice = Time.time;
+            lastPolice = Time.time;
+        }else if(Time.time - lastPolice > 30f){
+            GameObject newSingleSfxPlayer = Instantiate(singleSfxPlayerPrefab, singleSfxContainer.transform);
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = policeSfx;
+            lastPolice = Time.time;
+        }
+    }
+
+    public void PlaySingleSfx(GameObject gameObject){
+        GameObject newSingleSfxPlayer = Instantiate(singleSfxPlayerPrefab, singleSfxContainer.transform);
+        if(gameObject.name == "music_sfx_manager"){ // this is an exemple called using PlaySingleSfx(gameObject);
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "barril").clip;
+        }/*else if(gameObject.name == "..."){
+            //here are all the one shot sound effects that exist, not too sure what the destroyed gameobjects' names are tho
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "barril").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "big_building_break").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "bush").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "car_crash").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "cone_hit").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "fence_break").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "fuel").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_bin").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_post_big").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "metal_post_small").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "small_building_break").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "stone_wall_break").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "tree").clip;
+            newSingleSfxPlayer.GetComponent<AudioSource>().clip = singleSfxs.Find(singleSfx => singleSfx.name == "ui_click").clip;
+        }*/else{
+            Debug.LogError("Trying to PlaySingleSfx on a unknown gameobject name");
+            Destroy(newSingleSfxPlayer);
         }
     }
 }
