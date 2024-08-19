@@ -238,7 +238,7 @@ public class CilvianSpawner : MonoBehaviour
         
         foreach (var item in currentGameObjects)
         {
-            if (!item.currentGameObject.IsDestroyed())
+            if (item != null && !item.currentGameObject.IsDestroyed())
                MoveGameObjectToNextPosition(item);
         }
 
