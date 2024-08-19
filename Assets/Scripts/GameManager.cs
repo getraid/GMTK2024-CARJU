@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             return LevelUpPercentGUI >= 0.95;
         }
     }
-    public int CurrentPlayerLevel { get; set; } = 1;
+    [field: SerializeField] public int CurrentPlayerLevel { get; set; } = 1;
 
 
     private PlayerStatusUI PlayerStatusUI;
@@ -74,5 +74,14 @@ public class GameManager : MonoBehaviour
         // Link / Init UI
         PlayerStatusUI = GetComponent<PlayerStatusUI>();
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            DebreePartsTotalCollected = 0;
+            LeveledUp();
+        }
     }
 }

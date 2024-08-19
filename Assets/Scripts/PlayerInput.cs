@@ -6,13 +6,10 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] VehicleController controlledVehicle;
 
-
     private float _forwardInput;
     private float _reverseInput;
     private float _turnInput;
     private bool _isBraking;
-
-    private Vector2 _inputAxis;
 
     void Update()
     {
@@ -70,5 +67,10 @@ public class PlayerInput : MonoBehaviour
         controlledVehicle.SetReverseInput(_reverseInput);
         controlledVehicle.SetTurnInput(_turnInput);
         controlledVehicle.SetIsBraking(_isBraking);
+    }
+
+    public void SetControlledVehicle(VehicleController vehicle)
+    {
+        controlledVehicle = vehicle;
     }
 }

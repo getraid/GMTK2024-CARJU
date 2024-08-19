@@ -103,6 +103,7 @@ public class VehicleController : MonoBehaviour
     {
         PlayVFX();
         EngineSound();
+        UpdateSpeedometer();
     }
 
     private void FixedUpdate()
@@ -387,6 +388,15 @@ public class VehicleController : MonoBehaviour
         {
             ToggleSkidSound(false, 0f);
         }
+    }
+
+    private void UpdateSpeedometer()
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        float target_value = Mathf.Clamp(Mathf.Abs(_velocityRatio), 0f, 1f) * (float)GameManager.Instance.CurrentPlayerLevel / 4f;
+        GameManager.Instance.SpeedometerPercentGUI = target_value;
     }
     #endregion
 

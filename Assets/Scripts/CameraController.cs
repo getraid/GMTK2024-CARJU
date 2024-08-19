@@ -58,6 +58,8 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraSettings(_CameraSettings settings)
     {
+        cameraSettings = settings;
+
         heightOffset = settings.heightOffset;
         distanceOffset = settings.distanceOffset;
         cameraTilt = settings.cameraTilt;
@@ -65,5 +67,11 @@ public class CameraController : MonoBehaviour
         rotationSmoothing = settings.rotationSmoothing;
         forwardLookAhead = settings.forwardLookAhead;
         turnLookAhead = settings.turnLookAhead;
+    }
+
+    public void SetTarget(Transform newTarget, _CameraSettings settings)
+    {
+        target = newTarget;
+        UpdateCameraSettings(settings);
     }
 }
