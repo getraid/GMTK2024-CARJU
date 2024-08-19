@@ -116,6 +116,8 @@ public class VehicleController : MonoBehaviour
         GroundCheck();
         CalculateCarVelocity();
         Movement();
+
+        UpsideDownCheck();
     }
     
 
@@ -149,10 +151,51 @@ public class VehicleController : MonoBehaviour
             DownForce();
         }
     }
+
     public Rigidbody GetRigidBody()
     {
         return _rigidbody;
     }
+
+    [Header("Upside Down Check")]
+    [SerializeField] private bool isFlippable = false;
+    [SerializeField] private float roughHeight = 10f;
+    [SerializeField] private float flipVelocityTheshold = 5f;
+    [SerializeField] private float flipTimer = 3f;
+    private float _upsideDownTimer = 0f;
+
+    private void UpsideDownCheck()
+    {
+        if (!isFlippable)
+            return;
+
+        // Check velocity
+        if (_rigidbody.velocity.magnitude > flipVelocityTheshold)
+            return;
+
+        // Raycast Above the Vehicle
+        if (Physics.Raycast(transform.position, transform.up, out hit, roughHeight, drivableMask))
+        {
+            _upsideDownTimer += Time.fixedDeltaTime;
+
+            if (_upsideDownTimer >= flipTimer)
+            {
+                _upsideDownTimer = 0f;
+                transform.position += Vector3.up * roughHeight;
+                transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+            }
+        }
+        else
+        {
+            _upsideDownTimer = 0f;
+        }
+
+        if (showGizmos)
+        {
+            Debug.DrawLine(transform.position, transform.position + transform.up * roughHeight, Color.magenta);
+        }
+    }
+
     public void TransferRigidBodyParameters(Rigidbody rb)
     {
         _rigidbody.velocity = rb.velocity;
@@ -188,7 +231,7 @@ public class VehicleController : MonoBehaviour
                 // Helper
                 if (showGizmos)
                 {
-                    Debug.DrawLine(tireAnchors[i].position, hit.point, Color.red);
+                    Debug.DrawLine(tireAnchors[i].position, hit.point, Color.magenta);
                 }
             }
             else
@@ -259,7 +302,7 @@ public class VehicleController : MonoBehaviour
                 {
                     Debug.DrawLine(tire.position, tire.position + forward_force, Color.green);
                     Debug.DrawLine(tire.position, tire.position + backward_force, Color.yellow);
-                    Debug.DrawLine(tire.position, tire.position + brake_force, Color.red);
+                    Debug.DrawLine(tire.position, tire.position + brake_force, Color.cyan);
                 }
             }
             else // Only apply to the back 2 tires
@@ -307,7 +350,7 @@ public class VehicleController : MonoBehaviour
             
             if (_isBraking)
             {
-                force_applied = -tire_world_velocity * tireGripFactor * gripCurve.Evaluate(Mathf.Abs(_velocityRatio));
+                force_applied = gripCurve.Evaluate(Mathf.Abs(_velocityRatio)) * tireGripFactor * -tire_world_velocity;
             }
 
             // If no forward or backward input, double the grip
@@ -445,6 +488,14 @@ public class VehicleController : MonoBehaviour
         
         skidSound.mute = !isPlaying;
         skidSound.volume = 0.1f * (1f + volume);
+    }
+
+    #endregion
+
+    #region Public Methods
+    public float GetVelocityRatio()
+    {
+        return _velocityRatio;
     }
 
     #endregion

@@ -845,6 +845,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   pitchRange: {x: 0.7, y: 1.4}
+  isFlippable: 1
+  roughHeight: 2
+  flipVelocityTheshold: 5
+  flipTimer: 3
 --- !u!4 &1924980453592434868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d17836a62b8403439a76a6d73f8d8a6,

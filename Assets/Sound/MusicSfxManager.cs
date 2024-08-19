@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MusicSfxManager : MonoBehaviour
 {
+    [SerializeField] bool logMessages = false;
+
     public Action MusicUpgradeHappened { get; set; }
     double nextEventTime = Double.PositiveInfinity;
 
@@ -191,27 +193,44 @@ public class MusicSfxManager : MonoBehaviour
                 }
             }
         }else if(currentMusic != 5){
-            Debug.LogError("What the fuck is this music ?");
+            if (logMessages)
+            {
+                Debug.LogError("What the fuck is this music ?");
+            }
         }
     }
 
     void PlayNext(AudioSource src){
-        Debug.Log("Playing next : " + src.name);
+        if (logMessages)
+        {
+            Debug.Log("Playing next : " + src.name);
+        }
+
         src.PlayScheduled(nextEventTime);
         nextEventTime += (double)src.clip.samples / src.clip.frequency;
     }
 
     void TriggerUpgrade(){
         MusicUpgradeHappened?.Invoke();
-        Debug.Log("NOW UPGRADE TO LEVEL " + currentMusic.ToString());
+
+        if (logMessages)
+        {
+            Debug.Log("NOW UPGRADE TO LEVEL " + currentMusic.ToString());
+        }
     }
 
     public void RequestCarUpgrade()
     {
         if(requestingCarChange){
-            Debug.LogWarning("You've already requested a car upgrade that hasn't happened yet !");
+            if (logMessages)
+            {
+                Debug.LogWarning("You've already requested a car upgrade that hasn't happened yet !");
+            }
         }else{
-            Debug.LogWarning("Car upgrade request registered. Please wait for the music loop to finish");
+            if (logMessages)
+            {
+                Debug.LogWarning("Car upgrade request registered. Please wait for the music loop to finish");
+            }
             requestingCarChange = true;
         }
     }
