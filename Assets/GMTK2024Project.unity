@@ -4484,6 +4484,7 @@ MonoBehaviour:
   - {fileID: 3599180149268698741}
   _ultimatePlayer: {fileID: 277639546}
   _sizeOfTheMapBlock: 220
+  _howManyToPrepool: 100
 --- !u!4 &1309414499
 Transform:
   m_ObjectHideFlags: 0
