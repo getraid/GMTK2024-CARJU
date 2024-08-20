@@ -1033,7 +1033,7 @@ MonoBehaviour:
   - {fileID: 4114007965953562929}
   - {fileID: 1484231500920069853}
   - {fileID: 6579675077969599962}
-  _typeOfSfxToPlayOnDestroy: 11
+  _typeOfSfxToPlayOnDestroy: 5
 --- !u!1 &5251924229327678982
 GameObject:
   m_ObjectHideFlags: 0

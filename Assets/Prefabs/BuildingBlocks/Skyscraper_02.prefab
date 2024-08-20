@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 1764745505267210671}
   - component: {fileID: 3445949957698508298}
   - component: {fileID: 591817026900894400}
-  - component: {fileID: 1836816308479250629}
+  - component: {fileID: 3173568660944135614}
   m_Layer: 0
   m_Name: Skyscraper02
   m_TagString: Untagged
@@ -436,7 +436,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1836816308479250629
+--- !u!65 &3173568660944135614
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -455,8 +455,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 2.2981033, y: 5, z: 2.2867527}
-  m_Center: {x: -0.015865326, y: 0, z: 0.0030260086}
+  m_Size: {x: 2.08, y: 5, z: 2.08}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1417139641757053731
 GameObject:
   m_ObjectHideFlags: 0
@@ -25338,7 +25338,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.5, y: 5, z: 3.5}
+  m_Size: {x: 2.5, y: 5, z: 2.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6397604438388947104
 MonoBehaviour:
@@ -25352,7 +25352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialCollisionCollider: {fileID: 1836816308479250629}
+  _initialCollisionCollider: {fileID: 3173568660944135614}
   _levelOfTheCarNeededForDestroyment: 5
   _destroyParticles: {fileID: 2871210286746041926}
   _desctructionType: 0

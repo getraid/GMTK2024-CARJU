@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialCollisionCollider: {fileID: 1348011526620352658}
-  _levelOfTheCarNeededForDestroyment: 3
+  _levelOfTheCarNeededForDestroyment: 2
   _destroyParticles: {fileID: 1325177787396179357}
   _desctructionType: 0
   _slowCarVelocityMultiplier: 0.9

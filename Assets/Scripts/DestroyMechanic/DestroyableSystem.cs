@@ -13,7 +13,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 {
     public static Action<Debree> DebreeAttaching { get; set; }
 
-    float _probabilityOfDebreeAttach = 0.3f;
+    float _probabilityOfDebreeAttach = 0.5f;
     float _probabilityPartialDesctruction = 0.1f;
 
     [SerializeField] Collider _initialCollisionCollider;
