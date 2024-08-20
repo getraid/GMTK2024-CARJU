@@ -22,6 +22,10 @@ public class Startup: MonoBehaviour
         LoadAsync();
 #endif
         
+#if UNITY_STANDALONE_OSX
+        LoadAsync();
+#endif   
+        
 #if UNITY_STANDALONE_WIN
         LoadAsync();
 #endif
