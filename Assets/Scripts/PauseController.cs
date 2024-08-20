@@ -5,6 +5,7 @@ using UnityEngine;
 public class PauseController : MonoBehaviour
 {
     [SerializeField] RectTransform pauseMenu;
+    [SerializeField] RectTransform pauseMenu2;
 
     bool _isPaused = false;
 
@@ -27,6 +28,7 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0;
 
         pauseMenu.gameObject.SetActive(true);
+        pauseMenu2.gameObject.SetActive(true);
     }
 
     public void Unstuck()
@@ -45,6 +47,7 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1;
 
         pauseMenu.gameObject.SetActive(false);
+        pauseMenu2.gameObject.SetActive(false);
     }
 
     public void SetMusicVolume(float value)

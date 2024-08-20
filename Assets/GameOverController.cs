@@ -16,7 +16,6 @@ public class GameOverController : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(1);
-        MusicSfxManager.Instance.mixer.SetFloat("MasterVolume", 0f);
     }
 
 
@@ -26,9 +25,7 @@ public class GameOverController : MonoBehaviour
         {
             gameoverScreen?.SetActive(true);
             Time.timeScale = 0f;
-            
-            // Cut Volume in Half
-            MusicSfxManager.Instance.mixer.SetFloat("MasterVolume", -60f);
+ 
         }
     }
 }
