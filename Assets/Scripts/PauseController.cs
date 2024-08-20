@@ -64,6 +64,10 @@ public class PauseController : MonoBehaviour
 
     public void QuitGame()
     {
+        #if UNITY_STANDALONE_OSX
+        Application.Quit();
+        #endif
+        
 #if UNITY_STANDALONE_WIN
         Application.Quit();
 #endif
