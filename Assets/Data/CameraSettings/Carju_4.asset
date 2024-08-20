@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5728a1cc20adc4a80250b6627dd202, type: 3}
   m_Name: Carju_4
   m_EditorClassIdentifier: 
-  heightOffset: 45
-  distanceOffset: 45
-  cameraTilt: -10
+  heightOffset: 50
+  distanceOffset: 70
+  cameraTilt: -8
   positionSmoothing: 10
   rotationSmoothing: 10
   forwardLookAhead: 0.5

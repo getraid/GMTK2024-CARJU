@@ -231,7 +231,9 @@ public class VehicleController : MonoBehaviour
                 // Helper
                 if (showGizmos)
                 {
-                    Debug.DrawLine(tireAnchors[i].position, hit.point, Color.magenta);
+                    // Draw spring force and damp force
+                    Debug.DrawLine(tireAnchors[i].position, tireAnchors[i].position + spring_force * 0.01f * tireAnchors[i].up, Color.red);
+                    Debug.DrawLine(tireAnchors[i].position, tireAnchors[i].position + damp_force * 0.01f * tireAnchors[i].up, Color.blue);
                 }
             }
             else
