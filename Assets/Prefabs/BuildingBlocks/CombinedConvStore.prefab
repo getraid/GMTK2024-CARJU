@@ -41,6 +41,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2671102411808948137}
     m_Modifications:
+    - target: {fileID: 1655890914284495570, guid: 0a185543db9a6324f9357903e66dad5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3574797250239187688, guid: 0a185543db9a6324f9357903e66dad5d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -169,6 +174,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: convinience store_sign
+      objectReference: {fileID: 0}
+    - target: {fileID: 8453802547877844696, guid: 8c684a95571975b4baa34b44d69cf633,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

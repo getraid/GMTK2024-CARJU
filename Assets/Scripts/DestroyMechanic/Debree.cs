@@ -33,7 +33,7 @@ public class Debree : MonoBehaviour
         StartCoroutine(DetachDelay());
         IEnumerator DetachDelay()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             IsDettached = true;
             StartCoroutine(DestroyDebree(UnityEngine.Random.Range(10, 30)));        //When player doesnt pick up the debrie, it gets destroyed in random interval
         }

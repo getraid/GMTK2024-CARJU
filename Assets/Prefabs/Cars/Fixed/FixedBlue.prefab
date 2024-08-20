@@ -1612,7 +1612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialCollisionCollider: {fileID: 5070971063937937595}
-  _levelOfTheCarNeededForDestroyment: 1
+  _levelOfTheCarNeededForDestroyment: 2
   _destroyParticles: {fileID: 0}
   _desctructionType: 2
   _slowCarVelocityMultiplier: 0.9
@@ -1649,6 +1649,7 @@ MonoBehaviour:
   - {fileID: 1211342141343941626}
   - {fileID: 9040628117719282602}
   - {fileID: 5370659591855472650}
+  _typeOfSfxToPlayOnDestroy: 0
 --- !u!4 &4191677697649236649 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f1aeff89879ef92438e44ae9876c6d5a,

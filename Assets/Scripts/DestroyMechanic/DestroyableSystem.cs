@@ -13,8 +13,8 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 {
     public static Action<Debree> DebreeAttaching { get; set; }
 
-    float _probabilityOfDebreeAttach = 0.5f;
-    float _probabilityPartialDesctruction = 0.1f;
+    float _probabilityOfDebreeAttach = 0.7f;
+    float _probabilityPartialDesctruction = 0.2f;
 
     [SerializeField] Collider _initialCollisionCollider;
     [SerializeField] int _levelOfTheCarNeededForDestroyment = 1;
@@ -52,8 +52,11 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             {
                 if ((GameManager.Instance.CurrentPlayerLevel - _levelOfTheCarNeededForDestroyment) <= _ignoreCollisionsByLevelDifference)
                 {
-                    if(!_isDestroying)
+                    if (!_isDestroying)
+                    {
                         DestroyTheObject();
+                        MusicSfxManager.Instance.PlaySingleSfx(transform.position, _typeOfSfxToPlayOnDestroy);
+                    }
                 }
                 else
                 {
@@ -122,8 +125,6 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             StartCoroutine(TurnOffParticles());
         }
         DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
-
-        MusicSfxManager.Instance.PlaySingleSfx(transform.position, _typeOfSfxToPlayOnDestroy);
 
         IEnumerator TurnOffParticles()
         {
