@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     
     [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
 
-    [SerializeField] MusicSfxManager _musicManager;    
     
     float _DebreePartsTotalCollected = 0;
 
@@ -26,9 +25,6 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
 
     [SerializeField] List<Material> _skyboxesMaterials;
-
-
-    
 
     public float DebreePartsTotalCollected 
     {
@@ -43,7 +39,7 @@ public class GameManager : MonoBehaviour
             if (IsCloseToLevelUp && !_isLevelingUp)
             {
                 _isLevelingUp = true;
-                _musicManager.RequestCarUpgrade();
+                MusicSfxManager.Instance.RequestCarUpgrade();
             }
         }
     }
@@ -64,7 +60,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    void LeveledUp()
+    public void LeveledUp()
     {
         LevelUpPercentGUI = 0;
         _DebreePartsTotalCollected = 0;
@@ -84,8 +80,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-            _musicManager.StartMusic(1);
-            _musicManager.MusicUpgradeHappened += LeveledUp;
         }
             
         // Link / Init UI

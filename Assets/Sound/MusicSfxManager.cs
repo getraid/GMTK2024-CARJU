@@ -15,7 +15,6 @@ public class MusicSfxManager : MonoBehaviour
 {
     [SerializeField] bool logMessages = false;
 
-    public Action MusicUpgradeHappened { get; set; }
     double nextEventTime = Double.PositiveInfinity;
 
     public AudioSource music_1_start;
@@ -94,8 +93,8 @@ public class MusicSfxManager : MonoBehaviour
         }
         else
         {
-            Instance = this;
-            
+            StartMusic(1);
+            Instance = this;       
         }
     }
 
@@ -248,7 +247,7 @@ public class MusicSfxManager : MonoBehaviour
     }
 
     void TriggerUpgrade(){
-        MusicUpgradeHappened?.Invoke();
+        GameManager.Instance.LeveledUp();
 
         if (logMessages)
         {
