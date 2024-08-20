@@ -995,8 +995,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0167971, y: 2.0505524, z: 0.70364016}
-  m_Center: {x: -0.20424801, y: 0.08001006, z: -0.031219572}
+  m_Size: {x: 1.3545319, y: 2.0505524, z: 0.70364016}
+  m_Center: {x: -0.03538066, y: 0.0800101, z: -0.031219581}
 --- !u!114 &1926040291880394902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialCollisionCollider: {fileID: 6624560023350292888}
-  _levelOfTheCarNeededForDestroyment: 1
+  _levelOfTheCarNeededForDestroyment: 3
   _destroyParticles: {fileID: 6077499048363787823}
   _desctructionType: 1
   _slowCarVelocityMultiplier: 0.9

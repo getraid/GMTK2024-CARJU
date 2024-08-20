@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
 
     private PlayerStatusUI PlayerStatusUI;
-    [SerializeField] List<int> _levelDebreeTresholds = new List<int>() { 100, 200, 300, 400,500 };
+    [SerializeField] List<int> _levelDebreeTresholds = new List<int>() { 500, 1000, 2000, 3000,4000 };
     bool _isLevelingUp;
 
 

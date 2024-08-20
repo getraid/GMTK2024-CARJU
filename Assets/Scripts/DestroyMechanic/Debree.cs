@@ -8,10 +8,14 @@ public class Debree : MonoBehaviour
     [SerializeField] Rigidbody _rB;
     public Action<Debree> DebreeDeleteMessage { get; set; }
 
+    static LinkedList<Debree> AllDebries { get; set; }=new LinkedList<Debree>();
+    int _maxDebrieLimitor = 100;
     private void Awake()
     {
         _rB.isKinematic = true;
         _rB.constraints = RigidbodyConstraints.None;
+        AllDebries.AddLast(this);
+        RemoveOverLimitDebree();
     }
     public bool IsDettached { 
         get; 
@@ -39,6 +43,26 @@ public class Debree : MonoBehaviour
             yield return new WaitForSeconds(waitUntilDeletion);
 
             DebreeDeleteMessage?.Invoke(this);
+        }
+    }
+
+    public void RemoveOverLimitDebree()
+    {
+        if(AllDebries.Count>_maxDebrieLimitor)
+        {
+            int howManyToRemove = AllDebries.Count - _maxDebrieLimitor;
+
+            LinkedListNode<Debree> d = AllDebries.First;
+            for (int i = 0; i < howManyToRemove; i++)
+            {
+                if (d.Value == null)
+                    AllDebries.RemoveFirst();
+                else
+                {
+                    d.Value.DebreeDeleteMessage?.Invoke(d.Value);
+                    d = d.Next;
+                }
+            }
         }
     }
 }

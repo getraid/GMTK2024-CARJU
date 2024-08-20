@@ -76,10 +76,16 @@ public class PlayerDebrieAttraction : MonoBehaviour
         {
             int howManyToDelete = _listOfDebriesAttracting.Count - _maxDebreeAttraction;
 
-            for(int i=0;i< howManyToDelete; i++)
+            LinkedListNode<Debree> d = _listOfDebriesAttracting.First;
+            for (int i=0;i< howManyToDelete; i++)
             {
-                Debree d = _listOfDebriesAttracting.First.Value;
-                d.DebreeDeleteMessage?.Invoke(d);
+                if (d.Value == null)
+                    _listOfDebriesAttracting.RemoveFirst();
+                else
+                {
+                    d.Value.DebreeDeleteMessage?.Invoke(d.Value);
+                    d = d.Next;
+                }
             }
         }
     }
