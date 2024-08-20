@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         }
         set
         {
+
             _DebreePartsTotalCollected = value;
             LevelUpPercentGUI = _DebreePartsTotalCollected / (float)_levelDebreeTresholds[CurrentPlayerLevel - 1];
             if (IsCloseToLevelUp && !_isLevelingUp)
@@ -53,7 +54,12 @@ public class GameManager : MonoBehaviour
             return LevelUpPercentGUI >= 0.95;
         }
     }
-    [field: SerializeField] public int CurrentPlayerLevel { get; set; } = 1;
+    int _CurrentPlayerLevel = 1;
+    public int CurrentPlayerLevel
+    {
+        get { return _CurrentPlayerLevel; }
+        set { _CurrentPlayerLevel = Math.Clamp(value,1,5); }
+    }
 
 
 

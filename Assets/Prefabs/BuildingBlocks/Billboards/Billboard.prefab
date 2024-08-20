@@ -5196,11 +5196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialCollisionCollider: {fileID: 2239318252784908532}
-  _levelOfTheCarNeededForDestroyment: 4
+  _levelOfTheCarNeededForDestroyment: 3
   _destroyParticles: {fileID: 431950358722291769}
   _desctructionType: 1
   _slowCarVelocityMultiplier: 0.9
-  _destructionForceMultiplier: 50
+  _destructionForceMultiplier: 100
   _initialMeshRenderers:
   - {fileID: 372475403564515495}
   - {fileID: 2796318086400777636}

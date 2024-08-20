@@ -23,7 +23,7 @@ public class EnvironmentManager : MonoBehaviour
     int _groundLayer = 1 << 6;
     float _minimumEdgeDistance = 220;
     float _maximumDespawnEdgeDistance = 520;
-    float _mapCheckingDelaySeconds = 0.2f;
+    float _mapCheckingDelaySeconds = 0.1f;
 
     Queue<Tuple<GameObject, bool>> _activationCommands = new Queue<Tuple<GameObject, bool>>();
 

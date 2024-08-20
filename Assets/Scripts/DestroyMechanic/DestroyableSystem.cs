@@ -26,7 +26,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     [SerializeField] List<Debree> _fragments;
     [SerializeField] MusicSfxManager.TypeOfSfx _typeOfSfxToPlayOnDestroy;
 
-    int _howManyPartialDestructionUntilTheFullOne = 3;
+    int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
     int _ignoreCollisionsByLevelDifference = 1;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
