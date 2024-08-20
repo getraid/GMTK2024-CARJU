@@ -444,16 +444,21 @@ public class VehicleController : MonoBehaviour
         }
     }
 
+    float speedometerPercent = 0f;
+    float speedometerPercentLerp = 0.50f;
+
     private void UpdateSpeedometer()
     {
         if (GameManager.Instance == null)
             return;
 
         float velocity = Mathf.Abs(_velocityRatio);
-        float level_modifier = (float)GameManager.Instance.CurrentPlayerLevel / 4f; // Percentage based on Car Level
+        float level_modifier = (float)GameManager.Instance.CurrentPlayerLevel / 5f; // Percentage based on Car Level
         float factor = 0.90f; // 90% of the speedometer is the actual speed
 
-        GameManager.Instance.SpeedometerPercentGUI = velocity * level_modifier * factor;
+        speedometerPercent = Mathf.Lerp(speedometerPercent, velocity * level_modifier * factor, Time.deltaTime * speedometerPercentLerp);
+
+        GameManager.Instance.SpeedometerPercentGUI = speedometerPercent;
     }
     #endregion
 
