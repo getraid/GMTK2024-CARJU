@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class BillboardJokePicker : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] List<GameObject> _billboards;
     void Start()
     {
-        
+        _billboards[Random.Range(0, _billboards.Count - 1)].SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
