@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 215972832}
   - component: {fileID: 215972831}
   - component: {fileID: 215972830}
+  - component: {fileID: 215972833}
   m_Layer: 11
   m_Name: Plane
   m_TagString: Untagged
@@ -605,6 +606,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &215972833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215972828}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &277639546 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3994417924972886227, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
@@ -926,7 +948,6 @@ MonoBehaviour:
   _environmentPiece: {fileID: 9189220909696361490}
   _emptyPiece: {fileID: 9030136320849969593, guid: 6e78ced0daf962949bd28a3d271d37f2,
     type: 3}
-  _emptyPiece: {fileID: 0}
   _edgesEnvironment:
   - {fileID: 9189220909696361490}
   _ultimatePlayer: {fileID: 277639546}
