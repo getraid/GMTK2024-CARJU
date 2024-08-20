@@ -932,6 +932,7 @@ GameObject:
   - component: {fileID: 5257628246871756808}
   - component: {fileID: 518364943438092575}
   - component: {fileID: 1433326905926154462}
+  - component: {fileID: 2681711271972976506}
   m_Layer: 10
   m_Name: PoliceLogic
   m_TagString: Police
@@ -1287,6 +1288,23 @@ MonoBehaviour:
   rayAngle: 30
   rayAngleIncrease: 1
   minimumAddedDistance: 10
+--- !u!114 &2681711271972976506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862924612198094805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108db1cc31d890c4ea608228b99fac3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  cooldown: 1
+  impactForce: 10
+  impactVFX: {fileID: 2341936812307676039, guid: 7f4f63b965170554c813e6bb50823356,
+    type: 3}
 --- !u!1 &2030895295329239181
 GameObject:
   m_ObjectHideFlags: 0
