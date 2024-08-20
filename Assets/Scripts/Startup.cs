@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,11 +10,18 @@ public class Startup: MonoBehaviour
 
     [Header("For TitleScreen")] 
     private bool isLoading = false;
-    public Slider loadingBar = null;
+    public Image loadingIcon = null;
+    public GameObject loadingText = null;
+    public GameObject credits = null;
     private UnityEngine.AsyncOperation loading;
-    
+    private float timer = 0;
     public void SwitchSceneFromMainMenu()
     {
+        
+#if UNITY_EDITOR
+        LoadAsync();
+#endif
+        
 #if UNITY_STANDALONE_WIN
         LoadAsync();
 #endif
@@ -26,26 +34,40 @@ public class Startup: MonoBehaviour
     private void LoadAsync()
     {
         isLoading = true;
-        loadingBar?.gameObject.SetActive(true);
+        loadingIcon?.gameObject.SetActive(true);
+        loadingText.gameObject.SetActive(true);
         loading = SceneManager.LoadSceneAsync(1);
-        loadingBar.value = loading.progress;
+        
     }
 
     private void LoadSync()
     {
         SceneManager.LoadScene(1);
     }
+    
+    public void DisableCredits()
+    {
+        credits.SetActive(false);
+    }
+
+    public void enableCred()
+    {
+        credits.SetActive(true);
+    }
+    
 
     private void Update()
     {
-        if(loadingBar != null && loading != null)
-            if (loadingBar.gameObject.activeSelf)
-                loadingBar.value = Mathf.Clamp01(loading.progress / 0.9f);
+        if(loadingIcon != null && loading != null)
+            if (loadingIcon.gameObject.activeSelf)
+                loadingIcon.rectTransform.rotation = Quaternion.Euler(0,0,timer*20);
             else
             {
                 MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.ui_click);
-                loadingBar.gameObject.SetActive(true);
+                loadingText.gameObject.SetActive(true);
+                loadingIcon.gameObject.SetActive(true);
             }
-        
+
+        timer += Time.deltaTime;
     }
 }
