@@ -297,7 +297,7 @@ public class MusicSfxManager : MonoBehaviour
             newSingleSfxPlayer.GetComponent<AudioSource>().clip = clip;
         else
         { 
-            Debug.LogError("Trying to PlaySingleSfx on a unknown gameobject name");
+            Debug.LogError("Trying to PlaySingleSfx on a unknown gameobject name: " + sfxType.ToString());
             Destroy(newSingleSfxPlayer);
         }
     }

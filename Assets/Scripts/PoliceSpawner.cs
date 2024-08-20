@@ -49,6 +49,8 @@ public class PoliceSpawner : MonoBehaviour
             police_car.SetTarget(target);
 
             _activePoliceCars.Add(police_car);
+
+            MusicSfxManager.Instance.TryPoliceSfx();
         }
     }
 
