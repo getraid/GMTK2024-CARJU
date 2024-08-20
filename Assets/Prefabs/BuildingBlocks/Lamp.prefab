@@ -55,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8781762, y: 1.99, z: 0.17336906}
-  m_Center: {x: -1.0669455e-18, y: 0.64, z: 0.00056336075}
+  m_Size: {x: 0.1149137, y: 0.88047373, z: 0.13708878}
+  m_Center: {x: 0.005541086, y: 0.016339004, z: -0.13504219}
 --- !u!114 &6065395358404661495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialCollisionCollider: {fileID: 6686144665996672727}
+  _initialCollisionCollider: {fileID: 2230380651944987698}
   _levelOfTheCarNeededForDestroyment: 1
   _destroyParticles: {fileID: 270319869158324202}
   _desctructionType: 1
@@ -1810,7 +1810,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b1f780259c8e4284b87246db7d47ac6,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6686144665996672727}
+      addedObject: {fileID: 2230380651944987698}
   m_SourcePrefab: {fileID: 100100000, guid: 6b1f780259c8e4284b87246db7d47ac6, type: 3}
 --- !u!4 &4872843988746844675 stripped
 Transform:
@@ -1824,8 +1824,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4905942505043418600}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &6686144665996672727
-MeshCollider:
+--- !u!65 &2230380651944987698
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1842,10 +1842,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2560084863766108383, guid: 6b1f780259c8e4284b87246db7d47ac6, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.07615368, y: 0.8290049, z: 0.05312729}
+  m_Center: {x: -0.000000029802322, y: 0, z: -0.13913536}
 --- !u!23 &6040731275423695212 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6b1f780259c8e4284b87246db7d47ac6,

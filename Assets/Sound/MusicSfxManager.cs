@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [Serializable]
 public struct SingleSfx {
@@ -13,6 +14,7 @@ public struct SingleSfx {
 
 public class MusicSfxManager : MonoBehaviour
 {
+    [SerializeField] public AudioMixer mixer;
     [SerializeField] bool logMessages = false;
 
     double nextEventTime = Double.PositiveInfinity;

@@ -242,7 +242,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -516098083770646512, guid: 456411fe241ae8f4eb067b80d5392e8a,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7594488580648283011}
+      addedObject: {fileID: 4642936163300050504}
     - targetCorrespondingSourceObject: {fileID: -259199459689003643, guid: 456411fe241ae8f4eb067b80d5392e8a,
         type: 3}
       insertIndex: -1
@@ -605,7 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialCollisionCollider: {fileID: 7594488580648283011}
+  _initialCollisionCollider: {fileID: 4642936163300050504}
   _levelOfTheCarNeededForDestroyment: 3
   _destroyParticles: {fileID: 8199052224878915991}
   _desctructionType: 0
@@ -1390,8 +1390,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 167579857701013564}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &7594488580648283011
-MeshCollider:
+--- !u!65 &4642936163300050504
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1408,10 +1408,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4493585093827132993, guid: 456411fe241ae8f4eb067b80d5392e8a, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.044706687, y: 0.012275862, z: 0.1087042}
+  m_Center: {x: -0.0000000018626451, y: -0.0000000018626446, z: 0.044352107}
 --- !u!1 &9032755858599560817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -69357852096967091, guid: 456411fe241ae8f4eb067b80d5392e8a,

@@ -14,11 +14,11 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         // Show all Input Keys
-        //foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
-        //{
-        //    if (Input.GetKeyDown(kcode))
-        //        Debug.Log("KeyCode down: " + kcode);
-        //}
+        foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(kcode))
+                Debug.Log("KeyCode down: " + kcode);
+        }
 
         if (controlledVehicle == null)
             return;

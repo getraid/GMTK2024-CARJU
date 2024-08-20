@@ -30,6 +30,8 @@ public class ActiveCarPrefabSelector : MonoBehaviour
         playerInputRef.SetControlledVehicle(LatestController);
         cameraControllerRef.SetTarget(LatestController.transform, _cameraSettings[GameManager.Instance.CurrentPlayerLevel - 1]);
         _policeSpawner.SetTarget(LatestController.transform);
+
+        GameManager.Instance.SetActiveVehicle(LatestController);
     }
     void OnPlayerLeveledUp()
     {
@@ -46,6 +48,8 @@ public class ActiveCarPrefabSelector : MonoBehaviour
         playerInputRef.SetControlledVehicle(LatestController);
         cameraControllerRef.SetTarget(LatestController.transform, _cameraSettings[GameManager.Instance.CurrentPlayerLevel - 1]);
         _policeSpawner.SetTarget(LatestController.transform);
+
+        GameManager.Instance.SetActiveVehicle(LatestController);
 
         // 0, 2, 4, 6
         int spawn_count = policePerLevel * (GameManager.Instance.CurrentPlayerLevel - 1);

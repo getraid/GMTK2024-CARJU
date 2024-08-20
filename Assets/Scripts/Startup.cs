@@ -14,10 +14,26 @@ public class Startup: MonoBehaviour
     
     public void SwitchSceneFromMainMenu()
     {
+#if UNITY_STANDALONE_WIN
+        LoadAsync();
+#endif
+
+#if UNITY_WEBGL
+        LoadSync();
+#endif
+    }
+
+    private void LoadAsync()
+    {
         isLoading = true;
         loadingBar?.gameObject.SetActive(true);
         loading = SceneManager.LoadSceneAsync(1);
         loadingBar.value = loading.progress;
+    }
+
+    private void LoadSync()
+    {
+        SceneManager.LoadScene(1);
     }
 
     private void Update()

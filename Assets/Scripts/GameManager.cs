@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] List<Material> _skyboxesMaterials;
 
+    private VehicleController _activeVehicle;
+
     public float DebreePartsTotalCollected 
     {
         get 
@@ -99,8 +101,15 @@ public class GameManager : MonoBehaviour
 
         // fuel ui update
         FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
+    }
 
-    
+    public VehicleController GetActiveVehicle()
+    {
+        return _activeVehicle;
+    }
 
+    public void SetActiveVehicle(VehicleController vehicle)
+    {
+        _activeVehicle = vehicle;
     }
 }
