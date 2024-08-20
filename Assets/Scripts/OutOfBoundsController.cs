@@ -6,9 +6,9 @@ using UnityEngine.Serialization;
 public class OutOfBoundsController : MonoBehaviour
 {
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
-    public int WhenToResetUpwards = -300;
-    public int WhenToResetDownwards = -300;
-    public float startingHeightOffset = 5;
+     int WhenToResetUpwards = 100;
+     int WhenToResetDownwards = -30;
+     float startingHeightOffset = 5;
 
     private Vector3 startPosition;
 
@@ -22,11 +22,11 @@ public class OutOfBoundsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!(_ultimatePlayer.LatestController.transform.position.y < WhenToResetDownwards) && !(_ultimatePlayer.LatestController.transform.position.y > WhenToResetUpwards)) return;
-
-        _ultimatePlayer.transform.position = startPosition;
-        _ultimatePlayer.LatestController.GetRigidBody().velocity = Vector3.zero;
-
+        if ((_ultimatePlayer.LatestController.transform.position.y < WhenToResetDownwards) || (_ultimatePlayer.LatestController.transform.position.y > WhenToResetUpwards))
+        {
+            _ultimatePlayer.LatestController.transform.position = _ultimatePlayer.LatestVehicleStartingLocation;
+            _ultimatePlayer.LatestController.GetRigidBody().velocity = Vector3.zero;
+        }
     }
 }
 

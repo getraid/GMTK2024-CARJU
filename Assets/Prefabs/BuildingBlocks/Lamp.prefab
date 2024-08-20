@@ -55,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1149137, y: 0.88047373, z: 0.13708878}
-  m_Center: {x: 0.005541086, y: 0.016339004, z: -0.13504219}
+  m_Size: {x: 0.1149137, y: 0.88047373, z: 0.427253}
+  m_Center: {x: 0.0055410885, y: 0.016339004, z: 0.0100399675}
 --- !u!114 &6065395358404661495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
   _destroyParticles: {fileID: 270319869158324202}
   _desctructionType: 1
   _slowCarVelocityMultiplier: 0.9
-  _destructionForceMultiplier: 10
+  _destructionForceMultiplier: 5
   _initialMeshRenderers:
   - {fileID: 6040731275423695212}
   _fragments:
@@ -1841,10 +1841,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.07615368, y: 0.8290049, z: 0.05312729}
-  m_Center: {x: -0.000000029802322, y: 0, z: -0.13913536}
+  m_Size: {x: 0.07615368, y: 0.8290049, z: 0.34602955}
+  m_Center: {x: -0.000000029935364, y: 0, z: 0.0073157977}
 --- !u!23 &6040731275423695212 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6b1f780259c8e4284b87246db7d47ac6,

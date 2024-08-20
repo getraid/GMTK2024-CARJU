@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerDebrieAttraction : MonoBehaviour
 {
     LinkedList<Debree> _listOfDebriesAttracting = new LinkedList<Debree>();
-    float _shrinkBy = 0.002f;
+    float _shrinkBy = 0.01f;
     int _maxDebreeAttraction = 50;
     private void Awake()
     {

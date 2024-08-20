@@ -23,6 +23,7 @@ public class ActiveCarPrefabSelector : MonoBehaviour
     }
 
     [field:SerializeField] public VehicleController LatestController { get; set; }
+    public Vector3 LatestVehicleStartingLocation { get; set; }
     void Start()
     {
         GameManager.Instance.PlayerLeveledUp += OnPlayerLeveledUp;
@@ -36,7 +37,7 @@ public class ActiveCarPrefabSelector : MonoBehaviour
     void OnPlayerLeveledUp()
     {
         VehicleController newActiveController = _vehicleLevels[GameManager.Instance.CurrentPlayerLevel - 1];
-
+        LatestVehicleStartingLocation = LatestController.transform.position;
 
         newActiveController.gameObject.transform.SetPositionAndRotation(LatestController.gameObject.transform.position, LatestController.gameObject.transform.rotation);
         newActiveController.gameObject.SetActive(true);

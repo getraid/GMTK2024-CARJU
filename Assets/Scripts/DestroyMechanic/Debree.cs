@@ -9,7 +9,7 @@ public class Debree : MonoBehaviour
     public Action<Debree> DebreeDeleteMessage { get; set; }
 
     static LinkedList<Debree> AllDebries { get; set; }=new LinkedList<Debree>();
-    int _maxDebrieLimitor = 100;
+    int _maxDebrieLimitor = 200;
     private void Awake()
     {
         _rB.isKinematic = true;

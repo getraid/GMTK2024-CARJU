@@ -62,18 +62,25 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 }
             }
             else if ((_levelOfTheCarNeededForDestroyment- GameManager.Instance.CurrentPlayerLevel) == 1)        //Make partial destruction on object only one level above (so tiny car doesnt destroy scyscraper)
-
             {
                 PartiallyDestroyTheObject();
+                _initialCollisionCollider.enabled = true;
             }
+            else
+                _initialCollisionCollider.enabled = true;
         }
         else if(_levelOfTheCarNeededForDestroyment==1 && other.CompareTag("Police")&&!_isDestroying)
             DestroyTheObject();
+        else if (other.CompareTag("Police"))
+            _initialCollisionCollider.enabled = true;
 
     }
     private void OnTriggerExit(Collider other)
     {
         _playerColliderTouching.Remove(other);
+
+        if (_playerColliderTouching.Count == 0)
+            _initialCollisionCollider.enabled = false;
     }
 
     void PartiallyDestroyTheObject()

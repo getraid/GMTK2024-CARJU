@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class EnvironmentManager : MonoBehaviour
 {
     [SerializeField] GameObject _environmentPiece;
+    [SerializeField] GameObject _emptyPiece;
     [SerializeField] List<GameObject> _edgesEnvironment = new List<GameObject>();
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
@@ -16,7 +17,7 @@ public class EnvironmentManager : MonoBehaviour
 
     public Action FinishedLoading { get; set; }
     Dictionary<GameObject,GameObject> _placedEnvironments = new Dictionary<GameObject, GameObject>();
-    List<GameObject> _objectPool=new List<GameObject>();
+    List<Tuple<GameObject,bool>> _objectPool=new List<Tuple<GameObject,bool>>();
     int _poolIndex = 0;
 
     int _groundLayer = 1 << 6;
@@ -35,7 +36,7 @@ public class EnvironmentManager : MonoBehaviour
         for(int i=0;i<_howManyToPrepool;i++)
         {
             GameObject poolObj = Instantiate(_environmentPiece, transform);
-            _objectPool.Add(poolObj);
+            _objectPool.Add(new(poolObj,true));
         }
 
         StartCoroutine(UpdateLoop());
@@ -43,7 +44,7 @@ public class EnvironmentManager : MonoBehaviour
     }
     private void Start()
     {
-        _objectPool.ForEach(x => x.SetActive(false));
+        _objectPool.ForEach(x => x.Item1.SetActive(false));
 
         FinishedLoading?.Invoke();
     }
@@ -158,9 +159,19 @@ public class EnvironmentManager : MonoBehaviour
         {
             Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
 
-            instance = _objectPool[GetNextPoolIndex()];
-            instance.transform.SetPositionAndRotation(position, Quaternion.Euler(pieceRotatedBy));
-            instance.SetActive(true);
+            instance = _objectPool[GetNextPoolIndex()].Item1;
+
+            if(instance.activeSelf)
+            {
+                instance = Instantiate(_emptyPiece, position, Quaternion.Euler(pieceRotatedBy), transform);
+                _objectPool.Add(new(instance,false));
+            }
+            else
+            {
+                instance.transform.SetPositionAndRotation(position, Quaternion.Euler(pieceRotatedBy));
+                instance.SetActive(true);
+            }
+            
 
             //instance = Instantiate(_environmentPiece, position, Quaternion.Euler(pieceRotatedBy), transform);
 
@@ -172,11 +183,18 @@ public class EnvironmentManager : MonoBehaviour
     }
     int GetNextPoolIndex()
     {
-        _poolIndex++;
-        if (_poolIndex >= _objectPool.Count)
-            _poolIndex = 0;
 
+        for(int i= 0;i< _objectPool.Count;i++)
+        {
+            _poolIndex++;
+            if (_poolIndex >= _objectPool.Count)
+                _poolIndex = 0;
+
+            if (_objectPool[_poolIndex].Item2&&!_objectPool[_poolIndex].Item1.activeSelf)
+                return _poolIndex;
+        }
         return _poolIndex;
+
     }
-   
+
 }
