@@ -7,10 +7,16 @@ using UnityEngine.SceneManagement;
 public class GameOverController : MonoBehaviour
 {
     public GameObject gameoverScreen;
-    
+
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(1);
+        MusicSfxManager.Instance.mixer.SetFloat("MasterVolume", 0f);
     }
 
 

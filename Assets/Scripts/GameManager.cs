@@ -110,7 +110,18 @@ public class GameManager : MonoBehaviour
 
         if (timer >= 1f)
         {
-            CurrentFuelAmount -= ((float)CurrentPlayerLevel * fuelDrainagePerSecond);
+            if(CurrentPlayerLevel == 1)
+                CurrentFuelAmount -= (0.2f);
+            else if(CurrentPlayerLevel == 2)
+                CurrentFuelAmount -= (1f);
+            else if(CurrentPlayerLevel == 3)
+                CurrentFuelAmount -= (2f);
+            else if(CurrentPlayerLevel == 4)
+                CurrentFuelAmount -= (3f);
+            else 
+                CurrentFuelAmount -= (4f);
+            
+            
             timer = 0f;
         }
         // fuel ui update
