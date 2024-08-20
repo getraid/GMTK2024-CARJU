@@ -82,21 +82,22 @@ public class MusicSfxManager : MonoBehaviour
         }*/
 
         double time = AudioSettings.dspTime;
-        if(time + 0.2d >= nextEventTime){
+        if(time + 0.3d >= nextEventTime){
             ChooseNextAudio();
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
             StartMusic(1);
-            Instance = this;       
+            Debug.Log("StartMusic was called here by " + gameObject.name);
+            Instance = this;
         }
     }
 
@@ -104,7 +105,7 @@ public class MusicSfxManager : MonoBehaviour
     public void StartMusic(int startLevel = 1)
     {
         currentMusic = startLevel;
-        nextEventTime = AudioSettings.dspTime + 0.2f; //.2 seconds for buffer
+        nextEventTime = AudioSettings.dspTime + 2f; //1 seconds for buffer
         currentMusicPart = 'a';
         switch (startLevel)
         {
@@ -120,7 +121,7 @@ public class MusicSfxManager : MonoBehaviour
     void ChooseNextAudio()
     {
         if(currentMusic == 1){
-            if(music_1_loopback.isPlaying){
+            if(music_1_loopback.isPlaying || music_1_start.isPlaying){
                 PlayNext(music_1_main);
             }else{
                 if(requestingCarChange){
@@ -241,7 +242,7 @@ public class MusicSfxManager : MonoBehaviour
     void PlayNext(AudioSource src){
         if (logMessages)
         {
-            Debug.Log("Playing next : " + src.name);
+            Debug.Log("Playing at " + nextEventTime.ToString() + " next music: " + src.name);
         }
 
         src.PlayScheduled(nextEventTime);
