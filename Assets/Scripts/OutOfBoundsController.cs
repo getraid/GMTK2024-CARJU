@@ -24,7 +24,10 @@ public class OutOfBoundsController : MonoBehaviour
     {
         if ((_ultimatePlayer.LatestController.transform.position.y < WhenToResetDownwards) || (_ultimatePlayer.LatestController.transform.position.y > WhenToResetUpwards))
         {
-            _ultimatePlayer.LatestController.transform.position = _ultimatePlayer.LatestVehicleStartingLocation;
+            Vector3 pos = _ultimatePlayer.LatestVehicleStartingLocation;
+            pos.y += startingHeightOffset;
+
+            _ultimatePlayer.LatestController.transform.position = pos;
             _ultimatePlayer.LatestController.GetRigidBody().velocity = Vector3.zero;
         }
     }

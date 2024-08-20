@@ -8,13 +8,12 @@ public class Debree : MonoBehaviour
     [SerializeField] Rigidbody _rB;
     public Action<Debree> DebreeDeleteMessage { get; set; }
 
-    static LinkedList<Debree> AllDebries { get; set; }=new LinkedList<Debree>();
+    static LinkedList<Debree> AllPhysicalDebries { get; set; }=new LinkedList<Debree>();
     int _maxDebrieLimitor = 200;
     private void Awake()
     {
         _rB.isKinematic = true;
         _rB.constraints = RigidbodyConstraints.None;
-        AllDebries.AddLast(this);
         RemoveOverLimitDebree();
     }
     public bool IsDettached { 
@@ -27,6 +26,7 @@ public class Debree : MonoBehaviour
     }
     public void AddExplosionForce(Vector3 origin,int destructionForceVal)
     {
+        AllPhysicalDebries.AddLast(this);
         _rB.isKinematic = false;
         _rB.AddExplosionForce(destructionForceVal, origin, 50);
 
@@ -48,15 +48,15 @@ public class Debree : MonoBehaviour
 
     public void RemoveOverLimitDebree()
     {
-        if(AllDebries.Count>_maxDebrieLimitor)
+        if(AllPhysicalDebries.Count>_maxDebrieLimitor)
         {
-            int howManyToRemove = AllDebries.Count - _maxDebrieLimitor;
+            int howManyToRemove = AllPhysicalDebries.Count - _maxDebrieLimitor;
 
-            LinkedListNode<Debree> d = AllDebries.First;
+            LinkedListNode<Debree> d = AllPhysicalDebries.First;
             for (int i = 0; i < howManyToRemove; i++)
             {
                 if (d.Value == null)
-                    AllDebries.RemoveFirst();
+                    AllPhysicalDebries.RemoveFirst();
                 else
                 {
                     d.Value.DebreeDeleteMessage?.Invoke(d.Value);
