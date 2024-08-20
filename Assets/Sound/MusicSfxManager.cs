@@ -314,9 +314,9 @@ public class MusicSfxManager : MonoBehaviour
         //volume is a float in [0,1]
         //default volume is 0.8 for music and 0.65 for sfx
         if(mixerGroup == PauseMenuVolume.music){
-            mixer.SetFloat("MusicVolume", (100*volume) - 80f);
+            mixer.SetFloat("MusicVolume", volume);
         }else{
-            mixer.SetFloat("SfxVolume", (100*volume) - 80f);
+            mixer.SetFloat("SfxVolume", volume);
         }
     }
 }

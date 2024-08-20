@@ -47,6 +47,18 @@ public class PauseController : MonoBehaviour
         pauseMenu.gameObject.SetActive(false);
     }
 
+    public void SetMusicVolume(float value)
+    {
+        float log_value = (value <= 0f) ? -120f : Mathf.Log10(value) * 20;
+        MusicSfxManager.Instance.SetVolume(MusicSfxManager.PauseMenuVolume.music, log_value);
+    }
+
+    public void SetSfxVolume(float value)
+    {
+        float log_value = (value <= 0f) ? -120f : Mathf.Log10(value) * 20;
+        MusicSfxManager.Instance.SetVolume(MusicSfxManager.PauseMenuVolume.sfx, log_value);
+    }
+
     public void QuitGame()
     {
 #if UNITY_STANDALONE_WIN
