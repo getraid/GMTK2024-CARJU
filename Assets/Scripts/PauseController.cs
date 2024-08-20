@@ -27,9 +27,6 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0;
 
         pauseMenu.gameObject.SetActive(true);
-
-        // Cut Volume in Half
-        MusicSfxManager.Instance.mixer.SetFloat("MasterVolume", -60f);
     }
 
     public void Unstuck()
@@ -48,8 +45,6 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1;
 
         pauseMenu.gameObject.SetActive(false);
-
-        MusicSfxManager.Instance.mixer.SetFloat("MasterVolume", 0f);
     }
 
     public void QuitGame()

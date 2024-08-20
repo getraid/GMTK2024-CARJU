@@ -304,4 +304,19 @@ public class MusicSfxManager : MonoBehaviour
             Destroy(newSingleSfxPlayer);
         }
     }
+
+    public enum PauseMenuVolume
+    {
+        music, sfx
+    }
+
+    public void SetVolume(PauseMenuVolume mixerGroup, float volume){
+        //volume is a float in [0,1]
+        //default volume is 0.8 for music and 0.65 for sfx
+        if(mixerGroup == PauseMenuVolume.music){
+            mixer.SetFloat("MusicVolume", (100*volume) - 80f);
+        }else{
+            mixer.SetFloat("SfxVolume", (100*volume) - 80f);
+        }
+    }
 }
