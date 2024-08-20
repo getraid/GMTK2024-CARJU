@@ -27,6 +27,7 @@ public class Startup: MonoBehaviour
                 loadingBar.value = Mathf.Clamp01(loading.progress / 0.9f);
             else
             {
+                MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.ui_click);
                 loadingBar.gameObject.SetActive(true);
             }
         
