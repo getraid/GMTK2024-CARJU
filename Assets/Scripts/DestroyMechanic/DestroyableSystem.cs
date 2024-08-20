@@ -28,7 +28,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
 
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
-    int _ignoreCollisionsByLevelDifference = 2;
+    int _ignoreCollisionsByLevelDifference = 1;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
 
     List<Collider> _playerColliderTouching = new List<Collider>();
@@ -67,6 +67,9 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 PartiallyDestroyTheObject();
             }
         }
+        else if(_levelOfTheCarNeededForDestroyment==1 && other.CompareTag("Police")&&!_isDestroying)
+            DestroyTheObject();
+
     }
     private void OnTriggerExit(Collider other)
     {

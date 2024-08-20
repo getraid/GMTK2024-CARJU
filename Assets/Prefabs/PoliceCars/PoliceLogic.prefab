@@ -918,6 +918,7 @@ MonoBehaviour:
   - {fileID: 5843382528307557600}
   - {fileID: 2605137920669193329}
   - {fileID: 4509394954990236481}
+  _typeOfSfxToPlayOnDestroy: 0
 --- !u!1 &1862924612198094805
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +934,7 @@ GameObject:
   - component: {fileID: 1433326905926154462}
   m_Layer: 10
   m_Name: PoliceLogic
-  m_TagString: Untagged
+  m_TagString: Police
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
