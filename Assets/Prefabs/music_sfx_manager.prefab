@@ -585,6 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768b02cd44459054a9ef7098cacdcb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 0}
   logMessages: 0
   music_1_start: {fileID: 2332813589575422602}
   music_1_main: {fileID: 7387611291024427501}
@@ -646,6 +647,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c221ce280412fe94fb2c882b533c9a57, type: 3}
   - name: ui_click
     clip: {fileID: 8300000, guid: d812b6619cbb9de48a0a2b6d386a1235, type: 3}
+  - name: fire_hydrant
+    clip: {fileID: 8300000, guid: 2167b81f8c282e245bf184db9e273b27, type: 3}
   policeSfx: {fileID: 8300000, guid: 9dccaf29d2f00bf408215c99bac96bd1, type: 3}
   policeSfxWithVoice: {fileID: 8300000, guid: f67f580868fa5ab42b8a41fa111072e1, type: 3}
 --- !u!1 &1079706874760039344

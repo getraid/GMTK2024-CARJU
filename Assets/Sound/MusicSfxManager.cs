@@ -288,7 +288,7 @@ public class MusicSfxManager : MonoBehaviour
     }
     public enum TypeOfSfx
     {
-        barril, big_building, bush, car_crash, cone_hit, fence_break, fuel, metal_bin, metal_post_big, metal_post_small, small_building, stone_wall_break, tree, ui_click
+        barril, big_building, bush, car_crash, cone_hit, fence_break, fire_hydrant, fuel, metal_bin, metal_post_big, metal_post_small, small_building, stone_wall_break, tree, ui_click
     }
 
     public void PlaySingleSfx(Vector3 position, TypeOfSfx sfxType){
