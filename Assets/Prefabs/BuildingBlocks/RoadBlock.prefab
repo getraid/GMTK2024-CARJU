@@ -2374,7 +2374,7 @@ MonoBehaviour:
   - {fileID: 2804180500000862760}
   - {fileID: 198227236873560129}
   - {fileID: 6571992771376461685}
-  _typeOfSfxToPlayOnDestroy: 11
+  _typeOfSfxToPlayOnDestroy: 12
 --- !u!1001 &3262416594494729843
 PrefabInstance:
   m_ObjectHideFlags: 0

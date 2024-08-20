@@ -629,7 +629,7 @@ MonoBehaviour:
   - {fileID: 3205135825999014017}
   - {fileID: 5049509596425147899}
   - {fileID: 7995680951385762077}
-  _typeOfSfxToPlayOnDestroy: 8
+  _typeOfSfxToPlayOnDestroy: 9
 --- !u!1 &1330449596191512365 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1163591328471785233, guid: 456411fe241ae8f4eb067b80d5392e8a,

@@ -1111,7 +1111,7 @@ MonoBehaviour:
   - {fileID: 2995168874646186894}
   - {fileID: 7586312432543166874}
   - {fileID: 6305503733367397701}
-  _typeOfSfxToPlayOnDestroy: 10
+  _typeOfSfxToPlayOnDestroy: 11
 --- !u!1 &4439108708335853415 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 3f1180904f8c4c347b036eec7c370e81,

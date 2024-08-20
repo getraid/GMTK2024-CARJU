@@ -1706,7 +1706,7 @@ MonoBehaviour:
   - {fileID: 4005226283146762896}
   - {fileID: 2578406489711931655}
   - {fileID: 3206727954798252280}
-  _typeOfSfxToPlayOnDestroy: 9
+  _typeOfSfxToPlayOnDestroy: 10
 --- !u!4 &6683945835859490564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5dbc2c012b278d84082cd298c8fc8f35,
