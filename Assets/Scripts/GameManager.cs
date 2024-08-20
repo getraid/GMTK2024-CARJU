@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public float CurrentFuelAmount { get; set; } = 50;
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
 
+    public float fuelDrainagePerSecond = 1f;
+
     [SerializeField] List<Material> _skyboxesMaterials;
 
     private VehicleController _activeVehicle;
@@ -88,7 +90,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+    public float timer = 0f;
     private void Update()
     {
     #if UNITY_EDITOR
@@ -99,8 +101,18 @@ public class GameManager : MonoBehaviour
         }
     #endif
 
+
+        if (timer >= 1f)
+        {
+            CurrentFuelAmount -= ((float)CurrentPlayerLevel * fuelDrainagePerSecond);
+            timer = 0f;
+        }
         // fuel ui update
         FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
+
+        
+
+        timer += Time.deltaTime;
     }
 
     public VehicleController GetActiveVehicle()
