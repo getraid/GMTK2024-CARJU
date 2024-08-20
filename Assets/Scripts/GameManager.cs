@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     [field: SerializeField] public float CurrentFuelAmount { get; set; } = 50;
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
+
+    public float fuelDrainagePerSecond = 1f;
 
     [SerializeField] List<Material> _skyboxesMaterials;
 
@@ -94,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+    [FormerlySerializedAs("timer")] public float timer_fueldepletion = 0f;
     private void Update()
     {
     #if UNITY_EDITOR
@@ -105,8 +108,37 @@ public class GameManager : MonoBehaviour
         }
     #endif
 
+
+        if (timer_fueldepletion >= 1f)
+        {
+            if(CurrentPlayerLevel == 1)
+                CurrentFuelAmount -= (0.2f);
+            else if(CurrentPlayerLevel == 2)
+                CurrentFuelAmount -= (1f);
+            else if(CurrentPlayerLevel == 3)
+                CurrentFuelAmount -= (2f);
+            else if(CurrentPlayerLevel == 4)
+                CurrentFuelAmount -= (3f);
+            else 
+                CurrentFuelAmount -= (4f);
+            
+            
+            timer_fueldepletion = 0f;
+        }
         // fuel ui update
         FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
+
+
+
+        if (CurrentPlayerLevel == 5 &&
+            (_DebreePartsTotalCollected / (float)_levelDebreeTresholds[CurrentPlayerLevel - 1] >= 0.99f))
+        {
+
+            SceneManager.LoadScene(2);
+        }
+        
+
+        timer_fueldepletion += Time.deltaTime;
     }
 
     public VehicleController GetActiveVehicle()
