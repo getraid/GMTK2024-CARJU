@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GMTK2024Project.unity
     guid: 573dce40cd0760a4187278640aff7089
+  - enabled: 1
+    path: Assets/GMTK_END.unity
+    guid: 75874a5b6001143c0a86381526141734
   m_configObjects: {}
