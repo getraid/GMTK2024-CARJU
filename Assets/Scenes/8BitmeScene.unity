@@ -384,16 +384,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2664193335103816540, guid: a6fa3b712a3744d1ab702b16b4682e2d,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664193335103816540, guid: a6fa3b712a3744d1ab702b16b4682e2d,
-        type: 3}
-      propertyPath: _ultimatePlayer
-      value: 
-      objectReference: {fileID: 379259770}
     - target: {fileID: 5880413044966869881, guid: a6fa3b712a3744d1ab702b16b4682e2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -998,11 +988,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 747226498031090746, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: brakeForce
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 1192964861299610421, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
         type: 3}
       propertyPath: m_Name
@@ -1058,38 +1043,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6301442977203990922, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: brakeForce
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7197130516135104190, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: brakeForce
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8360187266710713420, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-        type: 3}
-      propertyPath: brakeForce
-      value: 0.45
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c468d7f3a0ef754cb4ece67bc7a800b, type: 3}
---- !u!114 &379259770 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3994417924972886227, guid: 5c468d7f3a0ef754cb4ece67bc7a800b,
-    type: 3}
-  m_PrefabInstance: {fileID: 379259768}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55a6f7d16e40b4d4ebdb5983106fa2b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &392162436
 GameObject:
   m_ObjectHideFlags: 0

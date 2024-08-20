@@ -48,7 +48,8 @@ MonoBehaviour:
   <FuelPercentGUI>k__BackingField: 1
   <SpeedometerPercentGUI>k__BackingField: 1
   <LevelUpPercentGUI>k__BackingField: 1
-  _musicManager: {fileID: 2279416624087743018}
+  levelVFX: {fileID: 2310453396731621909, guid: edc657480d78314449022898c4895619,
+    type: 3}
   <CurrentFuelAmount>k__BackingField: 50
   <MaxFuelAmount>k__BackingField: 100
   _skyboxesMaterials:
@@ -58,6 +59,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ceb0a3ed2cb53a94fa21843cc958c52b, type: 2}
   - {fileID: 2100000, guid: 3930fc89a28b29746bde6a2389a513e0, type: 2}
   <CurrentPlayerLevel>k__BackingField: 1
+  _levelDebreeTresholds: 64000000c80000002c01000090010000f4010000
 --- !u!1001 &4453973730526051516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,18 +128,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2add384cc1ac745ae80d7416581f5e, type: 3}
---- !u!114 &2279416624087743018 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2480829003853956758, guid: ca2add384cc1ac745ae80d7416581f5e,
-    type: 3}
-  m_PrefabInstance: {fileID: 4453973730526051516}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 768b02cd44459054a9ef7098cacdcb18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2905216702288033129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1557918575766129109, guid: ca2add384cc1ac745ae80d7416581f5e,

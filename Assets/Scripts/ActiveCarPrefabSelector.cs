@@ -11,7 +11,10 @@ public class ActiveCarPrefabSelector : MonoBehaviour
     [SerializeField] private CameraController cameraControllerRef;
 
     [SerializeField] private int policePerLevel = 1;
-    
+
+
+    [SerializeField] private Transform levelVFX;
+
     private PoliceSpawner _policeSpawner;
 
     private void Awake()
@@ -47,6 +50,12 @@ public class ActiveCarPrefabSelector : MonoBehaviour
         // 0, 2, 4, 6
         int spawn_count = policePerLevel * (GameManager.Instance.CurrentPlayerLevel - 1);
         _policeSpawner.SetMaxSpawnCount(spawn_count);
+
+        if (levelVFX)
+        {
+            Transform instance = Instantiate(levelVFX, LatestController.transform.position, Quaternion.identity);
+            instance.localScale = Vector3.one * GameManager.Instance.CurrentPlayerLevel;
+        }
     }
 
     // Update is called once per frame

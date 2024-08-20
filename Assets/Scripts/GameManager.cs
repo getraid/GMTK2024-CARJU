@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     [field:SerializeField] public float SpeedometerPercentGUI { get; set; } = 1f; // 0-1f
     
     [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
-
     
     float _DebreePartsTotalCollected = 0;
 

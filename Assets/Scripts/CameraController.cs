@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float turnLookAhead = 2f;
 
     private Vector2 _inputAxis;
+    private bool _isFlipCamera;
 
     private void Start()
     {
@@ -30,6 +31,9 @@ public class CameraController : MonoBehaviour
     {
         _inputAxis.x = Input.GetAxis("Horizontal");
         _inputAxis.y = Input.GetAxis("Vertical");
+
+        // Get "Fire1"
+        _isFlipCamera = Input.GetButton("Fire1");
     }
 
     private void LateUpdate()

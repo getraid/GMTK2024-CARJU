@@ -424,6 +424,12 @@ public class VehicleController : MonoBehaviour
                 play_skid_sound = true;
                 _skidMarkContainer[i].emitting = true;
                 _tireSmokeContainer[i].Emit(Mathf.RoundToInt(turn_threshold + speed_threshold));
+
+                // Check if tire smoke has any children particles and emit those.
+                for (int j = 0; j < _tireSmokeContainer[i].transform.childCount; j++)
+                {
+                    _tireSmokeContainer[i].transform.GetChild(j).GetComponent<ParticleSystem>().Emit(Mathf.RoundToInt(turn_threshold + speed_threshold));
+                }
                 
             }
         }
