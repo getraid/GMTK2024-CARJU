@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public class PlayerStatusUI : MonoBehaviour
     [SerializeField] private Image TrashDynamic;
     [SerializeField] private Image LevelUp_incoming_glow;
     [SerializeField] private List<Sprite> spriteAnim;
+    [SerializeField] TMP_Text _debreeCount;
     #endregion
     
     const float speedometerMaxTransformToDeg = -88.8f;
@@ -29,8 +31,9 @@ public class PlayerStatusUI : MonoBehaviour
     private float timeTrashC= 0f;
     private int trashImgIdx= 0;
     private float prevlevelUpPercentage = 0f;
-    
-    
+    private float _uiDebreeCount = 0;
+
+
     private GameManager gameManager;
 
 
@@ -86,6 +89,33 @@ public class PlayerStatusUI : MonoBehaviour
         LevelUp_incoming_glow.gameObject.SetActive(closeToLevelUp);
         
         prevlevelUpPercentage = levelUpPercentage;
+
+        if (_uiDebreeCount > gameManager.DebreePartsTotalCollected)
+        {
+            _uiDebreeCount = gameManager.DebreePartsTotalCollected;
+            _debreeCount.color = Color.white;
+            _debreeCount.text = $"{(int)_uiDebreeCount}/{gameManager.LevelDebreeTresholds[gameManager.CurrentPlayerLevel - 1]}";
+        }
+        else
+        {
+            int difference = 1 + (int)((gameManager.DebreePartsTotalCollected - _uiDebreeCount) / 20);      //If the UI is not catching on, lets speed it up
+            
+            float tmp = MathF.Min(gameManager.DebreePartsTotalCollected, _uiDebreeCount + difference);
+
+            if (tmp > gameManager.LevelDebreeTresholds[gameManager.CurrentPlayerLevel - 1])
+            {
+                _debreeCount.color = Color.green;
+                _uiDebreeCount = gameManager.LevelDebreeTresholds[gameManager.CurrentPlayerLevel - 1];
+                _debreeCount.text = "LEVEL UP SOON";
+
+            }
+            else
+            {
+                _uiDebreeCount = tmp;
+                _debreeCount.text = $"{(int)_uiDebreeCount}/{gameManager.LevelDebreeTresholds[gameManager.CurrentPlayerLevel - 1]}";
+            }
+        }
+
         timeTrashC += Time.deltaTime;
     }
 }

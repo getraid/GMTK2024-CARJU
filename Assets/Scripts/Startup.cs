@@ -17,20 +17,10 @@ public class Startup: MonoBehaviour
     private float timer = 0;
     public void SwitchSceneFromMainMenu()
     {
-        
-#if UNITY_EDITOR
-        LoadAsync();
-#endif
-        
-#if UNITY_STANDALONE_OSX
-        LoadAsync();
-#endif   
-        
-#if UNITY_STANDALONE_WIN
-        LoadAsync();
-#endif
 
-#if UNITY_WEBGL
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+        LoadAsync();
+#elif UNITY_WEBGL
         LoadSync();
 #endif
     }

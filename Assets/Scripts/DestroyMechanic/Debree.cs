@@ -7,14 +7,23 @@ public class Debree : MonoBehaviour
 {
     [SerializeField] Rigidbody _rB;
     public Action<Debree> DebreeDeleteMessage { get; set; }
+    public static Action<Debree> DebreeAttaching { get; set; }
+    public static int MaxDebrieLimitor { get; set; } = 200;
 
+    public bool AlreadyExploded { get; set; } = false;
     static LinkedList<Debree> AllPhysicalDebries { get; set; }=new LinkedList<Debree>();
-    int _maxDebrieLimitor = 200;
+    bool _isAttachedToCar = false;
     private void Awake()
     {
         _rB.isKinematic = true;
         _rB.constraints = RigidbodyConstraints.None;
         RemoveOverLimitDebree();
+    }
+    public void AttachDebreeToCar()
+    {
+        _rB.velocity = Vector3.zero;
+        DebreeAttaching?.Invoke(this);
+        _isAttachedToCar=true;
     }
     public bool IsDettached { 
         get; 
@@ -22,35 +31,31 @@ public class Debree : MonoBehaviour
     }
     public void MoveTowards(Vector3 direction)
     {
-        _rB.AddForce(direction.normalized, ForceMode.VelocityChange);
+        _rB.AddForce(direction, ForceMode.VelocityChange);
     }
     public void AddExplosionForce(Vector3 origin,int destructionForceVal)
     {
         AllPhysicalDebries.AddLast(this);
+        AlreadyExploded = true;
         _rB.isKinematic = false;
         _rB.AddExplosionForce(destructionForceVal, origin, 50);
+
 
         StartCoroutine(DetachDelay());
         IEnumerator DetachDelay()
         {
             yield return new WaitForSeconds(1);
-            IsDettached = true;
-            StartCoroutine(DestroyDebree(UnityEngine.Random.Range(10, 30)));        //When player doesnt pick up the debrie, it gets destroyed in random interval
-        }
 
-        IEnumerator DestroyDebree(int waitUntilDeletion)
-        {
-            yield return new WaitForSeconds(waitUntilDeletion);
-
-            DebreeDeleteMessage?.Invoke(this);
+            if (!_isAttachedToCar)
+                AttachDebreeToCar();
         }
     }
 
     public void RemoveOverLimitDebree()
     {
-        if(AllPhysicalDebries.Count>_maxDebrieLimitor)
+        if(AllPhysicalDebries.Count> MaxDebrieLimitor)
         {
-            int howManyToRemove = AllPhysicalDebries.Count - _maxDebrieLimitor;
+            int howManyToRemove = AllPhysicalDebries.Count - MaxDebrieLimitor;
 
             LinkedListNode<Debree> d = AllPhysicalDebries.First;
             for (int i = 0; i < howManyToRemove; i++)

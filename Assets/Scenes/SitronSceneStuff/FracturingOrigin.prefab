@@ -145,10 +145,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _probabilityOfDebreeAttach: 0.3
-  _probabilityPartialDesctruction: 0.1
+  _initialCollisionCollider: {fileID: 0}
   _levelOfTheCarNeededForDestroyment: 1
-  _destroyParticles: {fileID: 8864005836149028325}
+  _destroyParticles: {fileID: 8773252074874592467}
+  _desctructionType: 0
+  _slowCarVelocityMultiplier: 0.9
+  _destructionForceMultiplier: 50
+  _initialMeshRenderers: []
   _fragments:
   - {fileID: 0}
   - {fileID: 0}
@@ -175,6 +178,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _typeOfSfxToPlayOnDestroy: 0
 --- !u!4 &4124489650916395817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9279d9ca03edc7843a0029365f0ee0af,
@@ -336,9 +340,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
---- !u!1 &8864005836149028325 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00,
+--- !u!198 &8773252074874592467 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198220379293217532, guid: d8f0099df63275647a8bcf646df1ca00,
     type: 3}
   m_PrefabInstance: {fileID: 8863332719381720623}
   m_PrefabAsset: {fileID: 0}

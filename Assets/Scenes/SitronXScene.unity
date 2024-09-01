@@ -1697,10 +1697,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _environmentPiece: {fileID: 893156354468781890, guid: 2e680f794d8e2de4d8b686ee2fb5fe47,
     type: 3}
-  _edgesEnvironment:
-  - {fileID: 386043748}
+  _emptyPiece: {fileID: 0}
   _ultimatePlayer: {fileID: 889054359}
   _sizeOfTheMapBlock: 220
+  _howManyToPrepool: 50
+  _startingArea: {fileID: 0}
 --- !u!4 &349269187
 Transform:
   m_ObjectHideFlags: 0
@@ -1921,12 +1922,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e680f794d8e2de4d8b686ee2fb5fe47, type: 3}
---- !u!1 &386043748 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 893156354468781890, guid: 2e680f794d8e2de4d8b686ee2fb5fe47,
-    type: 3}
-  m_PrefabInstance: {fileID: 386043747}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &386043749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6734456300227950757, guid: 2e680f794d8e2de4d8b686ee2fb5fe47,

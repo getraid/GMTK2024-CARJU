@@ -2,6 +2,7 @@ using Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TextCore;
@@ -11,9 +12,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Collider))]
 public class DestroyableSystem : MonoBehaviour, IDestroyable
 {
-    public static Action<Debree> DebreeAttaching { get; set; }
-
-    float _probabilityOfDebreeAttach = 0.7f;
+    float _probabilityOfDebreeInstantAttach = 0.3f;
     float _probabilityPartialDesctruction = 0.2f;
 
     [SerializeField] Collider _initialCollisionCollider;
@@ -29,10 +28,12 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     int _howManyPartialDestructionUntilTheFullOne = 2;
     int _numberOfPartialDestructions = 0;
     int _ignoreCollisionsByLevelDifference = 1;
+    float _ignorePartialDestructionMilTime = 1000;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
 
     List<Collider> _playerColliderTouching = new List<Collider>();
     bool _isDestroying = false;
+    DateTime _latestTimeOfPartiallyDestructed=DateTime.MinValue;
     private void Awake()
     {
         _fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
@@ -43,87 +44,111 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     }
 
     private void OnTriggerEnter(Collider other)
-    {   
-        if (other.CompareTag("Player") && _playerColliderTouching.Count==0)
+    {
+        if (other.CompareTag("Player"))
         {
             _playerColliderTouching.Add(other);
 
-            if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions>=_howManyPartialDestructionUntilTheFullOne))
+            if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions >= _howManyPartialDestructionUntilTheFullOne))
             {
                 if ((GameManager.Instance.CurrentPlayerLevel - _levelOfTheCarNeededForDestroyment) <= _ignoreCollisionsByLevelDifference)
                 {
                     if (!_isDestroying)
                     {
-                        DestroyTheObject();
+                        DateTime destTime = DateTime.Now;
+                        if ((destTime - _latestTimeOfPartiallyDestructed).TotalMilliseconds < _ignorePartialDestructionMilTime)         //If the object was partially destructed few moments ago dont turn total destruction (like when wheel hits it)
+                            return;
+
+                        DestroyTheObject(other.ClosestPoint(transform.position));
                         MusicSfxManager.Instance.PlaySingleSfx(transform.position, _typeOfSfxToPlayOnDestroy);
                     }
                 }
                 else
                 {
+                    GameManager.Instance.DebreePartsTotalCollected += 0.25f * _fragments.Where(x=>!x.AlreadyExploded).Count();      //Even when only disabled, it also adds to debree meter
+
                     _initialCollisionCollider.enabled = false;
                     Destroy(gameObject);
                 }
             }
-            else if ((_levelOfTheCarNeededForDestroyment- GameManager.Instance.CurrentPlayerLevel) == 1)        //Make partial destruction on object only one level above (so tiny car doesnt destroy scyscraper)
+            else if ((_levelOfTheCarNeededForDestroyment - GameManager.Instance.CurrentPlayerLevel) == 1)        //Make partial destruction on object only one level above (so tiny car doesnt destroy scyscraper)
             {
-                PartiallyDestroyTheObject();
+                PartiallyDestroyTheObject(other.ClosestPoint(transform.position));
                 _initialCollisionCollider.enabled = true;
             }
             else
+            {
                 _initialCollisionCollider.enabled = true;
+                MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
+            }
         }
         else if(_levelOfTheCarNeededForDestroyment==1 && other.CompareTag("Police")&&!_isDestroying)
-            DestroyTheObject();
+            DestroyTheObject(other.ClosestPoint(transform.position));
         else if (other.CompareTag("Police"))
             _initialCollisionCollider.enabled = true;
 
     }
     private void OnTriggerExit(Collider other)
     {
-        _playerColliderTouching.Remove(other);
-
-        if (_playerColliderTouching.Count == 0)
+        if(other.CompareTag("Player"))
             _initialCollisionCollider.enabled = false;
     }
 
-    void PartiallyDestroyTheObject()
+    void PartiallyDestroyTheObject(Vector3 collisionPoint)
     {
+        DateTime destTime = DateTime.Now;
+        if ((destTime - _latestTimeOfPartiallyDestructed).TotalMilliseconds< _ignorePartialDestructionMilTime)         //Ignore other collider types like wheels
+            return;
+        
+        _latestTimeOfPartiallyDestructed=DateTime.Now;
         _initialMeshRenderers.ForEach(x=>x.enabled = false);
         _initialCollisionCollider.enabled = false;
 
+        int howManyPartialled = 0;
         for (int i = 0; i < _fragments.Count; i++)
         {
             _fragments[i].gameObject.SetActive(true);
             if (Random.Range(0, 1.0f) <= _probabilityPartialDesctruction)
             {
-                _fragments[i].AddExplosionForce( transform.position, _destructionForceMultiplier);
+                _fragments[i].AddExplosionForce(collisionPoint, _destructionForceMultiplier);
+                _fragments[i].AttachDebreeToCar();
+                howManyPartialled++;
             }
 
         }
+        GameManager.Instance.DebreePartsTotalCollected += 0.25f *howManyPartialled;
         _numberOfPartialDestructions++;
         MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
 
     }
-    void DestroyTheObject()
+    void DestroyTheObject(Vector3 collisionPoint)
     {
         _isDestroying = true;
         _initialMeshRenderers.ForEach(x => x.enabled = false);
         _initialCollisionCollider.enabled = false;
 
-        for(int i=0;i<_fragments.Count;i++)
+        int howManyDestroyed = 0;
+
+        for (int i=0;i<_fragments.Count;i++)
         {
+            if (_fragments[i].AlreadyExploded)
+                continue;
+
             _fragments[i].gameObject.SetActive(true);
-            _fragments[i].AddExplosionForce(transform.position, _destructionForceMultiplier);
-            if (Random.Range(0, 1.0f)<=_probabilityOfDebreeAttach)
+            _fragments[i].AddExplosionForce(collisionPoint, _destructionForceMultiplier);
+            if (Random.Range(0, 1.0f)<= _probabilityOfDebreeInstantAttach)
             {
-                DebreeAttaching?.Invoke(_fragments[i]);
+                _fragments[i].AttachDebreeToCar();
             }
+            howManyDestroyed++;
         }
         if (_destroyParticles != null)
         {
             _destroyParticles.gameObject?.SetActive(true);
             StartCoroutine(TurnOffParticles());
         }
+
+        GameManager.Instance.DebreePartsTotalCollected += 0.25f * howManyDestroyed;
         DestructionEvent?.Invoke(gameObject,EventArgs.Empty);
 
         IEnumerator TurnOffParticles()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,19 +13,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public Action PlayerLeveledUp { get; set; }
 
-    [field:SerializeField] public float FuelPercentGUI { get; set; } = 0f; // 0-1f
+    public float FuelPercentGUI { get; set; } = 0f; // 0-1f
     
-    [field:SerializeField] public float SpeedometerPercentGUI { get; set; } = 1f; // 0-1f
+    public float SpeedometerPercentGUI { get; set; } = 0f; // 0-1f
     
-    [field:SerializeField] public float LevelUpPercentGUI { get; set; } = 1f; // 0-1f
-    
+    public float LevelUpPercentGUI { get; set; } = 0f; // 0-1f
+
+    public float fuelDrainagePerSecond { get; set; } = 1f;
+
+
     float _DebreePartsTotalCollected = 0;
 
 
     [field: SerializeField] public float CurrentFuelAmount { get; set; } = 50;
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
 
-    public float fuelDrainagePerSecond = 1f;
 
     [SerializeField] List<Material> _skyboxesMaterials;
 
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour
         {
 
             _DebreePartsTotalCollected = value;
-            LevelUpPercentGUI = _DebreePartsTotalCollected / (float)_levelDebreeTresholds[CurrentPlayerLevel - 1];
+            LevelUpPercentGUI = _DebreePartsTotalCollected / (float)LevelDebreeTresholds[CurrentPlayerLevel - 1];
             if (IsCloseToLevelUp && !_isLevelingUp)
             {
                 _isLevelingUp = true;
@@ -61,11 +64,12 @@ public class GameManager : MonoBehaviour
         get { return _CurrentPlayerLevel; }
         set { _CurrentPlayerLevel = Math.Clamp(value,1,5); }
     }
+    public List<int> LevelDebreeTresholds { get; set; } = new List<int>() { 50, 500, 2000, 5000, 10000 };
+
 
 
 
     private PlayerStatusUI PlayerStatusUI;
-    List<int> _levelDebreeTresholds = new List<int>() { 400, 1000, 1000, 1500,2000 };
     bool _isLevelingUp;
 
 
@@ -131,7 +135,7 @@ public class GameManager : MonoBehaviour
 
 
         if (CurrentPlayerLevel == 5 &&
-            (_DebreePartsTotalCollected / (float)_levelDebreeTresholds[CurrentPlayerLevel - 1] >= 0.99f))
+            (_DebreePartsTotalCollected / (float)LevelDebreeTresholds[CurrentPlayerLevel - 1] >= 0.99f))
         {
 
             SceneManager.LoadScene(2);

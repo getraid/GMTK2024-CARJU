@@ -2,52 +2,65 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class EnvironmentManager : MonoBehaviour
 {
     [SerializeField] GameObject _environmentPiece;
     [SerializeField] GameObject _emptyPiece;
-    [SerializeField] List<GameObject> _edgesEnvironment = new List<GameObject>();
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
     [SerializeField] int _howManyToPrepool = 50;
+    [SerializeField] GameObject _startingArea;
+    [SerializeField] TMP_Text _loadingText;
 
-    public Action FinishedLoading { get; set; }
-    Dictionary<GameObject,GameObject> _placedEnvironments = new Dictionary<GameObject, GameObject>();
-    List<Tuple<GameObject,bool>> _objectPool=new List<Tuple<GameObject,bool>>();
+    Dictionary<Vector2, PoolValue> _placedEnvironmentsMap = new Dictionary<Vector2, PoolValue>();
+    Queue<PoolValue> _objectPool=new Queue<PoolValue>();
+
+    public class PoolValue
+    {
+        public GameObject PoolObject { get; set; }
+        public bool CanBeReused { get; set; }
+    }
+
     int _poolIndex = 0;
 
-    int _groundLayer = 1 << 6;
-    float _minimumEdgeDistance = 220;
-    float _maximumDespawnEdgeDistance = 520;
+    float _minimumTileDistance = 300;
+    float _maximumDespawnTileDistance = 520;
     float _mapCheckingDelaySeconds = 0.1f;
 
-    Queue<Tuple<GameObject, bool>> _activationCommands = new Queue<Tuple<GameObject, bool>>();
+    Queue<Tuple<PoolValue, bool>> _activationCommands = new Queue<Tuple<PoolValue, bool>>();
 
-    private void Awake()
+    IEnumerator Start()
     {
-        foreach (var item in _edgesEnvironment)
-            _placedEnvironments.Add(item.gameObject, null);
+        Time.timeScale = 0;
+        PoolValue startingPool = new PoolValue() { PoolObject = _startingArea, CanBeReused = true };
+        _placedEnvironmentsMap.Add(new Vector2(0, 0), startingPool);
 
-
-        for(int i=0;i<_howManyToPrepool;i++)
+        for (int i = 0; i < _howManyToPrepool; i++)
         {
+            _loadingText.text = $"Spawning...\n{i+1}/{_howManyToPrepool}";
             GameObject poolObj = Instantiate(_environmentPiece, transform);
-            _objectPool.Add(new(poolObj,true));
+            poolObj.SetActive(false);
+            poolObj.name = i.ToString();
+            _objectPool.Enqueue(new PoolValue() { PoolObject = poolObj, CanBeReused = true });
+
+            yield return null;
         }
 
         StartCoroutine(UpdateLoop());
         StartCoroutine(CommandQueue());
-    }
-    private void Start()
-    {
-        _objectPool.ForEach(x => x.Item1.SetActive(false));
 
-        FinishedLoading?.Invoke();
+        _loadingText.enabled = false;
+        Time.timeScale = 1;
     }
+
+
+
     IEnumerator UpdateLoop()
     {
         while (true)
@@ -56,63 +69,68 @@ public class EnvironmentManager : MonoBehaviour
 
             try
             {
+                List<KeyValuePair<Vector2, PoolValue>> toGoThru = _placedEnvironmentsMap.ToList();
 
-                List<GameObject> edgesToRemove = new List<GameObject>();
-                List<GameObject> edgesToAdd = new List<GameObject>();
-                List<GameObject> objectsToDestroy = new List<GameObject>();
-                for (int i = 0; i < _edgesEnvironment.Count; i++)
-                {
+                foreach (KeyValuePair<Vector2, PoolValue> tile in toGoThru)
+                { 
                     try
                     {
-                        float edgeDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, _edgesEnvironment[i].transform.position);
+                        float tileDistance = Vector3.Distance(_ultimatePlayer.LatestController.transform.position, tile.Value.PoolObject.transform.position);
 
-                        if (edgeDistance < _minimumEdgeDistance)
+                        Vector2 left = tile.Key + new Vector2(-_sizeOfTheMapBlock, 0);
+                        Vector2 right = tile.Key + new Vector2(_sizeOfTheMapBlock, 0);
+                        Vector2 up = tile.Key + new Vector2(0, _sizeOfTheMapBlock);
+                        Vector2 down = tile.Key + new Vector2(0, -_sizeOfTheMapBlock);
+
+                        if (tileDistance < _minimumTileDistance)
                         {
-
-                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.left * _sizeOfTheMapBlock), out GameObject leftInstance))
+                            if(!_placedEnvironmentsMap.ContainsKey(left))
                             {
-                                _placedEnvironments.Add(leftInstance, _edgesEnvironment[i]);
-                                edgesToAdd.Add(leftInstance);
-                                _activationCommands.Enqueue(new(leftInstance, true));
-                            }
-                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.right * _sizeOfTheMapBlock), out GameObject rightInstance))
-                            {
-                                _placedEnvironments.Add(rightInstance, _edgesEnvironment[i]);
-                                edgesToAdd.Add(rightInstance);
-                                _activationCommands.Enqueue(new(rightInstance, true));
+                                Vector3 newPos=new Vector3(left.x,0, left.y);
 
-                            }
-                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.forward * _sizeOfTheMapBlock), out GameObject forwardInstance))
-                            {
-                                _placedEnvironments.Add(forwardInstance, _edgesEnvironment[i]);
-                                edgesToAdd.Add(forwardInstance);
-                                _activationCommands.Enqueue(new(forwardInstance, true));
+                                PoolValue til= SetNewTilePositionAndRotation(newPos, new Vector3(0, Random.Range(0, 3) * 90, 0));
+                                _placedEnvironmentsMap.Add(left, til);
 
-                            }
-                            if (CheckDirectionForInstantiation(_edgesEnvironment[i].transform.position + (Vector3.back * _sizeOfTheMapBlock), out GameObject backInstance))
-                            {
-                                _placedEnvironments.Add(backInstance, _edgesEnvironment[i]);
-                                edgesToAdd.Add(backInstance);
-                                _activationCommands.Enqueue(new(backInstance, true));
-
+                                _activationCommands.Enqueue(new(til, true));
                             }
 
-                            edgesToRemove.Add(_edgesEnvironment[i]);
+                            if (!_placedEnvironmentsMap.ContainsKey(right))
+                            {
+                                Vector3 newPos = new Vector3(right.x, 0, right.y);
+
+                                PoolValue til = SetNewTilePositionAndRotation(newPos, new Vector3(0, Random.Range(0, 3) * 90, 0));
+                                _placedEnvironmentsMap.Add(right, til);
+
+                                _activationCommands.Enqueue(new(til, true));
+                            }
+
+                            if (!_placedEnvironmentsMap.ContainsKey(up))
+                            {
+                                Vector3 newPos = new Vector3(up.x, 0, up.y);
+
+                                PoolValue til = SetNewTilePositionAndRotation(newPos, new Vector3(0, Random.Range(0, 3) * 90, 0));
+                                _placedEnvironmentsMap.Add(up, til);
+
+                                _activationCommands.Enqueue(new(til, true));
+                            }
+
+                            if (!_placedEnvironmentsMap.ContainsKey(down))
+                            {
+                                Vector3 newPos = new Vector3(down.x, 0, down.y);
+
+                                PoolValue til = SetNewTilePositionAndRotation(newPos, new Vector3(0, Random.Range(0, 3) * 90, 0));
+                                _placedEnvironmentsMap.Add(down, til);
+
+                                _activationCommands.Enqueue(new(til, true));
+                            }
                         }
-                        else if (edgeDistance > _maximumDespawnEdgeDistance)
+                        else if (tileDistance > _maximumDespawnTileDistance)
                         {
-                            GameObject lastConnection = null;
-
-                            if (_placedEnvironments.ContainsKey(_edgesEnvironment[i]))
-                                lastConnection = _placedEnvironments[_edgesEnvironment[i]];
-
-                            if (lastConnection != null && !_edgesEnvironment.Contains(lastConnection) && !edgesToAdd.Contains(lastConnection))
+                            if(!_placedEnvironmentsMap.Remove(tile.Key))
                             {
-                                edgesToAdd.Add(lastConnection);
-                            }
 
-                            edgesToRemove.Add(_edgesEnvironment[i]);
-                            objectsToDestroy.Add(_edgesEnvironment[i].gameObject);
+                            }
+                            _activationCommands.Enqueue(new(tile.Value, false));
                         }
                     }
                     catch (Exception e)
@@ -120,22 +138,13 @@ public class EnvironmentManager : MonoBehaviour
                         Debug.Log("Some shit happened in tile map generation");
                     }
                 }
-                edgesToRemove.ForEach(x => _edgesEnvironment.Remove(x));
-                edgesToAdd.ForEach(x => _edgesEnvironment.Add(x));
-                objectsToDestroy.ForEach(x =>
-                {
-                    _placedEnvironments.Remove(x);
-
-                    _activationCommands.Enqueue(new(x, false));
-                });
             }
-            catch
+            catch(Exception ex)
             {
                 Debug.Log("Some shit happened in tile map generation");
             }
         }
-    }
-  
+    } 
     private IEnumerator CommandQueue()
     {
         while(true)
@@ -143,58 +152,40 @@ public class EnvironmentManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             try
             {
-                if (_activationCommands.TryDequeue(out Tuple<GameObject, bool> activate))
-                    activate.Item1.SetActive(activate.Item2);
+                if (_activationCommands.TryDequeue(out Tuple<PoolValue, bool> activate))
+                {
+                    if(activate.Item2)
+                        activate.Item1.PoolObject.SetActive(true);
+                    else
+                    {
+                        activate.Item1.PoolObject.SetActive(false);
+                        _objectPool.Enqueue(activate.Item1);
+                    }
+                }
             }
             catch
             {
-
+                Debug.Log("Error in command queue");
             }
         }
     }
-    bool CheckDirectionForInstantiation(Vector3  position, out GameObject instance)
+    PoolValue SetNewTilePositionAndRotation(Vector3 pos,Vector3 rotation)
     {
-        instance = null;
-        if (Physics.OverlapSphere(position, 50, _groundLayer).Length == 0)
-        {
-            Vector3 pieceRotatedBy = new Vector3(0, Random.Range(0, 3) * 90, 0);
+        PoolValue poolObj = GetNextPool();
 
-            instance = _objectPool[GetNextPoolIndex()].Item1;
-
-            if(instance.activeSelf)
-            {
-                instance = Instantiate(_emptyPiece, position, Quaternion.Euler(pieceRotatedBy), transform);
-                _objectPool.Add(new(instance,false));
-            }
-            else
-            {
-                instance.transform.SetPositionAndRotation(position, Quaternion.Euler(pieceRotatedBy));
-                instance.SetActive(true);
-            }
-            
-
-            //instance = Instantiate(_environmentPiece, position, Quaternion.Euler(pieceRotatedBy), transform);
-
-
-            return true;
-        }
+        poolObj.PoolObject.transform.SetPositionAndRotation(pos, Quaternion.Euler(rotation));
+        return poolObj;
+    }
+    PoolValue GetNextPool()
+    {
+        if (_objectPool.TryDequeue(out PoolValue res))
+            return res;
         else
-            return false;
-    }
-    int GetNextPoolIndex()
-    {
-
-        for(int i= 0;i< _objectPool.Count;i++)
         {
-            _poolIndex++;
-            if (_poolIndex >= _objectPool.Count)
-                _poolIndex = 0;
+            GameObject newObj= Instantiate(_emptyPiece, transform);
+            PoolValue newPoolObj = new PoolValue() { PoolObject = newObj, CanBeReused = false };
 
-            if (_objectPool[_poolIndex].Item2&&!_objectPool[_poolIndex].Item1.activeSelf)
-                return _poolIndex;
+            return newPoolObj;
         }
-        return _poolIndex;
-
     }
-
 }

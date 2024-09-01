@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseController : MonoBehaviour
 {
     [SerializeField] RectTransform pauseMenu;
     [SerializeField] RectTransform pauseMenu2;
+    [SerializeField] TMP_Text _debreeCountText;
+    [SerializeField] Slider _debreeSlider;
 
     bool _isPaused = false;
 
+    private void Start()
+    {
+        _debreeSlider.value = Debree.MaxDebrieLimitor;      //Sync
+    }
     // Update is called once per frame
     void Update()
     {
@@ -60,6 +68,11 @@ public class PauseController : MonoBehaviour
     {
         float log_value = (value <= 0f) ? -120f : Mathf.Log10(value) * 20;
         MusicSfxManager.Instance.SetVolume(MusicSfxManager.PauseMenuVolume.sfx, log_value);
+    }
+    public void SetMaxDebreeCount(float value)
+    {
+        Debree.MaxDebrieLimitor = (int)value;
+        _debreeCountText.text= Debree.MaxDebrieLimitor.ToString();
     }
 
     public void QuitGame()

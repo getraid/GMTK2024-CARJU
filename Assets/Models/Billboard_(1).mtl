@@ -1,0 +1,9 @@
+newmtl Mat2
+map_Kd 2.png
+Kd 1 1 1
+d 1
+
+newmtl BillboardDefault
+Kd 1 1 1
+d 1
+
