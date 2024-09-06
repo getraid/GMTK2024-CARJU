@@ -82,7 +82,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
             }
         }
-        else if(_levelOfTheCarNeededForDestroyment==1 && other.CompareTag("Police")&&!_isDestroying)
+        else if(_levelOfTheCarNeededForDestroyment<=2 && other.CompareTag("Police")&&!_isDestroying)
             DestroyTheObject(other.ClosestPoint(transform.position));
         else if (other.CompareTag("Police"))
             _initialCollisionCollider.enabled = true;

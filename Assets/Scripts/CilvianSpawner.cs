@@ -50,7 +50,7 @@ public class CilvianSpawner : MonoBehaviour
     public List<Spawnable> Spawnables; //type,count
     public bool ShouldMoveAlongPath = true;
     
-    private List<GoWithIndex> currentGameObjects;
+    [SerializeField] List<GoWithIndex> currentGameObjects;
 
     
     
@@ -87,7 +87,6 @@ public class CilvianSpawner : MonoBehaviour
             
             if (!currentGo.currentGameObject.IsDestroyed())
             {
-                
                 if (destroy)
                 {
                     var destroyable= FetchDestroyablesFromGameObject(currentGo.currentGameObject);
@@ -101,9 +100,7 @@ public class CilvianSpawner : MonoBehaviour
                     if(destroyable != null)
                         destroyable.DestructionEvent += InterfOnDestructionEvent;   
 
-                }
-                    
-                    
+                }   
             }
               
         }
@@ -177,18 +174,21 @@ public class CilvianSpawner : MonoBehaviour
         var knotIndex = GetValidKnotIndex(nextKnot);
         var knot = Path.Next(knotIndex);
 
-       GameObject gameobj = Instantiate(typeOfGoToSpawn,CivilianContainer);
-       float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
-       
-       gameobj.transform.localPosition= knot.Position + localTransformOffset + spawnable.spawn_offset;
-       gameobj.SetActive(true);
+       GameObject gameobj = Instantiate(typeOfGoToSpawn, CivilianContainer);
+
+        Vector3 wPos = SplineContainer.transform.TransformPoint(knot.Position  + spawnable.spawn_offset);
+        gameobj.transform.position = wPos;
+
+        //gameobj.transform.localPosition = knot.Position + spawnable.spawn_offset;
+
+        gameobj.SetActive(true);
        IEnumerator ScaleBypass()
        {
            if (spawnable.scale != Vector3.zero)
            {
                yield return new WaitForEndOfFrame();
                gameobj.transform.localScale = spawnable.scale;
-               gameobj.transform.LookAt(knot.Position + localTransformOffset+knot.Position + localTransformOffset);
+               gameobj.transform.LookAt(knot.Position +knot.Position );
                
            }
        }
@@ -198,19 +198,12 @@ public class CilvianSpawner : MonoBehaviour
 
     private Vector3 ConvertKnotPosToVec3(BezierKnot knot, float3 ObjectSpawnOffset )
     {
-        var knotPos = knot.Position;
-        float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
-        return new Vector3(knotPos.x+ObjectSpawnOffset.x+localTransformOffset.x,knot.Position.y+ObjectSpawnOffset.y+localTransformOffset.y,knot.Position.z+ObjectSpawnOffset.z+localTransformOffset.z);
+        Vector3 wPos = SplineContainer.transform.TransformPoint(knot.Position + ObjectSpawnOffset);
+        return wPos;
+
+        //var knotPos = knot.Position;
+        //return new Vector3(knotPos.x+ObjectSpawnOffset.x,knot.Position.y+ObjectSpawnOffset.y,knot.Position.z+ObjectSpawnOffset.z);
     }
-
-    private Vector3 ConvertTransformPosToVec3(Transform knot, float3 ObjectSpawnOffset )
-    {
-        float3 localTransformOffset = new float3(SplineContainer.transform.position.x,SplineContainer.transform.position.y,SplineContainer.transform.position.z);
-        return new Vector3(knot.localPosition.x+ObjectSpawnOffset.x+localTransformOffset.x,knot.localPosition.y+ObjectSpawnOffset.y+localTransformOffset.y,knot.localPosition.z+ObjectSpawnOffset.z+localTransformOffset.z);
-    }
-
-
-    
 
     public void MoveGameObjectToNextPosition(GoWithIndex go)
     {
@@ -229,7 +222,7 @@ public class CilvianSpawner : MonoBehaviour
         Vector3 fromPos = ConvertKnotPosToVec3(from, go.typeInfo.spawn_offset);
         Vector3 toPos = ConvertKnotPosToVec3(to, go.typeInfo.spawn_offset);
         
-        lgameObject.transform.localPosition = Vector3.Lerp(fromPos, toPos, go.localTimer / go.timeToCompleteTheLoop);
+        lgameObject.transform.position = Vector3.Lerp(fromPos, toPos, go.localTimer / go.timeToCompleteTheLoop);
         lgameObject.transform.LookAt(toPos);
         
         

@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         get { return _CurrentPlayerLevel; }
         set { _CurrentPlayerLevel = Math.Clamp(value,1,5); }
     }
-    public List<int> LevelDebreeTresholds { get; set; } = new List<int>() { 50, 500, 2000, 5000, 10000 };
+    public List<int> LevelDebreeTresholds { get; set; } = new List<int>() { 50, 750, 2000, 5000, 10000 };
 
 
 
