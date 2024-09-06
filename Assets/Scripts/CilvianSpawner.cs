@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Splines;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public struct Spawnable {
@@ -52,6 +53,7 @@ public class CilvianSpawner : MonoBehaviour
     
     [SerializeField] List<GoWithIndex> currentGameObjects;
 
+    HashSet<int> _spawnKnotsUsed=new HashSet<int>();
     
     
     // Start is called before the first frame update
@@ -164,13 +166,21 @@ public class CilvianSpawner : MonoBehaviour
         }
     }
 
-    public int GetValidKnotIndex(int index) => index % Path.Count;
+    public int GetValidKnotIndex(int index)
+    {
+        if (_spawnKnotsUsed.Contains(index))
+            return GetValidKnotIndex(index + 1);            //So two cars dont get spawned on same knot
+        else
+        {
+            _spawnKnotsUsed.Add(index);
+            return index % Path.Count;
+        }
+    }
     
     
     public void SpawnOnRandomPoint(GameObject typeOfGoToSpawn, Spawnable spawnable)
     {
-        var nextKnotRng = new System.Random();
-        var nextKnot = nextKnotRng.Next();
+        var nextKnot = Random.Range(0, Path.Count);     //Better random, in old code the random seed was not great
         var knotIndex = GetValidKnotIndex(nextKnot);
         var knot = Path.Next(knotIndex);
 

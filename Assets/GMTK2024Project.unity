@@ -859,7 +859,7 @@ MonoBehaviour:
     type: 3}
   _ultimatePlayer: {fileID: 277639546}
   _sizeOfTheMapBlock: 220
-  _howManyToPrepool: 5
+  _howManyToPrepool: 30
   _startingArea: {fileID: 9189220909696361490}
   _loadingText: {fileID: 14563099}
 --- !u!4 &1309414499
