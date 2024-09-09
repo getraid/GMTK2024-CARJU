@@ -43,8 +43,11 @@ public class CameraController : MonoBehaviour
 
         // Set the Position
         Vector3 vertical_offset = target.up * heightOffset;
-        Vector3 backward_offset = -target.forward * distanceOffset;
-        Vector3 forward_input_offset = target.forward * _inputAxis.y * forwardLookAhead;
+        //Vector3 backward_offset = -target.forward * distanceOffset;
+        Vector3 flip_forward = _isFlipCamera ? target.forward : -target.forward;
+
+        Vector3 backward_offset = distanceOffset * flip_forward;
+        Vector3 forward_input_offset = flip_forward * _inputAxis.y * forwardLookAhead;
 
         Vector3 target_camera_position = target.position + vertical_offset + backward_offset + forward_input_offset;
         transform.position = Vector3.Lerp(transform.position, target_camera_position, positionSmoothing * Time.deltaTime);
@@ -52,7 +55,7 @@ public class CameraController : MonoBehaviour
         // Set the Rotation
         // Get the Horizontal Input
         Vector3 look_direction = target.position - transform.position;
-        Vector3 forward_offset_rotation = target.forward * 10f;
+        Vector3 forward_offset_rotation = -flip_forward * 10f;
         Vector3 turn_input_offset_rotation = _inputAxis.x * turnLookAhead * transform.right;
 
         Quaternion target_rotation = Quaternion.LookRotation(look_direction + forward_offset_rotation + turn_input_offset_rotation);
