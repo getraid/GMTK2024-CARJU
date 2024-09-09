@@ -44,9 +44,10 @@ public class PauseController : MonoBehaviour
         ContinueGame();
 
         VehicleController vehicle = GameManager.Instance.GetActiveVehicle();
+        if (vehicle == null)
+            return;
 
-        // Move the vehicle up and in a random x/z direction
-        vehicle.transform.position = new Vector3(vehicle.transform.position.x + Random.Range(-5, 5), vehicle.transform.position.y + 5, vehicle.transform.position.z + Random.Range(-5, 5));
+        vehicle.CallUnstuck();
     }
 
     public void ContinueGame()

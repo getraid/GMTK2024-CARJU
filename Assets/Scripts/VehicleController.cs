@@ -112,6 +112,12 @@ public class VehicleController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_callUnstuck)
+        {
+            UnStuck();
+            return;
+        }
+
         Suspension();
         GroundCheck();
         CalculateCarVelocity();
@@ -509,6 +515,35 @@ public class VehicleController : MonoBehaviour
     public float GetVelocityRatio()
     {
         return _velocityRatio;
+    }
+
+    #endregion
+
+    #region Helper Calls
+    private bool _callUnstuck = false;
+    public void CallUnstuck()
+    {
+        _callUnstuck = true;
+    }
+
+    public void UnStuck()
+    {
+        _callUnstuck = false;
+
+        Vector3 vehicle_position = transform.position;
+        // Move the vehicle up
+        vehicle_position.y += roughHeight * 2f;
+        // Move the vehicle in a random x/z direction
+        vehicle_position.x += Random.Range(-5, 5);
+        vehicle_position.z += Random.Range(-5, 5);
+
+        transform.position = vehicle_position;
+
+        // Flip Upright
+        transform.up = Vector3.up;
+
+        // Reset the velocity
+        _rigidbody.velocity = Vector3.zero;
     }
 
     #endregion
