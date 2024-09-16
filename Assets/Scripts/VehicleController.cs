@@ -142,8 +142,8 @@ public class VehicleController : MonoBehaviour
 
     private void CalculateCarVelocity()
     {
-        //_currentLocalVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
-        _velocityRatio = _rigidbody.velocity.magnitude / maxSpeed;
+        _currentLocalVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
+        _velocityRatio = _currentLocalVelocity.z / maxSpeed;
     }
 
     private void Movement()
