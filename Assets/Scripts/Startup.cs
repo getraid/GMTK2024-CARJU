@@ -48,6 +48,10 @@ public class Startup: MonoBehaviour
     {
         credits.SetActive(true);
     }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
     
 
     private void Update()

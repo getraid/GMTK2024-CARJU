@@ -107,7 +107,6 @@ public class VehicleController : MonoBehaviour
     {
         PlayVFX();
         EngineSound();
-        UpdateSpeedometer();
     }
 
     private void FixedUpdate()
@@ -143,8 +142,8 @@ public class VehicleController : MonoBehaviour
 
     private void CalculateCarVelocity()
     {
-        _currentLocalVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
-        _velocityRatio = _currentLocalVelocity.z / maxSpeed;
+        //_currentLocalVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
+        _velocityRatio = _rigidbody.velocity.magnitude / maxSpeed;
     }
 
     private void Movement()
@@ -453,7 +452,7 @@ public class VehicleController : MonoBehaviour
     float speedometerPercent = 0f;
     float speedometerPercentLerp = 0.50f;
 
-    private void UpdateSpeedometer()
+    public void UpdateSpeedometer()
     {
         if (GameManager.Instance == null)
             return;
@@ -462,7 +461,8 @@ public class VehicleController : MonoBehaviour
         float level_modifier = (float)GameManager.Instance.CurrentPlayerLevel / 5f; // Percentage based on Car Level
         float factor = 0.90f; // 90% of the speedometer is the actual speed
 
-        speedometerPercent = Mathf.Lerp(speedometerPercent, velocity * level_modifier * factor, Time.deltaTime * speedometerPercentLerp);
+        speedometerPercent = velocity * level_modifier;
+        //speedometerPercent = Mathf.Lerp(speedometerPercent, velocity * level_modifier * factor, Time.deltaTime * speedometerPercentLerp);
 
         GameManager.Instance.SpeedometerPercentGUI = speedometerPercent;
     }

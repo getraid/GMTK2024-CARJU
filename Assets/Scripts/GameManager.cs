@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         }
         // fuel ui update
         FuelPercentGUI = (CurrentFuelAmount / MaxFuelAmount);
-
+        _activeVehicle.UpdateSpeedometer();
 
 
         if (CurrentPlayerLevel == 5 &&
