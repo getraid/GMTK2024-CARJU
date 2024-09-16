@@ -3822,7 +3822,7 @@ MonoBehaviour:
   _destroyParticles: {fileID: 7466945936891238269}
   _desctructionType: 1
   _slowCarVelocityMultiplier: 0.9
-  _destructionForceMultiplier: 20
+  _destructionForceMultiplier: 10
   _initialMeshRenderers:
   - {fileID: 2598883882491928481}
   _fragments:

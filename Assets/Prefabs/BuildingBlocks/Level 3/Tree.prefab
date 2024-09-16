@@ -117,7 +117,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097138916062952140}
   serializedVersion: 4
-  m_Mass: 0.09636752
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -266,7 +266,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546508331526467459}
   serializedVersion: 4
-  m_Mass: 0.0701842
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -415,7 +415,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732819417466417924}
   serializedVersion: 4
-  m_Mass: 0.022141654
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -564,7 +564,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879174713261429809}
   serializedVersion: 4
-  m_Mass: 0.050440237
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -713,7 +713,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898822002086550081}
   serializedVersion: 4
-  m_Mass: 0.013474974
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -814,12 +814,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66c8ce7d0f9ab8448d812bbe9a66bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialCollisionCollider: {fileID: 3591298441334745615}
+  _initialCollisionCollider: {fileID: 6319823054257932546}
   _levelOfTheCarNeededForDestroyment: 3
   _destroyParticles: {fileID: 6077499048363787823}
   _desctructionType: 1
   _slowCarVelocityMultiplier: 0.9
-  _destructionForceMultiplier: 20
+  _destructionForceMultiplier: 15
   _initialMeshRenderers:
   - {fileID: 5663097872522538000}
   _fragments:
@@ -959,7 +959,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2489265755573078816}
   serializedVersion: 4
-  m_Mass: 0.057100397
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1108,7 +1108,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2720213374252273454}
   serializedVersion: 4
-  m_Mass: 0.07549581
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1257,7 +1257,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933493418779544764}
   serializedVersion: 4
-  m_Mass: 0.08659718
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1406,7 +1406,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4363386532526317073}
   serializedVersion: 4
-  m_Mass: 0.044711217
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1604,7 +1604,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5046492257307783774}
   serializedVersion: 4
-  m_Mass: 0.07213618
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1753,7 +1753,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5953378717102946212}
   serializedVersion: 4
-  m_Mass: 0.020686552
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1902,7 +1902,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6070710926710528092}
   serializedVersion: 4
-  m_Mass: 0.06478489
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2051,7 +2051,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6447026420733597999}
   serializedVersion: 4
-  m_Mass: 0.04898586
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2200,7 +2200,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6850742379174113258}
   serializedVersion: 4
-  m_Mass: 0.017486554
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2349,7 +2349,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7522423188363121213}
   serializedVersion: 4
-  m_Mass: 0.08702777
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2498,7 +2498,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7685804221037921431}
   serializedVersion: 4
-  m_Mass: 0.013307436
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2647,7 +2647,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7732189659043082858}
   serializedVersion: 4
-  m_Mass: 0.012831508
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2796,7 +2796,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8781880233767339116}
   serializedVersion: 4
-  m_Mass: 0.038698718
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3018,7 +3018,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 359085498428e4f7e8eff52e2680cc1e,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3591298441334745615}
+      addedObject: {fileID: 6319823054257932546}
   m_SourcePrefab: {fileID: 100100000, guid: 359085498428e4f7e8eff52e2680cc1e, type: 3}
 --- !u!23 &5663097872522538000 stripped
 MeshRenderer:
@@ -3032,8 +3032,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6437552771789713556}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &3591298441334745615
-BoxCollider:
+--- !u!64 &6319823054257932546
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3050,9 +3050,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.39339912, y: 2.2803614, z: 0.38205612}
-  m_Center: {x: -0.05166143, y: 0, z: 0.011366487}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7659277842644410401, guid: 359085498428e4f7e8eff52e2680cc1e, type: 3}
 --- !u!4 &6835462983383390079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 359085498428e4f7e8eff52e2680cc1e,

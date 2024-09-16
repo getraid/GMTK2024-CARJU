@@ -30,10 +30,10 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
     int _ignoreCollisionsByLevelDifference = 1;
     float _ignorePartialDestructionMilTime = 1000;
     public event IDestroyable.DestroyableDelegate DestructionEvent;
-
     List<Collider> _playerColliderTouching = new List<Collider>();
     bool _isDestroying = false;
     DateTime _latestTimeOfPartiallyDestructed=DateTime.MinValue;
+
     private void Awake()
     {
         _fragments.ForEach(x => x.DebreeDeleteMessage += OnDebreeDeleted);
@@ -49,6 +49,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
         {
             _playerColliderTouching.Add(other);
 
+
             if ((GameManager.Instance.CurrentPlayerLevel >= _levelOfTheCarNeededForDestroyment) || (_numberOfPartialDestructions >= _howManyPartialDestructionUntilTheFullOne))
             {
                 if ((GameManager.Instance.CurrentPlayerLevel - _levelOfTheCarNeededForDestroyment) <= _ignoreCollisionsByLevelDifference)
@@ -59,13 +60,13 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                         if ((destTime - _latestTimeOfPartiallyDestructed).TotalMilliseconds < _ignorePartialDestructionMilTime)         //If the object was partially destructed few moments ago dont turn total destruction (like when wheel hits it)
                             return;
 
-                        DestroyTheObject(other.ClosestPoint(transform.position));
+                        DestroyTheObject(other.transform.position,GameManager.Instance.GetActiveVehicle().GetVelocityRatio());
                         MusicSfxManager.Instance.PlaySingleSfx(transform.position, _typeOfSfxToPlayOnDestroy);
                     }
                 }
                 else
                 {
-                    GameManager.Instance.DebreePartsTotalCollected += 0.25f * _fragments.Where(x=>!x.AlreadyExploded).Count();      //Even when only disabled, it also adds to debree meter
+                    GameManager.Instance.DebreePartsTotalCollected += 0.25f * _fragments.Where(x => !x.AlreadyExploded).Count();      //Even when only disabled, it also adds to debree meter
 
                     _initialCollisionCollider.enabled = false;
                     Destroy(gameObject);
@@ -73,7 +74,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             }
             else if ((_levelOfTheCarNeededForDestroyment - GameManager.Instance.CurrentPlayerLevel) == 1)        //Make partial destruction on object only one level above (so tiny car doesnt destroy scyscraper)
             {
-                PartiallyDestroyTheObject(other.ClosestPoint(transform.position));
+                PartiallyDestroyTheObject(other.transform.position, GameManager.Instance.GetActiveVehicle().GetVelocityRatio());
                 _initialCollisionCollider.enabled = true;
             }
             else
@@ -82,8 +83,12 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
             }
         }
-        else if(_levelOfTheCarNeededForDestroyment<=2 && other.CompareTag("Police")&&!_isDestroying)
-            DestroyTheObject(other.ClosestPoint(transform.position));
+        else if (_levelOfTheCarNeededForDestroyment <= 2 && other.CompareTag("Police") && !_isDestroying)
+        {
+            Rigidbody pRb = other.GetComponent<Rigidbody>();
+
+            DestroyTheObject(other.transform.position, 1);
+        }
         else if (other.CompareTag("Police"))
             _initialCollisionCollider.enabled = true;
 
@@ -94,7 +99,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             _initialCollisionCollider.enabled = false;
     }
 
-    void PartiallyDestroyTheObject(Vector3 collisionPoint)
+    void PartiallyDestroyTheObject(Vector3 collisionPoint, float force)
     {
         DateTime destTime = DateTime.Now;
         if ((destTime - _latestTimeOfPartiallyDestructed).TotalMilliseconds< _ignorePartialDestructionMilTime)         //Ignore other collider types like wheels
@@ -110,7 +115,8 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
             _fragments[i].gameObject.SetActive(true);
             if (Random.Range(0, 1.0f) <= _probabilityPartialDesctruction)
             {
-                _fragments[i].AddExplosionForce(collisionPoint, _destructionForceMultiplier);
+                _fragments[i].AddExplosionForce(_fragments[i].transform.position + ((_fragments[i].transform.position-collisionPoint).normalized * 10), _destructionForceMultiplier* force);
+
                 _fragments[i].AttachDebreeToCar();
                 howManyPartialled++;
             }
@@ -121,7 +127,7 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
         MusicSfxManager.Instance.PlaySingleSfx(transform.position, MusicSfxManager.TypeOfSfx.car_crash);
 
     }
-    void DestroyTheObject(Vector3 collisionPoint)
+    void DestroyTheObject(Vector3 collisionPoint,float force)
     {
         _isDestroying = true;
         _initialMeshRenderers.ForEach(x => x.enabled = false);
@@ -135,7 +141,9 @@ public class DestroyableSystem : MonoBehaviour, IDestroyable
                 continue;
 
             _fragments[i].gameObject.SetActive(true);
-            _fragments[i].AddExplosionForce(collisionPoint, _destructionForceMultiplier);
+            _fragments[i].AddExplosionForce(_fragments[i].transform.position + ((_fragments[i].transform.position - collisionPoint).normalized * 10), _destructionForceMultiplier*force);
+            _fragments[i].AddExplosionForce(collisionPoint, _destructionForceMultiplier*force);
+
             if (Random.Range(0, 1.0f)<= _probabilityOfDebreeInstantAttach)
             {
                 _fragments[i].AttachDebreeToCar();

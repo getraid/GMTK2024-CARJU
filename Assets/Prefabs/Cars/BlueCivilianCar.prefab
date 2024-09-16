@@ -2909,7 +2909,7 @@ MonoBehaviour:
   _destroyParticles: {fileID: 0}
   _desctructionType: 2
   _slowCarVelocityMultiplier: 0.9
-  _destructionForceMultiplier: 50
+  _destructionForceMultiplier: 100
   _initialMeshRenderers:
   - {fileID: 2013888659571151305}
   _fragments:
@@ -2942,6 +2942,7 @@ MonoBehaviour:
   - {fileID: 3923277500138513715}
   - {fileID: 746133678401051106}
   - {fileID: 4366935257902097063}
+  _typeOfSfxToPlayOnDestroy: 0
 --- !u!1 &9135753509648096712 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9160092539443740379, guid: f1aeff89879ef92438e44ae9876c6d5a,

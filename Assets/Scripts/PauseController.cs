@@ -16,6 +16,8 @@ public class PauseController : MonoBehaviour
     private void Start()
     {
         _debreeSlider.value = Debree.MaxDebrieLimitor;      //Sync
+        SetMusicVolume(0.8f);
+        SetSfxVolume(0.6f);
     }
     // Update is called once per frame
     void Update()

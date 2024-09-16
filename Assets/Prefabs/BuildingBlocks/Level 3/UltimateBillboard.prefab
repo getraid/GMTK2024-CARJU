@@ -121,6 +121,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: 452cf50f2c5f5814487564a769eac8bd,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: 452cf50f2c5f5814487564a769eac8bd,
         type: 3}
       propertyPath: m_Name
@@ -205,6 +210,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: de73aa7fe2cf63d46aae47e40ad8eb90,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: de73aa7fe2cf63d46aae47e40ad8eb90,
         type: 3}
@@ -291,6 +301,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: c9540cb698af8684eb22ffb3128a3a73,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: c9540cb698af8684eb22ffb3128a3a73,
         type: 3}
       propertyPath: m_Name
@@ -375,6 +390,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: bca019b2dbb9ab54f909f401b3780ed2,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: bca019b2dbb9ab54f909f401b3780ed2,
         type: 3}
@@ -461,6 +481,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: eabbe08c5b0c41d47a5b684226fb095a,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: eabbe08c5b0c41d47a5b684226fb095a,
         type: 3}
       propertyPath: m_Name
@@ -545,6 +570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: 9a2f0811bf82d274ea595f37c13fdd32,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: 9a2f0811bf82d274ea595f37c13fdd32,
         type: 3}
@@ -631,6 +661,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: fc8aadeb9a5f7b247b7bc8c1cd663353,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: fc8aadeb9a5f7b247b7bc8c1cd663353,
         type: 3}
       propertyPath: m_Name
@@ -716,6 +751,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: f065e70ef97c5b6449b80ce3c014974f,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: f065e70ef97c5b6449b80ce3c014974f,
         type: 3}
       propertyPath: m_Name
@@ -800,6 +840,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991519327803781697, guid: 6baf63b4a7f033041a6461a721a92cc3,
+        type: 3}
+      propertyPath: _destructionForceMultiplier
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7042893792644610583, guid: 6baf63b4a7f033041a6461a721a92cc3,
         type: 3}

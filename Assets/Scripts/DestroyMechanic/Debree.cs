@@ -33,7 +33,7 @@ public class Debree : MonoBehaviour
     {
         _rB.AddForce(direction, ForceMode.VelocityChange);
     }
-    public void AddExplosionForce(Vector3 origin,int destructionForceVal)
+    public void AddExplosionForce(Vector3 origin,float destructionForceVal)
     {
         AllPhysicalDebries.AddLast(this);
         AlreadyExploded = true;
