@@ -461,8 +461,7 @@ public class VehicleController : MonoBehaviour
         float level_modifier = (float)GameManager.Instance.CurrentPlayerLevel / 5f; // Percentage based on Car Level
         float factor = 0.90f; // 90% of the speedometer is the actual speed
 
-        speedometerPercent = velocity * level_modifier;
-        //speedometerPercent = Mathf.Lerp(speedometerPercent, velocity * level_modifier * factor, Time.deltaTime * speedometerPercentLerp);
+        speedometerPercent = Mathf.Lerp(speedometerPercent, velocity * level_modifier * factor, Time.deltaTime * speedometerPercentLerp);
 
         GameManager.Instance.SpeedometerPercentGUI = speedometerPercent;
     }
