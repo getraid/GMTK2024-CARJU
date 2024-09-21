@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
     public float LevelUpPercentGUI { get; set; } = 0f; // 0-1f
 
     public float fuelDrainagePerSecond { get; set; } = 1f;
-
-
+    
     float _DebreePartsTotalCollected = 0;
 
 

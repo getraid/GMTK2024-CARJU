@@ -15,9 +15,12 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] ActiveCarPrefabSelector _ultimatePlayer;
     [SerializeField] float _sizeOfTheMapBlock = 220;
     [SerializeField] int _howManyToPrepool = 50;
-    [SerializeField] GameObject _startingArea;
+    [SerializeField] GameObject _startingArea; 
+    [SerializeField] GameObject LoadingBg;
+    [SerializeField] GameObject StatusPanelUI;
     [SerializeField] TMP_Text _loadingText;
-
+    [SerializeField] UnityEngine.UI.Image loadingIcon;
+    
     Dictionary<Vector2, PoolValue> _placedEnvironmentsMap = new Dictionary<Vector2, PoolValue>();
     Queue<PoolValue> _objectPool=new Queue<PoolValue>();
 
@@ -40,7 +43,11 @@ public class EnvironmentManager : MonoBehaviour
         Time.timeScale = 0;
         PoolValue startingPool = new PoolValue() { PoolObject = _startingArea, CanBeReused = true };
         _placedEnvironmentsMap.Add(new Vector2(0, 0), startingPool);
-
+        LoadingBg.SetActive(true);
+        StatusPanelUI.SetActive(false); 
+        
+    
+        loadingIcon.gameObject.SetActive(true);
         for (int i = 0; i < _howManyToPrepool; i++)
         {
             _loadingText.text = $"Spawning...\n{i+1}/{_howManyToPrepool}";
@@ -49,13 +56,19 @@ public class EnvironmentManager : MonoBehaviour
             poolObj.name = i.ToString();
             _objectPool.Enqueue(new PoolValue() { PoolObject = poolObj, CanBeReused = true });
 
+            if(loadingIcon != null)
+                if (loadingIcon.gameObject.activeSelf)
+                    loadingIcon.rectTransform.rotation = Quaternion.Euler(0,0,i*20);
+            
             yield return null;
         }
-
         StartCoroutine(UpdateLoop());
         StartCoroutine(CommandQueue());
-
+        LoadingBg.SetActive(false);
         _loadingText.enabled = false;
+        loadingIcon.gameObject.SetActive(false);
+        StatusPanelUI.SetActive(true); 
+ 
         Time.timeScale = 1;
     }
 

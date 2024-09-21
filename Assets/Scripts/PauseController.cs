@@ -10,6 +10,8 @@ public class PauseController : MonoBehaviour
     [SerializeField] RectTransform pauseMenu2;
     [SerializeField] TMP_Text _debreeCountText;
     [SerializeField] Slider _debreeSlider;
+    [SerializeField] GameObject StatusPanelUI;
+    [SerializeField] GameObject grayBg;
 
     bool _isPaused = false;
 
@@ -36,7 +38,8 @@ public class PauseController : MonoBehaviour
     {
         _isPaused = true;
         Time.timeScale = 0;
-
+        grayBg.gameObject.SetActive(true);
+        StatusPanelUI.SetActive(false);
         pauseMenu.gameObject.SetActive(true);
         pauseMenu2.gameObject.SetActive(true);
     }
@@ -56,7 +59,8 @@ public class PauseController : MonoBehaviour
     {
         _isPaused = false;
         Time.timeScale = 1;
-
+        grayBg.gameObject.SetActive(false);
+        StatusPanelUI.SetActive(true);
         pauseMenu.gameObject.SetActive(false);
         pauseMenu2.gameObject.SetActive(false);
     }

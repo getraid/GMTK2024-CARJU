@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
+    public GameObject grayBg;
+
     public GameObject gameoverScreen;
 
     private void Awake()
@@ -23,6 +25,7 @@ public class GameOverController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentFuelAmount <= 0)
         {
+            grayBg?.SetActive(true);
             gameoverScreen?.SetActive(true);
             Time.timeScale = 0f;
  

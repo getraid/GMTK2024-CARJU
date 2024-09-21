@@ -20,6 +20,8 @@ public class PlayerStatusUI : MonoBehaviour
     [SerializeField] private Image TrashDynamic;
     [SerializeField] private Image LevelUp_incoming_glow;
     [SerializeField] private List<Sprite> spriteAnim;
+    [SerializeField] private Image greyBg;
+
     [SerializeField] TMP_Text _debreeCount;
     #endregion
     
@@ -116,6 +118,8 @@ public class PlayerStatusUI : MonoBehaviour
             }
         }
 
+
+        
         timeTrashC += Time.deltaTime;
     }
 }
