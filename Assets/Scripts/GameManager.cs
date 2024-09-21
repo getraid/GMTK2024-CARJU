@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return LevelUpPercentGUI >= 0.95;
+            return LevelUpPercentGUI >= 1;
         }
     }
     int _CurrentPlayerLevel = 1;
