@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] private Camera rearCamera;
+    [SerializeField] private AudioListener rearAudioListener;
     [SerializeField] private _CameraSettings cameraSettings;
 
     [SerializeField] private float heightOffset = 2.5f;
@@ -20,9 +22,16 @@ public class CameraController : MonoBehaviour
 
     private Vector2 _inputAxis;
     private bool _isFlipCamera;
+    private bool _lastFrameFlipCamera;
+
+    private Camera _thisCamera;
+    private AudioListener _thisAudioListener;
 
     private void Start()
     {
+        _thisCamera = GetComponent<Camera>();
+        _thisAudioListener = GetComponent<AudioListener>();
+
         if (cameraSettings != null)
             UpdateCameraSettings(cameraSettings);
     }
@@ -41,26 +50,84 @@ public class CameraController : MonoBehaviour
         if (target == null)
             return;
 
+        SetCameraValues(_thisCamera, false);
+        SetCameraValues(rearCamera, true);
+
+        if (_isFlipCamera)
+        {
+            rearCamera.enabled = true;
+            _thisCamera.enabled = false;
+
+            rearAudioListener.enabled = true;
+            _thisAudioListener.enabled = false;
+        }
+        else
+        {
+            rearCamera.enabled = false;
+            _thisCamera.enabled = true;
+
+            rearAudioListener.enabled = false;
+            _thisAudioListener.enabled = true;
+        }
+
+        //// Set the Position
+        //Vector3 vertical_offset = target.up * heightOffset;
+        ////Vector3 backward_offset = -target.forward * distanceOffset;
+
+        //Vector3 flip_forward = _isFlipCamera ? target.forward : -target.forward;
+
+        //Vector3 backward_offset = distanceOffset * flip_forward;
+        //Vector3 forward_input_offset = flip_forward * _inputAxis.y * forwardLookAhead;
+
+        //Vector3 target_camera_position = target.position + vertical_offset + backward_offset + forward_input_offset;
+        //transform.position = Vector3.Lerp(transform.position, target_camera_position, positionSmoothing * Time.deltaTime);
+
+        //// Set the Rotation
+        //// Get the Horizontal Input
+        //Vector3 look_direction = target.position - transform.position;
+        //Vector3 forward_offset_rotation = -flip_forward * 10f;
+        //Vector3 turn_input_offset_rotation = _inputAxis.x * turnLookAhead * transform.right;
+
+        ////bool instant_flip = _isFlipCamera != _lastFrameFlipCamera;
+
+        //Quaternion target_rotation = Quaternion.LookRotation(look_direction + forward_offset_rotation + turn_input_offset_rotation);
+        //target_rotation *= Quaternion.Euler(cameraTilt, 0, 0);
+
+        ////if (instant_flip)
+        ////{
+        ////    transform.rotation = target_rotation;
+        ////}
+        ////else
+        ////{
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, target_rotation, rotationSmoothing * Time.deltaTime);
+        ////}
+
+        ////_lastFrameFlipCamera = _isFlipCamera;
+    }
+
+    private void SetCameraValues(Camera camera, bool isRearCamera)
+    {
         // Set the Position
         Vector3 vertical_offset = target.up * heightOffset;
-        //Vector3 backward_offset = -target.forward * distanceOffset;
-        Vector3 flip_forward = _isFlipCamera ? target.forward : -target.forward;
+
+        Vector3 flip_forward = isRearCamera ? target.forward : -target.forward;
 
         Vector3 backward_offset = distanceOffset * flip_forward;
         Vector3 forward_input_offset = flip_forward * _inputAxis.y * forwardLookAhead;
 
         Vector3 target_camera_position = target.position + vertical_offset + backward_offset + forward_input_offset;
-        transform.position = Vector3.Lerp(transform.position, target_camera_position, positionSmoothing * Time.deltaTime);
+        camera.transform.position = Vector3.Lerp(camera.transform.position, target_camera_position, positionSmoothing * Time.deltaTime);
 
         // Set the Rotation
         // Get the Horizontal Input
-        Vector3 look_direction = target.position - transform.position;
+        Vector3 look_direction = target.position - camera.transform.position;
         Vector3 forward_offset_rotation = -flip_forward * 10f;
-        Vector3 turn_input_offset_rotation = _inputAxis.x * turnLookAhead * transform.right;
+        Vector3 turn_input_offset_rotation = _inputAxis.x * turnLookAhead * camera.transform.right;
 
         Quaternion target_rotation = Quaternion.LookRotation(look_direction + forward_offset_rotation + turn_input_offset_rotation);
         target_rotation *= Quaternion.Euler(cameraTilt, 0, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target_rotation, rotationSmoothing * Time.deltaTime);
+
+        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, target_rotation, rotationSmoothing * Time.deltaTime);
     }
 
     private void UpdateCameraSettings(_CameraSettings settings)
