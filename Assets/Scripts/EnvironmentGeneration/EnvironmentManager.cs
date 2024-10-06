@@ -172,7 +172,9 @@ public class EnvironmentManager : MonoBehaviour
                     else
                     {
                         activate.Item1.PoolObject.SetActive(false);
-                        _objectPool.Enqueue(activate.Item1);
+                        
+                        if(activate.Item1.CanBeReused)
+                            _objectPool.Enqueue(activate.Item1);
                     }
                 }
             }

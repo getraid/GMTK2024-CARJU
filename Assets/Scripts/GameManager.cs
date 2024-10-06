@@ -24,7 +24,12 @@ public class GameManager : MonoBehaviour
     float _DebreePartsTotalCollected = 0;
 
 
-    [field: SerializeField] public float CurrentFuelAmount { get; set; } = 50;
+    float _CurrentFuelAmount = 50;
+    public float CurrentFuelAmount
+    {
+        get { return _CurrentFuelAmount; }
+        set { _CurrentFuelAmount = Math.Min(value, MaxFuelAmount); }
+    }
     [field: SerializeField] public float MaxFuelAmount { get; set; } = 100;
 
 

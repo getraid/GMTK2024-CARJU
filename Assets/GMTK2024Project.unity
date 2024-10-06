@@ -1479,6 +1479,11 @@ PrefabInstance:
       propertyPath: StatusPanelUI
       value: 
       objectReference: {fileID: 779008227}
+    - target: {fileID: 2970169591267976705, guid: 0cd3909e78701473aa3676e7d6811db8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 53.344727
+      objectReference: {fileID: 0}
     - target: {fileID: 3973221048203556156, guid: 0cd3909e78701473aa3676e7d6811db8,
         type: 3}
       propertyPath: m_Name
@@ -1607,7 +1612,7 @@ PrefabInstance:
     - target: {fileID: 7376017854589312389, guid: 0cd3909e78701473aa3676e7d6811db8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.2
+      value: 37.19995
       objectReference: {fileID: 0}
     - target: {fileID: 7617497155476501613, guid: 0cd3909e78701473aa3676e7d6811db8,
         type: 3}

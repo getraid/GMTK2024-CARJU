@@ -1326,6 +1326,7 @@ GameObject:
   - component: {fileID: 6932934693375609103}
   - component: {fileID: 3077801132253073763}
   - component: {fileID: 8972555125003120438}
+  - component: {fileID: 5370839582178061672}
   m_Layer: 5
   m_Name: fuelSystem_bg
   m_TagString: Untagged
@@ -1344,7 +1345,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.8131, y: 1.8131, z: 1.8131}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 9181997370711819121}
   m_Father: {fileID: 9219666932611332713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1390,6 +1392,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5370839582178061672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681425161736505248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &1924004991987546786
 GameObject:
   m_ObjectHideFlags: 0
@@ -2494,12 +2509,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2538,6 +2553,8 @@ MonoBehaviour:
   pauseMenu2: {fileID: 2970169591267976705}
   _debreeCountText: {fileID: 5449727914566494246}
   _debreeSlider: {fileID: 3085397712168929276}
+  StatusPanelUI: {fileID: 6943380539651595577}
+  grayBg: {fileID: 0}
 --- !u!114 &9199637568802283895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2550,6 +2567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc6e3d0be12b45c1ba5c30ebdaf975b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grayBg: {fileID: 0}
   gameoverScreen: {fileID: 1337869848305408332}
 --- !u!1 &3974682714080355049
 GameObject:
@@ -4029,7 +4047,6 @@ RectTransform:
   - {fileID: 8712010848290036949}
   - {fileID: 9141902017286054567}
   - {fileID: 6932934693375609103}
-  - {fileID: 9181997370711819121}
   - {fileID: 8408421152677581571}
   - {fileID: 333652795271829259}
   - {fileID: 3126009381618099973}
@@ -4061,6 +4078,7 @@ MonoBehaviour:
   spriteAnim:
   - {fileID: 21300000, guid: 147c19ca9bdde4271a7bd3f88d27c629, type: 3}
   - {fileID: 21300000, guid: 627dfcc2f3102476690a96d8199a4195, type: 3}
+  greyBg: {fileID: 0}
   _debreeCount: {fileID: 36954067454143527}
 --- !u!1 &7156285029598898032
 GameObject:
@@ -4239,15 +4257,15 @@ RectTransform:
   m_GameObject: {fileID: 7466127960486502411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8131, y: 1.8131, z: 1.8131}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9219666932611332713}
+  m_Father: {fileID: 6932934693375609103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 99.87128, y: 102.27353}
-  m_SizeDelta: {x: 152.94739, y: 152.94739}
+  m_AnchoredPosition: {x: 34.36874, y: 13.143}
+  m_SizeDelta: {x: 70.7044, y: 44.846}
   m_Pivot: {x: 0.35653836, y: 0.29307938}
 --- !u!222 &6220957673267823218
 CanvasRenderer:
@@ -4279,10 +4297,10 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: e806bf7a7bc174fdd93531d087461700, type: 3}
   m_Type: 3
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 0.441
+  m_FillMethod: 2
+  m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0

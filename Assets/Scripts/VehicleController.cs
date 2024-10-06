@@ -58,6 +58,7 @@ public class VehicleController : MonoBehaviour
     // States
     private float[] _wheelGroundedDistance = new float[4];
     private bool _isGrounded = false;
+    float _angle = 0;
 
     // Inputs
     private float _forwardInput = 0;
@@ -266,6 +267,9 @@ public class VehicleController : MonoBehaviour
     private void WheelAcceleration()
     {
         // Apply Force at the Tire Positions based on their rotation
+
+        _angle = (_angle + ((_isBraking) ? 0f : tireRotationSpeed * _velocityRatio * Time.deltaTime));
+
         for (int i = 0; i < _tireVisuals.Length; i++)
         {
             // Cancel if the tire is not grounded
@@ -288,20 +292,33 @@ public class VehicleController : MonoBehaviour
                     brake_force = -_currentLocalVelocity.z * brakeForce * transform.forward;
                 }
 
-                // Turn the Tire
-                Vector3 current_rotation = tire.transform.localEulerAngles;
-                current_rotation.y = _currentSteeringAngle;
-                current_rotation.z = 0f;
+                //Spinning rotation
+                Quaternion spinRotation = Quaternion.AngleAxis(
+                        _angle,
+                        Vector3.right
+                    );
+                
+                // Steering rotation
+                Quaternion steeringRotation = Quaternion.Euler(0f, _currentSteeringAngle , 0f);
+                
+                tire.transform.localRotation = steeringRotation * spinRotation;
 
-                tire.transform.localEulerAngles = current_rotation;
+                //It appears the commented code below also works
+                //
+                // Turn the Tire
+                //Vector3 current_rotation = tire.transform.localEulerAngles;
+                //current_rotation.x = angle;
+                //current_rotation.y = _currentSteeringAngle;
+                //current_rotation.z = 0f;
+                //
+                //tire.transform.localEulerAngles = current_rotation;
 
                 // Spin the wheel
-                tire.transform.Rotate(
-                    Vector3.right,
-                    (_isBraking) ? 0f : tireRotationSpeed * _velocityRatio * Time.deltaTime,
-                    Space.Self
-                );
-
+                //tire.transform.Rotate(
+                //    Vector3.right,
+                //    (_isBraking) ? 0f : tireRotationSpeed * _velocityRatio * Time.deltaTime,
+                //    Space.Self
+                //);
 
                 _rigidbody.AddForceAtPosition(forward_force + backward_force + brake_force, tire.transform.position, ForceMode.Acceleration);
 
