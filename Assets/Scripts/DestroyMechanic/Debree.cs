@@ -8,7 +8,7 @@ public class Debree : MonoBehaviour
     [SerializeField] Rigidbody _rB;
     public Action<Debree> DebreeDeleteMessage { get; set; }
     public static Action<Debree> DebreeAttaching { get; set; }
-    public static int MaxDebrieLimitor { get; set; } = 200;
+    public static int MaxDebrieLimitor { get; set; } = 300;
 
     public bool AlreadyExploded { get; set; } = false;
     static LinkedList<Debree> AllPhysicalDebries { get; set; }=new LinkedList<Debree>();
@@ -21,6 +21,7 @@ public class Debree : MonoBehaviour
     }
     public void AttachDebreeToCar()
     {
+        _rB.detectCollisions = false;
         _rB.velocity = Vector3.zero;
         DebreeAttaching?.Invoke(this);
         _isAttachedToCar=true;
