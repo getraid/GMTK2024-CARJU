@@ -12,6 +12,7 @@ public class PauseController : MonoBehaviour
     [SerializeField] Slider _debreeSlider;
     [SerializeField] GameObject StatusPanelUI;
     [SerializeField] GameObject grayBg;
+    [SerializeField] GameObject _layout;
 
     bool _isPaused = false;
 
@@ -42,6 +43,7 @@ public class PauseController : MonoBehaviour
         StatusPanelUI.SetActive(false);
         pauseMenu.gameObject.SetActive(true);
         pauseMenu2.gameObject.SetActive(true);
+        _layout.SetActive(true);
     }
 
     public void Unstuck()
@@ -63,6 +65,8 @@ public class PauseController : MonoBehaviour
         StatusPanelUI.SetActive(true);
         pauseMenu.gameObject.SetActive(false);
         pauseMenu2.gameObject.SetActive(false);
+        _layout.SetActive(false);
+
     }
 
     public void SetMusicVolume(float value)

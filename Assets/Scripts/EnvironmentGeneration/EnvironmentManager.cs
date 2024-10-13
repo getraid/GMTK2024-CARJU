@@ -20,6 +20,7 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] GameObject StatusPanelUI;
     [SerializeField] TMP_Text _loadingText;
     [SerializeField] UnityEngine.UI.Image loadingIcon;
+    [SerializeField] GameObject _loadingObject;
     
     Dictionary<Vector2, PoolValue> _placedEnvironmentsMap = new Dictionary<Vector2, PoolValue>();
     Queue<PoolValue> _objectPool=new Queue<PoolValue>();
@@ -65,8 +66,7 @@ public class EnvironmentManager : MonoBehaviour
         StartCoroutine(UpdateLoop());
         StartCoroutine(CommandQueue());
         LoadingBg.SetActive(false);
-        _loadingText.enabled = false;
-        loadingIcon.gameObject.SetActive(false);
+        _loadingObject.SetActive(false);
         StatusPanelUI.SetActive(true); 
  
         Time.timeScale = 1;
