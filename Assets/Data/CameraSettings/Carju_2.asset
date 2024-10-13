@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heightOffset: 20
   distanceOffset: 28
+  rearDistanceOffset: 28
+  rearCameraHeightOffset: 12
   cameraTilt: -5
   positionSmoothing: 10
   rotationSmoothing: 10

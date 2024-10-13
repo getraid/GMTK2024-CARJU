@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float heightOffset = 2.5f;
     [SerializeField] private float distanceOffset = 4f;
     [SerializeField] private float cameraTilt = 15f;
+    [SerializeField] float _rearDistanceOffset = 2.5f;
+    [SerializeField] float _rearCameraHeightOffset = 2;
 
     [SerializeField] private float positionSmoothing = 10f;
     [SerializeField] private float rotationSmoothing = 5f;
@@ -42,7 +44,12 @@ public class CameraController : MonoBehaviour
         _inputAxis.y = Input.GetAxis("Vertical");
 
         // Get "Fire1"
-        _isFlipCamera = Input.GetButton("Fire1");
+
+        bool t = Input.mousePresent;
+        if ((Input.GetKey(KeyCode.JoystickButton4) || Input.GetKey(KeyCode.JoystickButton5) || Input.GetKey(KeyCode.LeftControl)))
+            _isFlipCamera = true;
+        else
+            _isFlipCamera = false;
     }
 
     private void LateUpdate()
@@ -108,11 +115,12 @@ public class CameraController : MonoBehaviour
     private void SetCameraValues(Camera camera, bool isRearCamera)
     {
         // Set the Position
-        Vector3 vertical_offset = target.up * heightOffset;
+        Vector3 vertical_offset = target.up * (isRearCamera? _rearCameraHeightOffset : heightOffset);
 
         Vector3 flip_forward = isRearCamera ? target.forward : -target.forward;
 
-        Vector3 backward_offset = distanceOffset * flip_forward;
+        Vector3 backward_offset = isRearCamera? _rearDistanceOffset * flip_forward: distanceOffset * flip_forward;
+
         Vector3 forward_input_offset = flip_forward * _inputAxis.y * forwardLookAhead;
 
         Vector3 target_camera_position = target.position + vertical_offset + backward_offset + forward_input_offset;
@@ -136,6 +144,8 @@ public class CameraController : MonoBehaviour
 
         heightOffset = settings.heightOffset;
         distanceOffset = settings.distanceOffset;
+        _rearDistanceOffset=settings.rearDistanceOffset;
+        _rearCameraHeightOffset = settings.rearCameraHeightOffset;
         cameraTilt = settings.cameraTilt;
         positionSmoothing = settings.positionSmoothing;
         rotationSmoothing = settings.rotationSmoothing;

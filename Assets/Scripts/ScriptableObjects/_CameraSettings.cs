@@ -7,6 +7,8 @@ public class _CameraSettings : ScriptableObject
 {
     public float heightOffset = 2.5f;
     public float distanceOffset = 4f;
+    public float rearDistanceOffset = 4f;
+    public float rearCameraHeightOffset = 2f;
     public float cameraTilt = 10f;
 
     public float positionSmoothing = 10f;
